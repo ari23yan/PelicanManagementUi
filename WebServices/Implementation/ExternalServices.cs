@@ -3,6 +3,17 @@ using PelicanManagementUi.Models.ViewModels.Common.Response;
 using PelicanManagementUi.ViewComponents.Common.Auth;
 using PelicanManagementUi.WebServices.Interfaces;
 using Microsoft.Extensions.Configuration;
+using System.Text;
+using Newtonsoft.Json;
+using Microsoft.IdentityModel.Tokens;
+using PelicanManagementUi.Models.ViewModels.User;
+using PelicanManagementUi.Models.ViewModels.Role;
+using Microsoft.AspNetCore.DataProtection;
+using System.Net.Http.Headers;
+using System.Net;
+using PelicanManagementUi.Models.ViewModels.Common;
+
+
 
 
 namespace PelicanManagementUi.WebServices.Implementation
@@ -16,65 +27,83 @@ namespace PelicanManagementUi.WebServices.Implementation
         public ExternalServices(IConfiguration configuration)
         {
             _configuration = configuration;
-            serviceAddress = configuration.GetValue<string>("ServiceAddress");
+            serviceAddress = configuration.GetValue<string>("ServiceUrlAddress");
             this.jwtTokenHandler = new JwtTokenHandler();
 
         }
 
-        public async Task<ResponseViewModel<string>> Authenticate(AuthenticateViewModel viewModel)
+        public async Task<ResponseViewModel<UserAuthenticateViewModel>> Authenticate(AuthenticateViewModel viewModel)
         {
             try
             {
-                if (jwtTokenHandler.IsTokenValid())
+                if (serviceAddress == null)
                 {
-                    return new ResponseViewModel<string> { IsSuccessFull = true, Data = jwtTokenHandler.Token };
+                    return new ResponseViewModel<UserAuthenticateViewModel> { IsSuccessFull = false, Message = ErrorsMessages.Faild, Status = "کانفیگ های ارتباطی در اپ ستینگ یافت نشد." };
                 }
-
-                if (serviceAddress.IsNullOrEmpty())
-                {
-                    return new ResponseViewModel<string> { IsSuccessFull = false, Message = ErrorsMessages.Faild, Status = "کانفیگ های ارتباطی در اپ ستینگ یافت نشد." };
-                }
-                string requestBody = $"Username={Uri.EscapeDataString(Username)}&Password={Uri.EscapeDataString(Password)}";
-                byte[] requestBytes = Encoding.UTF8.GetBytes(requestBody);
+                var requestBody = new AuthenticateViewModel { Input = viewModel.Input, Password = viewModel.Password };
+                var jsonRequestBody = JsonConvert.SerializeObject(requestBody);
+                var requestBytes = Encoding.UTF8.GetBytes(jsonRequestBody);
 
                 using (var httpClient = new HttpClient())
                 {
-                    var requestMessage = new HttpRequestMessage(HttpMethod.Post, middlewareAddress + "Api/Authenticate")
+                    var requestMessage = new HttpRequestMessage(HttpMethod.Post, serviceAddress + "authenticate")
                     {
                         Content = new ByteArrayContent(requestBytes)
                     };
-                    requestMessage.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/x-www-form-urlencoded");
+                    requestMessage.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json-patch+json");
 
                     var response = await httpClient.SendAsync(requestMessage);
-
                     if (response.IsSuccessStatusCode)
                     {
                         var responseBody = await response.Content.ReadAsStringAsync();
-                        var responseDto = JsonConvert.DeserializeObject<ResponseViewModel<string>>(responseBody);
+                        var responseDto = JsonConvert.DeserializeObject<ResponseViewModel<UserAuthenticateViewModel>>(responseBody);
                         if (responseDto.IsSuccessFull.HasValue && responseDto.IsSuccessFull.Value)
                         {
-                            jwtTokenHandler.Token = responseDto.Data;
-                            var tokenHandler = new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler();
-                            var jwtToken = tokenHandler.ReadJwtToken(responseDto.Data);
-                            var expiry = jwtToken.Claims.First(c => c.Type == "exp").Value;
-                            jwtTokenHandler.ExpiryTime = DateTimeOffset.FromUnixTimeSeconds(long.Parse(expiry)).UtcDateTime;
+                            return new ResponseViewModel<UserAuthenticateViewModel> { IsSuccessFull = true, Data = responseDto.Data, Message = ErrorsMessages.SuccessLogin };
                         }
-                        return responseDto;
+                        return new ResponseViewModel<UserAuthenticateViewModel> { IsSuccessFull = false, Message = ErrorsMessages.FaildLogin, Status = "Api Response Status Code Is Not 200" };
                     }
                     else
                     {
-                        return new ResponseViewModel<string> { IsSuccessFull = false, Data = response.StatusCode.ToString() + "  /  " + response.Content.ToString(), Message = ErrorsMessages.Faild, Status = "Api Response Status Code Is Not 200" };
+                        return new ResponseViewModel<UserAuthenticateViewModel> { IsSuccessFull = false, Message = ErrorsMessages.FaildLogin, Status = "Api Response Status Code Is Not 200" };
                     }
                 }
             }
             catch (Exception ex)
             {
-                return new ResponseViewModel<string> { IsSuccessFull = false, Data = ex.Message, Message = ErrorsMessages.InternalServerError, Status = "Exception" };
+                return new ResponseViewModel<UserAuthenticateViewModel> { IsSuccessFull = false, Message = ErrorsMessages.InternalServerError, Status = "Exception" };
             }
-            return new ResponseViewModel<string>();
         }
 
-       
+        public async Task<ResponseViewModel<GetRoleMenuViewModel>> GetRoleMenu(Guid roleId, string token)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                try
+                {
+                    var url = $"{serviceAddress}role/get-role-menu";
+                    var requestBody = new GetByIdViewModel { TargetId = roleId };
+                    var jsonContent = new StringContent(JsonConvert.SerializeObject(requestBody), Encoding.UTF8, "application/json");
 
+                    var response = await httpClient.PostAsync(url, jsonContent);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string responseBody = await response.Content.ReadAsStringAsync();
+                        var responseDto = JsonConvert.DeserializeObject<ResponseViewModel<GetRoleMenuViewModel>>(responseBody);
+                        return new ResponseViewModel<GetRoleMenuViewModel>{IsSuccessFull = true,Data = responseDto.Data,Message = ErrorsMessages.Success,Status = "SuccessFul"};
+                    }
+                    else
+                    {
+                        return new ResponseViewModel<GetRoleMenuViewModel>{IsSuccessFull = false,Message = ErrorsMessages.Faild,Status = "Api Response Status Code Is Not 200"};
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return new ResponseViewModel<GetRoleMenuViewModel>{IsSuccessFull = false,Message = ErrorsMessages.InternalServerError,Status = "Exception"};
+                }
+            }
+        }
     }
 }

@@ -42,12 +42,12 @@
                                             @* <img src="../images/logo-full.png" alt=""> *@
                                     </a></div>
                                     <h4 class="text-center mb-4">وارد حساب کاربری خود شوید</h4>
-                                    <form action="index.html">
+                                    <form asp-action="Login" asp-controller="Account" enctype="multipart/form-data" method="post">
                                         <div class="mb-3">
-                                            <label class="mb-1"><strong> نام کاربری </strong></label><input type="email" id="inputUsername" class="form-control" value="ایمیل یا شماره تلفن و یا نام کاربری">
+                                            <label class="mb-1"><strong> نام کاربری </strong></label><input name="Input" type="text" id="inputUsername" class="form-control" value="ایمیل یا شماره تلفن و یا نام کاربری">
                                         </div>
                                         <div class="mb-3">
-                                            <label class="mb-1"><strong>کلمه عبور</strong></label><input type="password" id="inputPaasword" class="form-control" value="Password">
+                                            <label class="mb-1"><strong>کلمه عبور</strong></label><input name="Password" type="text" id="inputPaasword" class="form-control" value="رمز عبور">
                                         </div>
                                         <div class="row d-flex justify-content-between mt-4 mb-2">
                                             <div class="mb-3">
@@ -79,5 +79,7 @@
             text.value = '';
         });
     </script>
+    @await Component.InvokeAsync("Notyf")
+
 </body>
 </html>
