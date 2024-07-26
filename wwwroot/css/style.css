@@ -9369,13 +9369,13 @@ label {
     display: flex;
     height: 100%;
     width: 100%;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
     font-size: 1.125rem;
     color: #fff;
     text-decoration: none;
-    padding-left: 30px;
-    padding-right: 30px;
+    /*padding-left: 30px;*/
+    /*padding-right: 30px;*/
     font-weight: 700; }
     @media only screen and (max-width: 1400px) {
       .nav-header .brand-logo {
@@ -9519,8 +9519,8 @@ label {
   max-width: 75px; }
 
 [data-sidebar-style="compact"][data-layout="horizontal"] .nav-header .brand-logo {
-  padding-left: 30px;
-  padding-right: 30px;
+ /* padding-left: 30px;
+  padding-right: 30px;*/
   justify-content: start; }
 
 [data-sidebar-style="modern"][data-layout="vertical"] .nav-header {
@@ -11499,8 +11499,8 @@ svg.pulse-svg {
     margin-left: 0;
     margin-right: 15px; }
   [direction="rtl"] .nav-header .brand-logo {
-    padding-left: 0;
-    padding-right: 1.75rem; }
+   /* padding-left: 0;
+    padding-right: 1.75rem;*/ }
     [data-sidebar-style="compact"][direction="rtl"] .nav-header .brand-logo {
       padding-right: 0; }
     [data-sidebar-style="compact"][direction="rtl"] .nav-header .brand-logo[data-layout="horizontal"] {
@@ -12445,12 +12445,12 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
       .deznav .header-profile .dropdown-menu a:hover, .deznav .header-profile .dropdown-menu a:focus, .deznav .header-profile .dropdown-menu a.active {
         color: var(--primary); }
     .deznav .header-profile img {
-      width: 93px;
-      height: 93px;
+      width: 100px;
+      height: 100px;
       display: block;
       margin-left: auto;
       margin-right: auto;
-      margin-bottom: 20px;
+      /*margin-bottom: 20px;*/
       border-radius: 50%; }
     .deznav .header-profile .dropdown-toggle i {
       font-size: 1.25rem; }
@@ -28255,8 +28255,8 @@ table.dataTable.market-tbl {
     margin-left: 0;
     margin-right: 15px; }
   [direction="rtl"] .nav-header .brand-logo {
-    padding-left: 0;
-    padding-right: 1.75rem; }
+   /* padding-left: 0;
+    padding-right: 1.75rem;*/ }
     [data-sidebar-style="compact"][direction="rtl"] .nav-header .brand-logo {
       padding-right: 0; }
     [data-sidebar-style="compact"][direction="rtl"] .nav-header .brand-logo[data-layout="horizontal"] {
