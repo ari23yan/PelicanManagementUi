@@ -24,7 +24,7 @@ builder.Services
     })
     .AddCookie(options =>
     {
-        options.LoginPath = "/User/Login";
+        options.LoginPath = "/Account/Login";
         options.LogoutPath = "/SignOut";
         options.ExpireTimeSpan = TimeSpan.FromDays(2);
         options.SlidingExpiration = true;

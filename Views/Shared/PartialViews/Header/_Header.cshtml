@@ -10,10 +10,46 @@
                     </div>
                 </div>
                 <ul class="navbar-nav header-right">
-                      <li class="nav-item dropdown notification_dropdown">
-                    @* <h1>داشبورد مدیریت اسکن</h1> *@
+                    <li class="nav-item dropdown notification_dropdown">
+                        @* <h1>داشبورد مدیریت اسکن</h1> *@
                         @* <i class="flaticon-381-settings-6"></i> *@
+                    </li>
+                </ul>
+                <ul class="navbar-nav header-right">
+                    <li class="nav-item dropdown notification_dropdown">
+                        <a class="nav-link ai-icon" href="javascript:void(0);" role="button" data-bs-toggle="dropdown">
+                            <i style="color:#6c757d !important;padding-right: 1px;" class="flaticon-381-settings-6"></i>
+                        </a><div class="dropdown-menu dropdown-menu-end">
+                            <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3">
+                                <ul class="timeline mt-3">
+                                    <li>
+                                        <div class="timeline-panel">
+                                            <div class="media me-2">
+                                                <i class="flaticon-062-pencil"></i>
+                                            </div>
+                                            <a class="" asp-action="ChangePassword" asp-controller="Account">
+                                                <div class="media-body">
+                                                    <h6 class="mb-1">تغییر رمز عبور</h6>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="timeline-panel">
+                                            <div class="media me-2">
+                                                <i class="flaticon-381-exit-2"></i>
+                                            </div>
+                                            <a class="" asp-action="SignOut" asp-controller="Account">
+                                                <div class="media-body">
+                                                    <h6 class="mb-1">خروج</h6>
+                                                </div>
+                                            </a>
+                                        </div>
 
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </li>
                 </ul>
 

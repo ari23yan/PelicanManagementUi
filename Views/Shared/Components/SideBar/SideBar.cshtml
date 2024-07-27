@@ -17,21 +17,39 @@
 
                 foreach (var item in Model.RoleData.Menus)
                 {
-                    <li>
-                        <a class="has-arrow ai-icon" href="javascript:void(0)" aria-expanded="false">
-                            <i class="flaticon-025-dashboard"></i>
-                            <span class="nav-text">@item.Name_Farsi</span>
-                        </a>
-                        <ul aria-expanded="false">
-                            @if (item.SubMenus != null)
-                            {
-                                foreach (var subItem in item.SubMenus)
-                                {
-                                    <li><a href="@subItem.Link">@subItem.Name_Farsi</a></li>
-                                }
-                            }
-                        </ul>
-                    </li>
+                    @if (item.HasMenu)
+                    {
+                        var attrebutes = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(item.Link);
+                        @if (item.SubMenus == null)
+                        {
+
+
+                            <li>
+                                <a asp-action="@attrebutes.Action" asp-controller="@attrebutes.Controller" class="ai-icon" aria-expanded="false">
+                                    <i class="@attrebutes.Icon"></i>
+                                    <span class="nav-text">@item.Name_Farsi</span>
+                                </a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <a class="has-arrow ai-icon" asp-action="@attrebutes.Action" asp-controller="@attrebutes.Controller" aria-expanded="false">
+                                    <i class="flaticon-025-dashboard"></i>
+                                    <span class="nav-text">@item.Name_Farsi</span>
+                                </a>
+                                <ul aria-expanded="false">
+                                    @if (item.SubMenus != null)
+                                    {
+                                        foreach (var subItem in item.SubMenus)
+                                        {
+                                            <li><a href="@subItem.Link">@subItem.Name_Farsi</a></li>
+                                        }
+                                    }
+                                </ul>
+                            </li>
+                        }
+                    }
                 }
             }
         </ul>
