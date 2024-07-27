@@ -1,12 +1,11 @@
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using PelicanManagementUi.Models;
-using System.Diagnostics;
 
 namespace PelicanManagementUi.Controllers
 {
     [Authorize]
-    public class HomeController : Controller
+    public class UserController : Controller
     {
         public IActionResult Index()
         {
