@@ -12,6 +12,8 @@ using Microsoft.AspNetCore.DataProtection;
 using System.Net.Http.Headers;
 using System.Net;
 using PelicanManagementUi.Models.ViewModels.Common;
+using PelicanManagementUi.Models.ViewModels.Common.Pagination;
+using NuGet.Common;
 
 
 
@@ -75,6 +77,10 @@ namespace PelicanManagementUi.WebServices.Implementation
             }
         }
 
+
+
+
+
         public async Task<ResponseViewModel<GetRoleMenuViewModel>> GetRoleMenu(Guid roleId, string token)
         {
             using (var httpClient = new HttpClient())
@@ -92,16 +98,62 @@ namespace PelicanManagementUi.WebServices.Implementation
                     {
                         string responseBody = await response.Content.ReadAsStringAsync();
                         var responseDto = JsonConvert.DeserializeObject<ResponseViewModel<GetRoleMenuViewModel>>(responseBody);
-                        return new ResponseViewModel<GetRoleMenuViewModel>{IsSuccessFull = true,Data = responseDto.Data,Message = ErrorsMessages.Success,Status = "SuccessFul"};
+                        return new ResponseViewModel<GetRoleMenuViewModel> { IsSuccessFull = true, Data = responseDto.Data, Message = ErrorsMessages.Success, Status = "SuccessFul" };
                     }
                     else
                     {
-                        return new ResponseViewModel<GetRoleMenuViewModel>{IsSuccessFull = false,Message = ErrorsMessages.Faild,Status = "Api Response Status Code Is Not 200"};
+                        return new ResponseViewModel<GetRoleMenuViewModel> { IsSuccessFull = false, Message = ErrorsMessages.Faild, Status = "Api Response Status Code Is Not 200" };
                     }
                 }
                 catch (Exception ex)
                 {
-                    return new ResponseViewModel<GetRoleMenuViewModel>{IsSuccessFull = false,Message = ErrorsMessages.InternalServerError,Status = "Exception"};
+                    return new ResponseViewModel<GetRoleMenuViewModel> { IsSuccessFull = false, Message = ErrorsMessages.InternalServerError, Status = "Exception" };
+                }
+            }
+        }
+
+        public async Task<ResponseViewModel<List<UsersListViewModel>>> GetUserList(PaginationViewModel model, string token)
+        {
+
+            using (var httpClient = new HttpClient())
+            {
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                try
+                {
+                    var queryParams = new List<string>
+                    {
+                        $"pageNumber={model.PageNumber}",
+                        $"pageSize={model.PageSize}"
+                    };
+
+                    if (!string.IsNullOrEmpty(model.Searchkey))
+                    {
+                        queryParams.Add($"searchkey={Uri.EscapeDataString(model.Searchkey)}");
+                    }
+
+                    if (model.FilterType.HasValue)
+                    {
+                        queryParams.Add($"filterType={model.FilterType.Value}");
+                    }
+
+                    var url = $"{serviceAddress}user/get-list?" + string.Join("&", queryParams);
+
+                    var response = await httpClient.GetAsync(url);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string responseBody = await response.Content.ReadAsStringAsync();
+                        var responseDto = JsonConvert.DeserializeObject<ResponseViewModel<List<UsersListViewModel>>>(responseBody);
+                        return new ResponseViewModel<List<UsersListViewModel>> { IsSuccessFull = true, Data = responseDto.Data, Message = ErrorsMessages.Success, Status = "SuccessFul" };
+                    }
+                    else
+                    {
+                        return new ResponseViewModel<List<UsersListViewModel>> { IsSuccessFull = false, Message = ErrorsMessages.Faild, Status = "Api Response Status Code Is Not 200" };
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return new ResponseViewModel<List<UsersListViewModel>> { IsSuccessFull = false, Message = $"{ErrorsMessages.InternalServerError}: {ex.Message}", Status = "Exception" };
                 }
             }
         }
