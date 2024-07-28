@@ -44,10 +44,10 @@
                                     <h4 class="text-center mb-4">وارد حساب کاربری خود شوید</h4>
                                     <form asp-action="Login" asp-controller="Account" enctype="multipart/form-data" method="post">
                                         <div class="mb-3">
-                                            <label class="mb-1"><strong> نام کاربری </strong></label><input name="Input" type="text" id="inputUsername" class="form-control" value="ایمیل یا شماره تلفن و یا نام کاربری">
+                                            <label class="mb-1"><strong> نام کاربری </strong></label><input name="Input" type="text" placeholder="ایمیل یا شماره تلفن و یا نام کاربری" id="inputUsername" class="form-control" >
                                         </div>
                                         <div class="mb-3">
-                                            <label class="mb-1"><strong>کلمه عبور</strong></label><input name="Password" type="password" id="inputPaasword" class="form-control" value="رمز عبور">
+                                            <label class="mb-1"><strong>کلمه عبور</strong></label><input name="Password" placeholder="رمز عبور" type="password" id="inputPaasword" class="form-control" >
                                         </div>
                                         <div class="row d-flex justify-content-between mt-4 mb-2">
                                             <div class="mb-3">
@@ -69,15 +69,7 @@
     <script src="../js/custom.min.js"></script>
     <script src="../js/deznav-init.js"></script>
     <script type="text/javascript">
-        document.getElementById("inputUsername").addEventListener('click', function () {
-            var text = document.getElementById('inputUsername');
-            text.value = '' ;
-        });
-
-        document.getElementById("inputPaasword").addEventListener('click', function () {
-            var text = document.getElementById('inputPaasword');
-            text.value = '';
-        });
+  
     </script>
     @await Component.InvokeAsync("Notyf")
 

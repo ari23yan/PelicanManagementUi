@@ -144,7 +144,7 @@ namespace PelicanManagementUi.WebServices.Implementation
                     {
                         string responseBody = await response.Content.ReadAsStringAsync();
                         var responseDto = JsonConvert.DeserializeObject<ResponseViewModel<List<UsersListViewModel>>>(responseBody);
-                        return new ResponseViewModel<List<UsersListViewModel>> { IsSuccessFull = true, Data = responseDto.Data, Message = ErrorsMessages.Success, Status = "SuccessFul" };
+                        return new ResponseViewModel<List<UsersListViewModel>> { IsSuccessFull = true, Data = responseDto.Data, Message = ErrorsMessages.Success, Status = "SuccessFul",TotalCount=responseDto.TotalCount };
                     }
                     else
                     {

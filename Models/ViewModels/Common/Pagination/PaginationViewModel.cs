@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System;
-using PelicanManagementUI.Models.Enums;
+using PelicanManagementUi.Models.Enums;
 
 namespace PelicanManagementUi.Models.ViewModels.Common.Pagination
 {
@@ -10,6 +10,6 @@ namespace PelicanManagementUi.Models.ViewModels.Common.Pagination
         public int PageSize { get; set; } = 20;
         public string? Searchkey { get; set; }
         [EnumDataType(typeof(FilterType))]
-        public FilterType? FilterType { get; set; } = PelicanManagementUI.Models.Enums.FilterType.Desc;
+        public FilterType? FilterType { get; set; } = PelicanManagementUi.Models.Enums.FilterType.Desc;
     }
 }
