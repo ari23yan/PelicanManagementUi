@@ -48,7 +48,7 @@ namespace PelicanManagementUi.WebServices.Implementation
 
                 using (var httpClient = new HttpClient())
                 {
-                    var requestMessage = new HttpRequestMessage(HttpMethod.Post, serviceAddress + "authenticate")
+                    var requestMessage = new HttpRequestMessage(HttpMethod.Post, serviceAddress + "/authenticate")
                     {
                         Content = new ByteArrayContent(requestBytes)
                     };
@@ -77,10 +77,6 @@ namespace PelicanManagementUi.WebServices.Implementation
             }
         }
 
-
-
-
-
         public async Task<ResponseViewModel<GetRoleMenuViewModel>> GetRoleMenu(Guid roleId, string token)
         {
             using (var httpClient = new HttpClient())
@@ -88,7 +84,7 @@ namespace PelicanManagementUi.WebServices.Implementation
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 try
                 {
-                    var url = $"{serviceAddress}role/get-role-menu";
+                    var url = $"{serviceAddress}/role/get-role-menu";
                     var requestBody = new GetByIdViewModel { TargetId = roleId };
                     var jsonContent = new StringContent(JsonConvert.SerializeObject(requestBody), Encoding.UTF8, "application/json");
 
@@ -114,7 +110,6 @@ namespace PelicanManagementUi.WebServices.Implementation
 
         public async Task<ResponseViewModel<List<UsersListViewModel>>> GetUserList(PaginationViewModel model, string token)
         {
-
             using (var httpClient = new HttpClient())
             {
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
@@ -136,7 +131,7 @@ namespace PelicanManagementUi.WebServices.Implementation
                         queryParams.Add($"filterType={model.FilterType.Value}");
                     }
 
-                    var url = $"{serviceAddress}user/get-list?" + string.Join("&", queryParams);
+                    var url = $"{serviceAddress}/user/get-list?" + string.Join("&", queryParams);
 
                     var response = await httpClient.GetAsync(url);
 
@@ -157,5 +152,100 @@ namespace PelicanManagementUi.WebServices.Implementation
                 }
             }
         }
+
+        public async Task<ResponseViewModel<UserDetailViewModel>> GetUser(Guid userId, string token)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                try
+                {
+                    var url = $"{serviceAddress}/user/get";
+                    var requestBody = new GetByIdViewModel { TargetId = userId };
+                    var jsonContent = new StringContent(JsonConvert.SerializeObject(requestBody), Encoding.UTF8, "application/json");
+
+                    var response = await httpClient.PostAsync(url, jsonContent);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string responseBody = await response.Content.ReadAsStringAsync();
+                        var responseDto = JsonConvert.DeserializeObject<ResponseViewModel<UserDetailViewModel>>(responseBody);
+                        return new ResponseViewModel<UserDetailViewModel> { IsSuccessFull = true, Data = responseDto.Data, Message = ErrorsMessages.Success, Status = "SuccessFul" };
+                    }
+                    else
+                    {
+                        return new ResponseViewModel<UserDetailViewModel> { IsSuccessFull = false, Message = ErrorsMessages.Faild, Status = "Api Response Status Code Is Not 200" };
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return new ResponseViewModel<UserDetailViewModel> { IsSuccessFull = false, Message = ErrorsMessages.InternalServerError, Status = "Exception" };
+                }
+            }
+        }
+
+        public async Task<ResponseViewModel<bool>> DeleteUser(Guid userId, string token)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                try
+                {
+                    var url = $"{serviceAddress}/user/delete";
+                    var requestBody = new GetByIdViewModel { TargetId = userId };
+                    var jsonContent = new StringContent(JsonConvert.SerializeObject(requestBody), Encoding.UTF8, "application/json");
+                    var request = new HttpRequestMessage(HttpMethod.Delete, url)
+                    {
+                        Content = jsonContent
+                    };
+
+                    var response = await httpClient.SendAsync(request);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return new ResponseViewModel<bool> { IsSuccessFull = true, Message = ErrorsMessages.Success, Status = "SuccessFul" };
+                    }
+                    else
+                    {
+                        return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.Faild, Status = "Api Response Status Code Is Not 200" };
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.InternalServerError, Status = "Exception" };
+                }
+            }
+        }
+
+        public async Task<ResponseViewModel<bool>> ToggleActiveStatus(Guid userId, string token)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                try
+                {
+                    var url = $"{serviceAddress}/user/toggle-active-status";
+                    var requestBody = new GetByIdViewModel { TargetId = userId };
+                    var jsonContent = new StringContent(JsonConvert.SerializeObject(requestBody), Encoding.UTF8, "application/json");
+                    var request = new HttpRequestMessage(HttpMethod.Put, url)
+                    {
+                        Content = jsonContent
+                    };
+                    var response = await httpClient.SendAsync(request);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return new ResponseViewModel<bool> { IsSuccessFull = true, Message = ErrorsMessages.Success, Status = "SuccessFul" };
+                    }
+                    else
+                    {
+                        return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.Faild, Status = "Api Response Status Code Is Not 200" };
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.InternalServerError, Status = "Exception" };
+                }
+            }
+        }
+
     }
 }

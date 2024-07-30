@@ -1,15 +1,16 @@
 ﻿@model PelicanManagementUi.Models.ViewModels.User.UserViewModel
+@using PelicanManagementUi.Models.ViewModels.Common;
 
 
 <div class="deznav">
     <div class="deznav-scroll">
         <div class="dropdown header-profile">
             <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown">
-                <img src="images/profile/pic1.jpg" width="20" alt=""><div class="header-info">
+                <img src="~/images/profile/pic1.jpg" width="20" alt=""><div class="header-info">
                     <span class="font-w400 mb-0">@Model.FullName</span><small class="text-end font-w400">@Model.RoleData.RoleName_Farsi</small>
                 </div>
             </a><div class="dropdown-menu dropdown-menu-end">
-                <a href="./app-profile.html" class="dropdown-item ai-icon"><svg id="icon-user1" xmlns="http://www.w3.org/2000/svg" class="text-primary" width="18" height="18" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg><span class="ms-2">مشخصات</span></a><a href="./email-inbox.html" class="dropdown-item ai-icon"><svg id="icon-inbox" xmlns="http://www.w3.org/2000/svg" class="text-success" width="18" height="18" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg><span class="ms-2">صندوق ورودی</span></a><a href="./login.html" class="dropdown-item ai-icon"><svg id="icon-logout" xmlns="http://www.w3.org/2000/svg" class="text-danger" width="18" height="18" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg><span class="ms-2">خروج</span></a>
+                <a href="!/app-profile.html" class="dropdown-item ai-icon"><svg id="icon-user1" xmlns="http://www.w3.org/2000/svg" class="text-primary" width="18" height="18" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg><span class="ms-2">مشخصات</span></a><a href="./email-inbox.html" class="dropdown-item ai-icon"><svg id="icon-inbox" xmlns="http://www.w3.org/2000/svg" class="text-success" width="18" height="18" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg><span class="ms-2">صندوق ورودی</span></a><a href="./login.html" class="dropdown-item ai-icon"><svg id="icon-logout" xmlns="http://www.w3.org/2000/svg" class="text-danger" width="18" height="18" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg><span class="ms-2">خروج</span></a>
             </div>
         </div>
         <ul class="metismenu" id="menu">
@@ -19,7 +20,7 @@
                 {
                     @if (item.HasMenu)
                     {
-                        var attrebutes = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(item.Link);
+                        var attrebutes = Newtonsoft.Json.JsonConvert.DeserializeObject<AttributesViewModel>(item.Link);
                         @if (item.SubMenus == null)
                         {
 
@@ -41,9 +42,15 @@
                                 <ul aria-expanded="false">
                                     @if (item.SubMenus != null)
                                     {
+
+
                                         foreach (var subItem in item.SubMenus)
                                         {
-                                            <li><a href="@subItem.Link">@subItem.Name_Farsi</a></li>
+                                            var subItemattrebutes = Newtonsoft.Json.JsonConvert.DeserializeObject<AttributesViewModel>(subItem.Link);
+
+
+
+                                            <li><a asp-action="@subItemattrebutes.Action" asp-controller="@subItemattrebutes.Controller" >@subItem.Name_Farsi</a></li>
                                         }
                                     }
                                 </ul>

@@ -14,9 +14,12 @@
     <meta name="format-detection" content="telephone=no">
     <title>داشبور مدیریت پلیکان</title>
     <link rel="shortcut icon" type="image/png" href="images/favicon.png">
-    <link href="./vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
-    <link href="./vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet">
-    <link href="./css/style.css" rel="stylesheet">
+    <link href="~/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="~/vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet">
+    <link href="~/vendor/jquery-smartwizard/dist/css/smart_wizard.min.css" rel="stylesheet">
+    <link href="~/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/tippy.js@5/dist/backdrop.css" />
+
 
 </head>
 <body>
@@ -61,15 +64,23 @@
 
 
     </div>
-    <script src="./vendor/global/global.min.js"></script>
-    <script src="./vendor/chart.js/Chart.bundle.min.js"></script>
-    <script src="vendor/jquery-nice-select/js/jquery.nice-select.min.js"></script>
-    <script src="./vendor/owl-carousel/owl.carousel.js"></script>
-    <script src="./js/dashboard/dashboard-1.js"></script>
-    <script src="./js/custom.min.js"></script>
-    <script src="./js/deznav-init.js"></script>
-    <script src="./vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/vendor/global/global.min.js"></script>
+    <script src="~/vendor/chart.js/Chart.bundle.min.js"></script>
+    <script src="~/vendor/jquery-nice-select/js/jquery.nice-select.min.js"></script>
+    <script src="~/vendor/owl-carousel/owl.carousel.js"></script>
+    <script src="~/js/dashboard/dashboard-1.js"></script>
+    <script src="~/js/custom.min.js"></script>
+    <script src="~/js/deznav-init.js"></script>
+    <script src="~/vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="https://unpkg.com/popper.js@1"></script>
+    <script src="https://unpkg.com/tippy.js@5"></script>
+    <script>
+        (function () {
+            tippy('[data-tippy-content]');
 
+        })();
+
+    </script>
 </body>
 </html>
 

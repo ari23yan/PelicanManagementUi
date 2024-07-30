@@ -1,0 +1,72 @@
+﻿@model PelicanManagementUi.Models.ViewModels.User.UserDetailViewModel
+
+
+
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row page-titles">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">خانه</a></li> &nbsp;
+                ->
+                <li class="breadcrumb-item"><a asp-action="List" asp-controller="User">لیست کاربران</a></li> &nbsp;
+                ->
+                <li class="breadcrumb-item active"><a asp-action="Detail" asp-controller="User">جزئیات کاربر</a></li>
+            </ol>
+        </div>
+        <div class="row">
+            <div class="col-xl-12 col-xxl-12">
+                <div class="card">
+                    <div class="card-header"><h4 class="card-title">فرم ویرایش</h4></div>
+                    <div class="card-body">
+                                <form asp-action="Update" asp-controller="User" enctype="multipart/form-data" method="post">
+                            <div class="tab-content">
+                                    <div class="row">
+                                    <div class="col-lg-6 mb-2">
+                                            <div class="mb-3">
+                                            <label class="text-label form-label">نام</label><input value="@Model.FirstName" type="text" name="firstName" class="form-control" placeholder="جعفری" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 mb-2">
+                                            <div class="mb-3">
+                                                <label class="text-label form-label">نام خانوادگی</label><input type="text" name="lastName" class="form-control" placeholder="مونتانا" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 mb-2">
+                                            <div class="mb-3">
+                                                <label class="text-label form-label">آدرس ایمیل</label><input type="email" class="form-control" id="inputGroupPrepend2" aria-describedby="inputGroupPrepend2" placeholder="example@example.com.com" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 mb-2">
+                                            <div class="mb-3">
+                                                <label class="text-label form-label">شماره تلفن</label><input type="text" name="phoneNumber" class="form-control" placeholder="(+1)408-657-9007" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 mb-3">
+                                            <div class="mb-3">
+                                                <label class="text-label form-label">شما اهل کجا هستید</label><input type="text" name="place" class="form-control" required>
+                                            </div>
+                                        </div>
+                                    <div class="col-lg-10 mb-3">
+                                        <div class="mb-3">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-1 mb-3 w-auto pl-0">
+                                        <div class="mb-3">
+                                            <div class="text-center"><button type="reset" class="btn btn-dark btn-block">انصراف</button></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-1 mb-3 w-auto">
+                                        <div class="mb-3">
+                                            <div class="text-center"><button type="submit" class="btn btn-primary btn-block">ثبت</button></div>
+                                        </div>
+                                    </div>
+
+                                    </div>
+                            </div>
+                          </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
