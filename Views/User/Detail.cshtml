@@ -16,36 +16,115 @@
         <div class="row">
             <div class="col-xl-12 col-xxl-12">
                 <div class="card">
-                    <div class="card-header"><h4 class="card-title">فرم ویرایش</h4></div>
+                    <div class="card-header"><h4 class="card-title">ویرایش کاربر</h4></div>
                     <div class="card-body">
-                                <form asp-action="Update" asp-controller="User" enctype="multipart/form-data" method="post">
+                        <form asp-action="Update" asp-controller="User" enctype="multipart/form-data" method="post">
+                            <input value="@Model.Id" type="text" name="UserId" class="d-none">
+
                             <div class="tab-content">
-                                    <div class="row">
+                                <div class="row">
                                     <div class="col-lg-6 mb-2">
+                                        <div class="mb-3">
+                                            <label style="font-size: medium;font-weight: bold;" class="text-label form-label">نام</label><input value="@Model.FirstName" type="text" name="FirstName" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 mb-2">
+                                        <div class="mb-3">
+                                            <label style="font-size: medium;font-weight: bold;" class="text-label form-label">نام خانوادگی</label><input value="@Model.LastName" type="text" name="LastName" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 mb-2">
+                                        <div class="mb-3">
+                                            <label style="font-size: medium;font-weight: bold;" class="text-label form-label">نام کاربری</label><input value="@Model.Username" name="Username" type="text" class="form-control" id="inputGroupPrepend2" aria-describedby="inputGroupPrepend2" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 mb-2">
+                                        <div class="mb-3">
+                                            <label style="font-size: medium;font-weight: bold;" class="text-label form-label">شماره تلفن</label><input value="@Model.PhoneNumber" type="text" name="PhoneNumber" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 mb-2">
+                                        <div class="mb-3">
+                                            <label style="font-size: medium;font-weight: bold;" class="text-label form-label">آدرس ایمیل</label><input value="@Model.Email" name="Email" type="email" class="form-control" id="inputGroupPrepend2" aria-describedby="inputGroupPrepend2" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 mb-2">
+                                        <div class="mb-3">
+                                            <label style="font-size: medium;font-weight: bold;" class="text-label form-label">وضعیت ایمیل</label>
+                                            <select name="EmailConfirmed" class="default-select form-control wide mb-3" dir="ltr">
+                                                @{
+                                                    if (Model.EmailConfirmed.Value)
+                                                    {
+                                                        <option value="True" selected>تایید شده</option>
+                                                        <option value="False">تایید نشده</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="True" >تایید شده</option>
+                                                        <option value="False" selected>تایید نشده</option>
+
+                                                    }
+                                                }
+                                            </select>
+                                            @* <input value="@Model.EmailConfirmed" type="text" name="phoneNumber" class="form-control" placeholder="(+1)408-657-9007" required> *@
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 mt-5 mb-3">
+                                        <div class="mb-3">
+                                            <label style="font-size: medium;font-weight: bold;" class="text-label form-label">نقش کاربر</label>
+                                            <select name="RoleId" onchange="getRolePermissions(this)" id="roleSelect" class="default-select form-control wide mb-3">
+                                                @{
+                                                    foreach (var role in Model.AllRoles)
+                                                    {
+                                                        if (Model.RoleId == role.Id)
+                                                        {
+                                                            <option selected value="@role.Id">@role.RoleName_Farsi</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@role.Id">@role.RoleName_Farsi</option>
+                                                        }
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 mb-3">
+                                        <div class="mb-3">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-12 mb-3">
+                                        <div class="mb-3">
+                                            <label style="font-size: medium;font-weight: bold;" class="text-label bold form-label">دسترسی ها :</label>
+                                            <a asp-action="GetRole" asp-controller="User" asp-route-RoleId="@Model.RoleId" style="color:blue">(ویرایش دسترسی ها)</a>
                                             <div class="mb-3">
-                                            <label class="text-label form-label">نام</label><input value="@Model.FirstName" type="text" name="firstName" class="form-control" placeholder="جعفری" required>
+                                            </div>
+                                            <div class="row" id="permissionList">
+                                                @{
+                                                    foreach (var item in Model.Permissions)
+                                                    {
+                                                        <div class="col-lg-2 mb-3">
+                                                            <div class="form-check custom-checkbox mb-3 checkbox-success">
+                                                                @if (@item.HasPermission)
+                                                                {
+                                                                    <input disabled type="checkbox" class="form-check-input" checked="" id="customCheckBox3" required="">
+                                                                }
+                                                                else
+                                                                {
+                                                                    <input disabled type="checkbox" class="form-check-input" id="customCheckBox3" required="">
+
+                                                                }
+                                                                <label class="form-check-label" for="customCheckBox3">@item.PermissionName_Farsi</label>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                }
                                             </div>
                                         </div>
-                                        <div class="col-lg-6 mb-2">
-                                            <div class="mb-3">
-                                                <label class="text-label form-label">نام خانوادگی</label><input type="text" name="lastName" class="form-control" placeholder="مونتانا" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6 mb-2">
-                                            <div class="mb-3">
-                                                <label class="text-label form-label">آدرس ایمیل</label><input type="email" class="form-control" id="inputGroupPrepend2" aria-describedby="inputGroupPrepend2" placeholder="example@example.com.com" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6 mb-2">
-                                            <div class="mb-3">
-                                                <label class="text-label form-label">شماره تلفن</label><input type="text" name="phoneNumber" class="form-control" placeholder="(+1)408-657-9007" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12 mb-3">
-                                            <div class="mb-3">
-                                                <label class="text-label form-label">شما اهل کجا هستید</label><input type="text" name="place" class="form-control" required>
-                                            </div>
-                                        </div>
+                                    </div>
+
+
                                     <div class="col-lg-10 mb-3">
                                         <div class="mb-3">
                                         </div>
@@ -61,12 +140,48 @@
                                         </div>
                                     </div>
 
-                                    </div>
+                                </div>
                             </div>
-                          </form>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script>
+
+    function getRolePermissions(role) {
+        var divPermission = document.getElementById('permissionList');
+        fetch(`/User/GetRolePermissions?roleId=${role.value}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(response => response.text())
+            .then(result => {
+                let res = JSON.parse(result);
+                console.log(res);
+                var str = '';
+                for (var i = 0; i < res.length; i++) {
+                    str += '<div class="col-lg-2 mb-3"><div class="form-check custom-checkbox mb-3 checkbox-success">';
+                    if (res[i].hasPermission) {
+                        str += '<input disabled type="checkbox" class="form-check-input" checked id="customCheckBox' + i + '" required>';
+                    } else {
+                        str += '<input disabled type="checkbox" class="form-check-input" id="customCheckBox' + i + '" required>';
+                    }
+                    str += '<label class="form-check-label" for="customCheckBox' + i + '">';
+                    str += res[i].permissionName_Farsi;
+                    str += '</label></div ></div>';
+                }
+                divPermission.innerHTML = '';
+                divPermission.innerHTML = str;
+            })
+            .catch(error => {
+                console.log('error', error);
+            });
+    }
+
+</script>
+

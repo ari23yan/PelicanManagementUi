@@ -14,6 +14,7 @@ using System.Net;
 using PelicanManagementUi.Models.ViewModels.Common;
 using PelicanManagementUi.Models.ViewModels.Common.Pagination;
 using NuGet.Common;
+using PelicanManagementUi.Models.ViewModels.Permission;
 
 
 
@@ -247,5 +248,133 @@ namespace PelicanManagementUi.WebServices.Implementation
             }
         }
 
+        public async Task<ResponseViewModel<List<PermissionsViewModel>>> GetRolePermissions(Guid roleId, string token)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                try
+                {
+                    var url = $"{serviceAddress}/role/get-role-permissions";
+                    var requestBody = new GetByIdViewModel { TargetId = roleId };
+                    var jsonContent = new StringContent(JsonConvert.SerializeObject(requestBody), Encoding.UTF8, "application/json");
+
+                    var response = await httpClient.PostAsync(url, jsonContent);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string responseBody = await response.Content.ReadAsStringAsync();
+                        var responseDto = JsonConvert.DeserializeObject<ResponseViewModel<List<PermissionsViewModel>>>(responseBody);
+                        return new ResponseViewModel<List<PermissionsViewModel>> { IsSuccessFull = true, Data = responseDto.Data, Message = ErrorsMessages.Success, Status = "SuccessFul" };
+                    }
+                    else
+                    {
+                        return new ResponseViewModel<List<PermissionsViewModel>> { IsSuccessFull = false, Message = ErrorsMessages.Faild, Status = "Api Response Status Code Is Not 200" };
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return new ResponseViewModel<List<PermissionsViewModel>> { IsSuccessFull = false, Message = ErrorsMessages.InternalServerError, Status = "Exception" };
+                }
+            }
+        }
+
+        public async Task<ResponseViewModel<bool>> UpdateUser(UpdateUserViewModel updateUserViewModel, string token)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                try
+                {
+                    var url = $"{serviceAddress}/user/update?userId={updateUserViewModel.UserId}";
+                    var requestBody = updateUserViewModel;
+                    var jsonContent = new StringContent(JsonConvert.SerializeObject(requestBody), Encoding.UTF8, "application/json");
+                    var request = new HttpRequestMessage(HttpMethod.Put, url)
+                    {
+                        Content = jsonContent
+                    };
+                    var response = await httpClient.SendAsync(request);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var responseBody = await response.Content.ReadAsStringAsync();
+                        var responseDto = JsonConvert.DeserializeObject<ResponseViewModel<bool>>(responseBody);
+                        if (responseDto.IsSuccessFull.HasValue && responseDto.IsSuccessFull.Value)
+                        {
+                            return new ResponseViewModel<bool> { IsSuccessFull = true, Message = ErrorsMessages.Success, Status = "SuccessFul" };
+                        }
+                        return new ResponseViewModel<bool> { IsSuccessFull = false, Message = responseDto.Message, Status = "Failed" };
+                    }
+                    else
+                    {
+                        return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.Faild, Status = "Api Response Status Code Is Not 200" };
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.InternalServerError, Status = "Exception" };
+                }
+            }
+        }
+
+        public async Task<ResponseViewModel<bool>> AddUser(AddUserViewModel updateUserViewModel, string token)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                try
+                {
+                    var url = $"{serviceAddress}/user/add";
+                    var requestBody = updateUserViewModel;
+                    var jsonContent = new StringContent(JsonConvert.SerializeObject(requestBody), Encoding.UTF8, "application/json");
+                    var response = await httpClient.PostAsync(url, jsonContent);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var responseBody = await response.Content.ReadAsStringAsync();
+                        var responseDto = JsonConvert.DeserializeObject<ResponseViewModel<bool>>(responseBody);
+                        if (responseDto.IsSuccessFull.HasValue && responseDto.IsSuccessFull.Value)
+                        {
+                            return new ResponseViewModel<bool> { IsSuccessFull = true, Message = ErrorsMessages.Success, Status = "SuccessFul" };
+                        }
+                        return new ResponseViewModel<bool> { IsSuccessFull = false, Message = responseDto.Message, Status = "Failed" };
+                    }
+                    else
+                    {
+                        return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.Faild, Status = "Api Response Status Code Is Not 200" };
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.InternalServerError, Status = "Exception" };
+                }
+            }
+        }
+
+        public async Task<ResponseViewModel<List<RolesListViewModel>>> GetRolesList(string token)
+        {
+            
+            using (var httpClient = new HttpClient())
+            {
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                try
+                {
+                    var url = $"{serviceAddress}/role/get-list";
+                    var response = await httpClient.GetAsync(url);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string responseBody = await response.Content.ReadAsStringAsync();
+                        var responseDto = JsonConvert.DeserializeObject<ResponseViewModel<List<RolesListViewModel>>>(responseBody);
+                        return new ResponseViewModel<List<RolesListViewModel>> { IsSuccessFull = true, Data = responseDto.Data, Message = ErrorsMessages.Success, Status = "SuccessFul" };
+                    }
+                    else
+                    {
+                        return new ResponseViewModel<List<RolesListViewModel>> { IsSuccessFull = false, Message = ErrorsMessages.Faild, Status = "Api Response Status Code Is Not 200" };
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return new ResponseViewModel<List<RolesListViewModel>> { IsSuccessFull = false, Message = ErrorsMessages.InternalServerError, Status = "Exception" };
+                }
+            }
+        }
     }
 }

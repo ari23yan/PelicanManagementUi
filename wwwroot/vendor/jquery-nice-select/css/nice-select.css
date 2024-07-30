@@ -7,7 +7,7 @@
   clear: both;
   cursor: pointer;
   display: block;
-  float: left;
+  float: right;
   font-family: inherit;
   font-size: 14px;
   font-weight: normal;
@@ -17,7 +17,7 @@
   padding-left: 18px;
   padding-right: 30px;
   position: relative;
-  text-align: left !important;
+  /*text-align: left !important;*/
   -webkit-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
   -webkit-user-select: none;
@@ -39,7 +39,7 @@
     margin-top: -6px;
     pointer-events: none;
     position: absolute;
-    right: 8px;
+    left: 29px;
     top: 50%;
 	margin-right:10px;
     -webkit-transform-origin: 66% 66%;
@@ -122,7 +122,7 @@
     outline: none;
     padding-left: 18px;
     padding-right: 29px;
-    text-align: left;
+    /*text-align: left;*/
     -webkit-transition: all 0.2s;
     transition: all 0.2s; }
     .nice-select .option:hover, .nice-select .option.focus, .nice-select .option.selected.focus {

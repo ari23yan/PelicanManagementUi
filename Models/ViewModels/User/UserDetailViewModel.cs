@@ -28,6 +28,7 @@ namespace PelicanManagementUi.Models.ViewModels.User
         public Guid? ModifiedBy { get; set; }
         public List<PermissionsViewModel> Permissions { get; set; }
         public List<RoleMenusViewModel> Menus { get; set; }
+        public List<RolesListViewModel> AllRoles { get; set; }
     }
 
 

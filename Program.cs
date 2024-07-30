@@ -10,7 +10,7 @@ builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 builder.Services.AddScoped<IExternalServices, ExternalServices>();
 builder.Services.AddNotyf(config =>
 {
-    config.DurationInSeconds = 5;
+    config.DurationInSeconds = 2;
     config.IsDismissable = true;
     config.Position = NotyfPosition.BottomCenter;
     config.HasRippleEffect = true;
