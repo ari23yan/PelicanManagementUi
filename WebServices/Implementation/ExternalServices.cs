@@ -364,7 +364,7 @@ namespace PelicanManagementUi.WebServices.Implementation
                 }
             }
         }
-        public async Task<ResponseViewModel<GetRoleMenuViewModel>> GetRoleMenu(Guid roleId, string token)
+        public async Task<ResponseViewModel<RoleMenuViewModel>> GetRoleMenu(Guid roleId, string token)
         {
             using (var httpClient = new HttpClient())
             {
@@ -380,24 +380,24 @@ namespace PelicanManagementUi.WebServices.Implementation
                     if (response.IsSuccessStatusCode)
                     {
                         string responseBody = await response.Content.ReadAsStringAsync();
-                        var responseDto = JsonConvert.DeserializeObject<ResponseViewModel<GetRoleMenuViewModel>>(responseBody);
+                        var responseDto = JsonConvert.DeserializeObject<ResponseViewModel<RoleMenuViewModel>>(responseBody);
 
 
                         if (responseDto.IsSuccessFull.HasValue && responseDto.IsSuccessFull.Value)
                         {
-                            return new ResponseViewModel<GetRoleMenuViewModel> { IsSuccessFull = true, Data = responseDto.Data, Message = ErrorsMessages.Success, Status = "SuccessFul" };
+                            return new ResponseViewModel<RoleMenuViewModel> { IsSuccessFull = true, Data = responseDto.Data, Message = ErrorsMessages.Success, Status = "SuccessFul" };
                         }
-                        return new ResponseViewModel<GetRoleMenuViewModel> { IsSuccessFull = false, Message = responseDto.Message, Status = "Failed" };
+                        return new ResponseViewModel<RoleMenuViewModel> { IsSuccessFull = false, Message = responseDto.Message, Status = "Failed" };
                     }
                     else
                     {
-                        return new ResponseViewModel<GetRoleMenuViewModel> { IsSuccessFull = false, Message = ErrorsMessages.PermissionDenied, Status = "Api Response Status Code Is Not 200" };
+                        return new ResponseViewModel<RoleMenuViewModel> { IsSuccessFull = false, Message = ErrorsMessages.PermissionDenied, Status = "Api Response Status Code Is Not 200" };
                     }
 
                 }
                 catch (Exception ex)
                 {
-                    return new ResponseViewModel<GetRoleMenuViewModel> { IsSuccessFull = false, Message = ErrorsMessages.InternalServerError, Status = "Exception" };
+                    return new ResponseViewModel<RoleMenuViewModel> { IsSuccessFull = false, Message = ErrorsMessages.InternalServerError, Status = "Exception" };
                 }
             }
         }

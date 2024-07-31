@@ -1,6 +1,6 @@
 ﻿namespace PelicanManagementUi.ViewModels.Role
 {
-    public class GetRoleMenuViewModel
+    public class RoleMenuViewModel
     {
         public Guid Id { get; set; }
         public string RoleName { get; set; }
