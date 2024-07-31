@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using PelicanManagementUi.Models;
+using PelicanManagementUi;
 using System.Diagnostics;
 
 namespace PelicanManagementUi.Controllers

@@ -9356,7 +9356,7 @@ label {
   top: 0;
   background-color: var(--nav-headbg);
   transition: all .2s ease;
-  z-index: 5; }
+  z-index: 99999999; }
   .nav-header .logo-abbr {
     max-width: 47px; }
     @media only screen and (max-width: 1400px) {
@@ -13926,10 +13926,12 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
   position: fixed; }
 
 [data-sidebar-position="fixed"][data-layout="vertical"] .nav-header {
-  position: fixed;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-  box-shadow: 7px -7px 25px rgba(241, 241, 241, 0.5); }
+    position: fixed;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    /*box-shadow: 7px -7px 25px rgba(241, 241, 241, 0.5);*/
+    box-shadow: 0px -20px 25px rgba(241, 241, 241, 0.5)
+}
 [data-sidebar-position="fixed"][data-layout="vertical"] .deznav {
   position: fixed;
   border-bottom-left-radius: 0;

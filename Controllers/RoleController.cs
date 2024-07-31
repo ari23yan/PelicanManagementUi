@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using PelicanManagementUi.Models.ViewModels.Common.Pagination;
-using PelicanManagementUi.Models.ViewModels.Role;
-using PelicanManagementUi.Models.ViewModels.User;
+using PelicanManagementUi.ViewModels.User;
+using PelicanManagementUi.ViewModels.Common.Pagination;
+using PelicanManagementUi.ViewModels.Role;
 using PelicanManagementUi.WebServices.Interfaces;
 using System.Security.Claims;
 

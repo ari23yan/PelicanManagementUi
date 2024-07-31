@@ -1,20 +1,21 @@
-﻿using PelicanManagementUi.Models.ViewModels;
-using PelicanManagementUi.Models.ViewModels.Common.Response;
-using PelicanManagementUi.ViewComponents.Common.Auth;
+﻿using PelicanManagementUi.ViewModels;
+using PelicanManagementUi.ViewModels.Common.Response;
+using PelicanManagementUi.ViewModels.Common.Auth;
 using PelicanManagementUi.WebServices.Interfaces;
 using Microsoft.Extensions.Configuration;
 using System.Text;
 using Newtonsoft.Json;
 using Microsoft.IdentityModel.Tokens;
-using PelicanManagementUi.Models.ViewModels.User;
-using PelicanManagementUi.Models.ViewModels.Role;
+using PelicanManagementUi.ViewModels.User;
+using PelicanManagementUi.ViewModels.Role;
 using Microsoft.AspNetCore.DataProtection;
 using System.Net.Http.Headers;
 using System.Net;
-using PelicanManagementUi.Models.ViewModels.Common;
-using PelicanManagementUi.Models.ViewModels.Common.Pagination;
+using PelicanManagementUi.ViewModels.Common;
+using PelicanManagementUi.ViewModels.Common.Pagination;
 using NuGet.Common;
-using PelicanManagementUi.Models.ViewModels.Permission;
+using PelicanManagementUi.ViewModels.Permission;
+using PelicanManagementUi.ViewModels.Common.Auth;
 
 
 

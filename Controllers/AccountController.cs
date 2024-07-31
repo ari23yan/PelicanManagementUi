@@ -2,11 +2,11 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using PelicanManagementUi.Models.ViewModels;
-using PelicanManagementUi.Models.ViewModels.Common.Response;
+using PelicanManagementUi.ViewModels.Common.Response;
 using PelicanManagementUi.WebServices.Interfaces;
 using System.Security.Claims;
 using AspNetCoreHero.ToastNotification.Abstractions;
+using PelicanManagementUi.ViewModels;
 
 namespace PelicanManagementUi.Controllers
 {

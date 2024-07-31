@@ -1,9 +1,9 @@
-﻿using PelicanManagementUi.Models.ViewModels;
-using PelicanManagementUi.Models.ViewModels.Common.Pagination;
-using PelicanManagementUi.Models.ViewModels.Common.Response;
-using PelicanManagementUi.Models.ViewModels.Permission;
-using PelicanManagementUi.Models.ViewModels.Role;
-using PelicanManagementUi.Models.ViewModels.User;
+﻿using PelicanManagementUi.ViewModels;
+using PelicanManagementUi.ViewModels.Common.Pagination;
+using PelicanManagementUi.ViewModels.Common.Response;
+using PelicanManagementUi.ViewModels.Permission;
+using PelicanManagementUi.ViewModels.Role;
+using PelicanManagementUi.ViewModels.User;
 
 namespace PelicanManagementUi.WebServices.Interfaces
 {

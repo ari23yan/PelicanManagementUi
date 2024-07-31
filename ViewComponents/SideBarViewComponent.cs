@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PelicanManagementUi.Models.ViewModels.User;
+using PelicanManagementUi.ViewModels.User;
 using PelicanManagementUi.WebServices.Interfaces;
 using System.Security.Claims;
 

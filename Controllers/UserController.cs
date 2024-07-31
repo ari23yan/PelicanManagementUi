@@ -2,11 +2,10 @@
 using AspNetCoreHero.ToastNotification.Notyf;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using PelicanManagementUi.Models.ViewModels.Common.Pagination;
-using PelicanManagementUi.Models.ViewModels.User;
+using PelicanManagementUi.ViewModels.Common.Pagination;
+using PelicanManagementUi.ViewModels.User;
 using PelicanManagementUi.WebServices.Interfaces;
 using System.Drawing.Printing;
 using System.Reflection;
@@ -27,20 +26,12 @@ namespace PelicanManagementUi.Controllers
             _toastNotification = notyfService;
 
         }
-
-
-
-
         [HttpGet]
         public async Task<IActionResult> List(PaginationViewModel model)
         {
             var token = HttpContext.User.FindFirstValue(ClaimTypes.Authentication);
             var users = await _service.GetUserList(model, token);
-            if (!users.IsSuccessFull.Value) 
-            {
-                _toastNotification.Error(users.Message);
-                return RedirectToAction("index","Home");
-            }
+
             var paginationModel = new PaginationMetadata<UsersListViewModel>
             {
                 Data = users.Data,
@@ -50,42 +41,33 @@ namespace PelicanManagementUi.Controllers
             };
             return View(paginationModel);
         }
+
         [HttpGet]
         public async Task<IActionResult> Detail(Guid id)
         {
             var token = HttpContext.User.FindFirstValue(ClaimTypes.Authentication);
             var userDetail = await _service.GetUser(id, token);
-            if (!userDetail.IsSuccessFull.Value)
-            {
-                _toastNotification.Error(userDetail.Message);
-                return RedirectToAction("index", "Home");
-            }
             return View(userDetail.Data);
         }
+
         [HttpGet]
         public async Task<IActionResult> Add()
         {
             var token = HttpContext.User.FindFirstValue(ClaimTypes.Authentication);
             var rolesList = await _service.GetRolesList(token);
-            if (!rolesList.IsSuccessFull.Value)
-            {
-                _toastNotification.Error(rolesList.Message);
-                return RedirectToAction("index", "Home");
-            }
             return View(rolesList.Data);
         }
         [HttpPost]
         public async Task<IActionResult> Add(AddUserViewModel model)
         {
             var token = HttpContext.User.FindFirstValue(ClaimTypes.Authentication);
-            var result = await _service.AddUser(model, token);
-            if (!result.IsSuccessFull.Value)
+            var userDetail = await _service.AddUser(model, token);
+            if (!userDetail.IsSuccessFull.Value)
             {
-                _toastNotification.Error(result.Message);
-                var rolesList = await _service.GetRolesList(token);
-                return View(rolesList.Data);
+                _toastNotification.Error(userDetail.Message);
+                return RedirectToAction("Detail", "User");
             }
-            _toastNotification.Success(result.Message);
+            _toastNotification.Success(userDetail.Message);
             return RedirectToAction("List", "User");
 
         }
@@ -127,6 +109,7 @@ namespace PelicanManagementUi.Controllers
             var result = await _service.ToggleActiveStatus(id, token);
             return Json(result);
         }
+
 
 
 
