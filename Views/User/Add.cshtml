@@ -3,142 +3,143 @@
 
 
 
-    <div class="content-body">
-        <div class="container-fluid">
-            <div class="row page-titles">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">خانه</a></li> &nbsp;
-                    ->
-                    <li class="breadcrumb-item active"><a asp-action="Detail" asp-controller="User">ایجاد کاربر</a></li>
-                </ol>
-            </div>
-            <div class="row">
-                <div class="col-xl-12 col-xxl-12">
-                    <div class="card">
-                        <div class="card-header"><h4 class="card-title">ویرایش کاربر</h4></div>
-                        <div class="card-body">
-                            <form asp-action="Update" asp-controller="User" enctype="multipart/form-data" method="post">
-                                <div class="tab-content">
-                                    <div class="row">
-                                        <div class="col-lg-6 mb-2">
-                                            <div class="mb-3">
-                                                <label style="font-size: medium;font-weight: bold;" class="text-label form-label">نام</label><input type="text" name="FirstName" class="form-control" required>
-                                            </div>
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row page-titles">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">خانه</a></li> &nbsp;
+                ->
+                <li class="breadcrumb-item active"><a asp-action="Detail" asp-controller="User">ایجاد کاربر</a></li>
+            </ol>
+        </div>
+        <div class="row">
+            <div class="col-xl-12 col-xxl-12">
+                <div class="card">
+                    <div class="card-header"><h4 class="card-title">ویرایش کاربر</h4></div>
+                    <div class="card-body">
+                        <form asp-action="Add" asp-controller="User" enctype="multipart/form-data" method="post">
+                            <div class="tab-content">
+                                <div class="row">
+                                    <div class="col-lg-6 mb-2">
+                                        <div class="mb-3">
+                                            <label style="font-size: medium;font-weight: bold;" class="text-label form-label">نام</label><input type="text" name="FirstName" class="form-control" required>
                                         </div>
-                                        <div class="col-lg-6 mb-2">
-                                            <div class="mb-3">
-                                                <label style="font-size: medium;font-weight: bold;" class="text-label form-label">نام خانوادگی</label><input type="text" name="LastName" class="form-control" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6 mb-2">
-                                            <div class="mb-3">
-                                                <label style="font-size: medium;font-weight: bold;" class="text-label form-label">نام کاربری</label><input name="Username" type="text" class="form-control" id="inputGroupPrepend2" aria-describedby="inputGroupPrepend2" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6 mb-2">
-                                            <div class="mb-3">
-                                                <label style="font-size: medium;font-weight: bold;" class="text-label form-label">شماره تلفن</label><input type="text" name="PhoneNumber" class="form-control" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6 mb-2">
-                                            <div class="mb-3">
-                                                <label style="font-size: medium;font-weight: bold;" class="text-label form-label">آدرس ایمیل</label><input name="Email" type="email" class="form-control" id="inputGroupPrepend2" aria-describedby="inputGroupPrepend2" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6 mt-5 mb-3">
-                                        </div>
-
-                                        <div class="col-lg-6 mt-5 mb-3">
-                                            <div class="mb-3">
-                                                <label style="font-size: medium;font-weight: bold;" class="text-label form-label">نقش کاربر</label>
-                                                <select name="RoleId" onchange="getRolePermissions(this)" id="roleSelect" class="default-select form-control wide mb-3">
-                                                    <option selected value="null">انتخاب کنید</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6 mb-3">
-                                            <div class="mb-3">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-12 mb-3">
-                                            <div class="mb-3">
-                                                <label style="font-size: medium;font-weight: bold;" class="text-label bold form-label">دسترسی ها :</label>
-                                                <div class="mb-3">
-                                                </div>
-                                                <div class="row" id="permissionList">
-                                                    <div class="col-lg-2 mb-3">
-                                                        <div class="form-check custom-checkbox mb-3 checkbox-success">
-                                                            <input disabled type="checkbox" class="form-check-input" checked="" id="customCheckBox3" required="">
-                                                            <label class="form-check-label" for="customCheckBox3"></label>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-                                        <div class="col-lg-10 mb-3">
-                                            <div class="mb-3">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-1 mb-3 w-auto pl-0">
-                                            <div class="mb-3">
-                                                <div class="text-center"><button type="reset" class="btn btn-dark btn-block">انصراف</button></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-1 mb-3 w-auto">
-                                            <div class="mb-3">
-                                                <div class="text-center"><button type="submit" class="btn btn-primary btn-block">ثبت</button></div>
-                                            </div>
-                                        </div>
-
                                     </div>
+                                    <div class="col-lg-6 mb-2">
+                                        <div class="mb-3">
+                                            <label style="font-size: medium;font-weight: bold;" class="text-label form-label">نام خانوادگی</label><input type="text" name="LastName" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 mb-2">
+                                        <div class="mb-3">
+                                            <label style="font-size: medium;font-weight: bold;" class="text-label form-label">نام کاربری</label><input name="Username" type="text" class="form-control"  aria-describedby="inputGroupPrepend2" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 mb-2">
+                                        <div class="mb-3">
+                                            <label style="font-size: medium;font-weight: bold;" class="text-label form-label">شماره تلفن</label><input type="text" name="PhoneNumber" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 mb-2">
+                                        <div class="mb-3">
+                                            <label style="font-size: medium;font-weight: bold;" class="text-label form-label">آدرس ایمیل</label><input name="Email" type="email" class="form-control"  aria-describedby="inputGroupPrepend2" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 mb-2">
+                                        <div class="mb-3">
+                                            <label style="font-size: medium;font-weight: bold;" class="text-label form-label"> رمز عبور</label><input name="Password" type="text" class="form-control"  aria-describedby="inputGroupPrepend2" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 mt-5 mb-3">
+                                        <div class="mb-3">
+                                            <label style="font-size: medium;font-weight: bold;" class="text-label form-label">نقش کاربر</label>
+                                            <select name="RoleId" required onchange="getRolePermissions(this)" id="roleSelect" class="default-select form-control wide mb-3">
+                                                <option selected value="">انتخاب کنید</option>
+                                                @{
+                                                    foreach (var item in Model)
+                                                    {
+                                                        <option value="@item.Id">@item.RoleName_Farsi</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 mb-3">
+                                        <div class="mb-3">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-12 mb-3">
+                                        <div class="mb-3">
+                                            <label style="font-size: medium;font-weight: bold;" class="text-label bold form-label">دسترسی ها :</label>
+                                            <div class="mb-3">
+                                            </div>
+                                            <div class="row" id="permissionList">
+                                                <div class="col-lg-2 mb-3">
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-lg-10 mb-3">
+                                        <div class="mb-3">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-1 mb-3 w-auto pl-0">
+                                        <div class="mb-3">
+                                            <div class="text-center"><button type="reset" class="btn btn-dark btn-block">انصراف</button></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-1 mb-3 w-auto">
+                                        <div class="mb-3">
+                                            <div class="text-center"><button type="submit" class="btn btn-primary btn-block">ثبت</button></div>
+                                        </div>
+                                    </div>
+
                                 </div>
-                            </form>
-                        </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <script>
+</div>
+<script>
 
-        function getRolePermissions(role) {
+    function getRolePermissions(role) {
+        var divPermission = document.getElementById('permissionList');
+        fetch(`/User/GetRolePermissions?roleId=${role.value}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(response => response.text())
+            .then(result => {
+                let res = JSON.parse(result);
+                console.log(res);
+                var str = '';
+                for (var i = 0; i < res.length; i++) {
+                    str += '<div class="col-lg-2 mb-3"><div class="form-check custom-checkbox mb-3 checkbox-success">';
+                    if (res[i].hasPermission) {
+                        str += '<input disabled type="checkbox" class="form-check-input" checked id="customCheckBox' + i + '" required>';
+                    } else {
+                        str += '<input disabled type="checkbox" class="form-check-input" id="customCheckBox' + i + '" required>';
+                    }
+                    str += '<label class="form-check-label" for="customCheckBox' + i + '">';
+                    str += res[i].permissionName_Farsi;
+                    str += '</label></div ></div>';
+                }
+                divPermission.innerHTML = '';
+                divPermission.innerHTML = str;
+            })
+            .catch(error => {
+                console.log('error', error);
+            });
+    }
 
-            alert();
-
-            // var divPermission = document.getElementById('permissionList');
-            // fetch(`/User/GetRolePermissions?roleId=${role.value}`, {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //     },
-            // })
-            //     .then(response => response.text())
-            //     .then(result => {
-            //         let res = JSON.parse(result);
-            //         console.log(res);
-            //         var str = '';
-            //         for (var i = 0; i < res.length; i++) {
-            //             str += '<div class="col-lg-2 mb-3"><div class="form-check custom-checkbox mb-3 checkbox-success">';
-            //             if (res[i].hasPermission) {
-            //                 str += '<input disabled type="checkbox" class="form-check-input" checked id="customCheckBox' + i + '" required>';
-            //             } else {
-            //                 str += '<input disabled type="checkbox" class="form-check-input" id="customCheckBox' + i + '" required>';
-            //             }
-            //             str += '<label class="form-check-label" for="customCheckBox' + i + '">';
-            //             str += res[i].permissionName_Farsi;
-            //             str += '</label></div ></div>';
-            //         }
-            //         divPermission.innerHTML = '';
-            //         divPermission.innerHTML = str;
-            //     })
-            //     .catch(error => {
-            //         console.log('error', error);
-            //     });
-        }
-
-    </script>
+</script>
 

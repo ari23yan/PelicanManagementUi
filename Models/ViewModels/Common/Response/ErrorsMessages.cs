@@ -26,7 +26,7 @@ namespace PelicanManagementUi.Models.ViewModels.Common.Response
         public static string Faild = "عملیات ناموفق بود";
         public static string OtpIncorrect = "کد تایید اشتباه است";
         public static string EmailSend = "کد تایید به ایمیل شما ارسال شد";
-        public static string PermissionDenied = "دسترسی رد شد";
+        public static string PermissionDenied = "شما دسترسی مورد نیاز برای انجام این عملیات را ندارید";
         public static string InternalServerError = "اوه، خطای سرور داخلی";
         public static string PhoneNumberAlreadyExist = "شماره تلفن در پایگاه داده موجود است";
         public static string UsernameAlreadyExist = "نام کاربری در پایگاه داده موجود است";

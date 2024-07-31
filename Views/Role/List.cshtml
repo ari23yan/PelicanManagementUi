@@ -1,9 +1,7 @@
 ﻿@using PelicanManagementUi.Utilities;
-@model PelicanManagementUi.Models.ViewModels.Common.Pagination.PaginationMetadata<PelicanManagementUi.Models.ViewModels.User.UsersListViewModel>
+@model PelicanManagementUi.Models.ViewModels.Common.Pagination.PaginationMetadata<PelicanManagementUi.Models.ViewModels.Role.RolesListViewModel>
 
 
-
-<link href="~/css/list.css" rel="stylesheet" />
 
 
 
@@ -13,13 +11,13 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">خانه</a></li> &nbsp;
                 ->
-                <li class="breadcrumb-item active"><a asp-action="List" asp-controller="User">لیست کاربران</a></li>
+                <li class="breadcrumb-item active"><a asp-action="List" asp-controller="Role">لیست نقش ها</a></li>
             </ol>
         </div>
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header"><h4 class="card-title">لیست کاربران</h4></div>
+                    <div class="card-header"><h4 class="card-title">لیست نقش ها</h4></div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <div id="example3_wrapper" class="dataTables_wrapper no-footer">
@@ -51,24 +49,20 @@
                                     </label>
                                 </div>
                                 <div id="example3_filter" class="dataTables_filter">
-
                                     <a class="d-none" id="pageSearchBtn" asp-action="List" asp-controller="User"></a>
-
                                     <label>
-                                        جست و جو :&nbsp;<input placeholder="بر اساس نام خانوادگی" type="search" class="" onkeydown="if(event.key === 'Enter') searchList(this);"
+                                        جست و جو :&nbsp;<input placeholder="بر اساس نام نقش" type="search" class="" onkeydown="if(event.key === 'Enter') searchList(this);"
                                     </label>
                                 </div>
                                 <table id="example3" class="display dataTable no-footer" style="min-width: 845px" role="grid" aria-describedby="example3_info">
                                     <thead>
                                         <tr role="row">
                                             <th class="" tabindex="0" aria-controls="example3" rowspan="1" colspan="1" aria-label=": activate to sort column descending" aria-sort="ascending">ردیف</th>
-                                            <th tabindex="0" aria-controls="example3" rowspan="1" colspan="1" aria-label="نام: activate to sort column ascending">نام</th>
-                                            <th tabindex="0" aria-controls="example3" rowspan="1" colspan="1" aria-label="بخش: activate to sort column ascending">شماره تماس</th>
-                                            <th tabindex="0" aria-controls="example3" rowspan="1" colspan="1" aria-label="بخش: activate to sort column ascending">نام کاربری</th>
-                                            <th tabindex="0" aria-controls="example3" rowspan="1" colspan="1" aria-label="پست الکترونیک: activate to sort column ascending">پست الکترونیک</th>
-                                            <th tabindex="0" aria-controls="example3" rowspan="1" colspan="1" aria-label="جنسیت: activate to sort column ascending">نقش</th>
+                                            <th tabindex="0" aria-controls="example3" rowspan="1" colspan="1" aria-label="نام: activate to sort column ascending">نام نقش</th>
+                                            <th tabindex="0" aria-controls="example3" rowspan="1" colspan="1" aria-label="بخش: activate to sort column ascending">شناسه</th>
+                                            <th tabindex="0" aria-controls="example3" rowspan="1" colspan="2" aria-label="پست الکترونیک: activate to sort column ascending">توضیحات</th>
                                             <th tabindex="0" aria-controls="example3" rowspan="1" colspan="1" aria-label="تحصیلات: activate to sort column ascending">وضعیت</th>
-                                            <th tabindex="0" aria-controls="example3" rowspan="1" colspan="1" aria-label="تاریخ عضویت: activate to sort column ascending">تاریخ عضویت</th>
+                                            <th tabindex="0" aria-controls="example3" rowspan="1" colspan="1" aria-label="تاریخ عضویت: activate to sort column ascending">تاریخ ایجاد</th>
                                             <th tabindex="0" aria-controls="example3" rowspan="1" colspan="1" aria-label="عمل: activate to sort column ascending">عملیات</th>
                                         </tr>
                                     </thead>
@@ -77,28 +71,26 @@
                                             int rowNum = 1;
                                             foreach (var item in Model.Data)
                                             {
-                                                    <tr role="row" class="odd">
-                                                        <td>@rowNum</td>
-                                                        <td>@item.FullName</td>
-                                                        <td>@item.PhoneNumber</td>
-                                                        <td>@item.Username</td>
-                                                        <td>@item.Email</td>
-                                                        <td>@item.RoleName</td>
-                                                        <td>
-                                                            @if (item.IsActive.Value)
+                                                <tr role="row" class="odd">
+                                                    <td>@rowNum</td>
+                                                    <td>@item.RoleName_Farsi</td>
+                                                    <td>@item.RoleName</td>
+                                                    <td rowspan="1" colspan="2">@item.Description</td>
+                                                    <td>
+                                                        @if (item.IsActive.Value)
                                                         {
-                                                                <span class="badge light badge-success">فعال</span>
+                                                            <span class="badge light badge-success">فعال</span>
                                                         }
                                                         else
                                                         {
-                                                                <span class="badge light badge-danger">غیرفعال</span>
+                                                            <span class="badge light badge-danger">غیرفعال</span>
                                                         }
-                                                        </td>
-                                                        <td>@UtilityManager.PersianDateConverter(@item.CreatedDate.Value)</td>
-                                                        <td>
-                                                            <div class="d-flex">
-                                                                <a data-tippy-content="ویرایش" asp-action="Detail" asp-controller="User" asp-route-Id="@item.Id" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-pencil"></i></a>
-                                                                &nbsp;
+                                                    </td>
+                                                    <td>@UtilityManager.PersianDateConverter(@item.CreatedDate.Value)</td>
+                                                    <td>
+                                                        <div class="d-flex">
+                                                            <a data-tippy-content="ویرایش" asp-action="Detail" asp-controller="Role" asp-route-Id="@item.Id" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-pencil"></i></a>
+                                                            &nbsp;
                                                             @if (item.IsActive.Value)
                                                             {
                                                                 <a data-tippy-content="غیرفعال سازی" onclick="activationStatus('@item.Id')" class="btn btn-warning shadow btn-xs sharp"><i class="flaticon-381-lock-3"></i></a>
@@ -106,12 +98,12 @@
                                                             else
                                                             {
                                                                 <a data-tippy-content="فعال سازی" onclick="activationStatus('@item.Id')" class="btn btn-success shadow btn-xs sharp"><i class="flaticon-381-lock-3"></i></a>
-                                                            } 
+                                                            }
                                                             &nbsp;
                                                             <a data-tippy-content="حذف" onclick="deleteRecord('@item.Id')" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"></i></a>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
+                                                        </div>
+                                                    </td>
+                                                </tr>
                                                 rowNum++;
                                             }
                                         }
@@ -150,7 +142,6 @@
                                             <i class="fa fa-angle-double-left" aria-hidden="true"></i>
                                         </a>
                                     }
-
                                 </div>
                             </div>
                         </div>
@@ -161,7 +152,7 @@
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
+
 <script>
 
     function deleteRecord(recordId) {
@@ -175,7 +166,7 @@
             confirmButtonText: 'بله, حذف شود!'
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`/User/Delete?id=${recordId}`, {
+                fetch(`/Role/Delete?id=${recordId}`, {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json',
@@ -223,7 +214,7 @@
             confirmButtonText: 'بله!'
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`/User/ToggleActiveStatus?id=${recordId}`, {
+                fetch(`/Role/ToggleActiveStatus?id=${recordId}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
@@ -232,7 +223,7 @@
                     .then(response => response.text())
                     .then(result => {
                         let res = JSON.parse(result);
-                        if (res.isSuccessFull == true ){
+                        if (res.isSuccessFull == true) {
                             Swal.fire(
                                 '',
                                 'عملیات موفقیت آمیز بود',
@@ -242,22 +233,20 @@
                                 location.reload();
                             }, 1000);
                             return
-
                         }
+                        
                         Swal.fire(
                             '',
                             res.message,
                             'error'
                         )
                         return
-
                     }).catch(error => {
                         console.log('error', error);
                     });
             }
         });
     }
-
 
 
     function searchList(input) {
