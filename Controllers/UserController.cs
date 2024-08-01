@@ -17,12 +17,14 @@ namespace PelicanManagementUi.Controllers
     public class UserController : Controller
     {
 
-        private readonly IExternalServices _service;
+        private readonly IUserService _userService;
+        private readonly IRoleService _roleService;
         private readonly INotyfService _toastNotification;
 
-        public UserController(IExternalServices externalServices, INotyfService notyfService)
+        public UserController(IUserService userService,IRoleService roleService , INotyfService notyfService)
         {
-            _service = externalServices;
+            _userService = userService;
+            _roleService = roleService;
             _toastNotification = notyfService;
 
         }
@@ -30,7 +32,7 @@ namespace PelicanManagementUi.Controllers
         public async Task<IActionResult> List(PaginationViewModel model)
         {
             var token = HttpContext.User.FindFirstValue(ClaimTypes.Authentication);
-            var users = await _service.GetUserList(model, token);
+            var users = await _userService.GetUserList(model, token);
 
             var paginationModel = new PaginationMetadata<UsersListViewModel>
             {
@@ -46,7 +48,7 @@ namespace PelicanManagementUi.Controllers
         public async Task<IActionResult> Detail(Guid id)
         {
             var token = HttpContext.User.FindFirstValue(ClaimTypes.Authentication);
-            var userDetail = await _service.GetUser(id, token);
+            var userDetail = await _userService.GetUser(id, token);
             if (!userDetail.IsSuccessFull.Value)
             {
                 _toastNotification.Error(userDetail.Message);
@@ -59,14 +61,14 @@ namespace PelicanManagementUi.Controllers
         public async Task<IActionResult> Add()
         {
             var token = HttpContext.User.FindFirstValue(ClaimTypes.Authentication);
-            var rolesList = await _service.GetRolesList(token);
+            var rolesList = await _roleService.GetRolesList(token);
             return View(rolesList.Data);
         }
         [HttpPost]
         public async Task<IActionResult> Add(AddUserViewModel model)
         {
             var token = HttpContext.User.FindFirstValue(ClaimTypes.Authentication);
-            var result = await _service.AddUser(model, token);
+            var result = await _userService.AddUser(model, token);
             if (!result.IsSuccessFull.Value)
             {
                 _toastNotification.Error(result.Message);
@@ -81,7 +83,7 @@ namespace PelicanManagementUi.Controllers
         public async Task<IActionResult> Update(UpdateUserViewModel model)
         {
             var token = HttpContext.User.FindFirstValue(ClaimTypes.Authentication);
-            var userDetail = await _service.UpdateUser(model, token);
+            var userDetail = await _userService.UpdateUser(model, token);
             if (!userDetail.IsSuccessFull.Value)
             {
                 _toastNotification.Error(userDetail.Message);
@@ -95,7 +97,7 @@ namespace PelicanManagementUi.Controllers
         public async Task<IActionResult> Delete(Guid id)
         {
             var token = HttpContext.User.FindFirstValue(ClaimTypes.Authentication);
-            var result = await _service.DeleteUser(id, token);
+            var result = await _userService.DeleteUser(id, token);
             return Json(result);
         }
 
@@ -103,7 +105,7 @@ namespace PelicanManagementUi.Controllers
         public async Task<IActionResult> ToggleActiveStatus(Guid id)
         {
             var token = HttpContext.User.FindFirstValue(ClaimTypes.Authentication);
-            var result = await _service.ToggleActiveStatus(id, token);
+            var result = await _userService.ToggleActiveStatus(id, token);
             return Json(result);
         }
 

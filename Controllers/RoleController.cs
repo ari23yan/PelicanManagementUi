@@ -13,12 +13,12 @@ namespace PelicanManagementUi.Controllers
     [Authorize]
     public class RoleController : Controller
     {
-        private readonly IExternalServices _service;
+        private readonly IRoleService _roleService;
         private readonly INotyfService _toastNotification;
 
-        public RoleController(IExternalServices externalServices, INotyfService notyfService)
+        public RoleController(IRoleService roleService, INotyfService notyfService)
         {
-            _service = externalServices;
+            _roleService = roleService;
             _toastNotification = notyfService;
 
         }
@@ -26,7 +26,7 @@ namespace PelicanManagementUi.Controllers
         public async Task<IActionResult> List(PaginationViewModel model)
         {
             var token = HttpContext.User.FindFirstValue(ClaimTypes.Authentication);
-            var roles = await _service.GetRoleList(model, token);
+            var roles = await _roleService.GetRoleList(model, token);
             if (!roles.IsSuccessFull.Value)
             {
                 _toastNotification.Error(roles.Message);
@@ -45,7 +45,7 @@ namespace PelicanManagementUi.Controllers
         public async Task<IActionResult> Detail(Guid id)
         {
             var token = HttpContext.User.FindFirstValue(ClaimTypes.Authentication);
-            var userDetail = await _service.GetRole(id, token);
+            var userDetail = await _roleService.GetRole(id, token);
             if (!userDetail.IsSuccessFull.Value)
             {
                 _toastNotification.Error(userDetail.Message);
@@ -56,14 +56,14 @@ namespace PelicanManagementUi.Controllers
         public async Task<IActionResult> Add()
         {
             var token = HttpContext.User.FindFirstValue(ClaimTypes.Authentication);
-            var userDetail = await _service.GetRolePermissionsAndMenus(null, token);
+            var userDetail = await _roleService.GetRolePermissionsAndMenus(null, token);
             return View(userDetail.Data);
         }
         [HttpPost]
         public async Task<IActionResult> Add(AddRoleViewModel model)
         {
             var token = HttpContext.User.FindFirstValue(ClaimTypes.Authentication);
-            var result = await _service.AddRole(model, token);
+            var result = await _roleService.AddRole(model, token);
             if (!result.IsSuccessFull.Value)
             {
                 _toastNotification.Error(result.Message);
@@ -77,7 +77,7 @@ namespace PelicanManagementUi.Controllers
         public async Task<IActionResult> Update(UpdateRoleViewModel model)
         {
             var token = HttpContext.User.FindFirstValue(ClaimTypes.Authentication);
-            var result = await _service.UpdateRole(model, token);
+            var result = await _roleService.UpdateRole(model, token);
             if (!result.IsSuccessFull.Value)
             {
                 _toastNotification.Error(result.Message);
@@ -90,21 +90,21 @@ namespace PelicanManagementUi.Controllers
         public async Task<IActionResult> Delete(Guid id)
         {
             var token = HttpContext.User.FindFirstValue(ClaimTypes.Authentication);
-            var result = await _service.DeleteRole(id, token);
+            var result = await _roleService.DeleteRole(id, token);
             return Json(result);
         }
         [HttpPut]
         public async Task<IActionResult> ToggleActiveStatus(Guid id)
         {
             var token = HttpContext.User.FindFirstValue(ClaimTypes.Authentication);
-            var result = await _service.ToggleRoleActiveStatus(id, token);
+            var result = await _roleService.ToggleRoleActiveStatus(id, token);
             return Json(result);
         }
         [HttpPost]
         public async Task<IActionResult> GetRolePermissions(Guid roleID)
         {
             var token = HttpContext.User.FindFirstValue(ClaimTypes.Authentication);
-            var userDetail = await _service.GetRolePermissions(roleID, token);
+            var userDetail = await _roleService.GetRolePermissions(roleID, token);
             return Json(userDetail.Data);
         }
 
@@ -112,7 +112,7 @@ namespace PelicanManagementUi.Controllers
         public async Task<IActionResult> GetRolePermissionsAndMenus(Guid roleID)
         {
             var token = HttpContext.User.FindFirstValue(ClaimTypes.Authentication);
-            var userDetail = await _service.GetRolePermissionsAndMenus(roleID, token);
+            var userDetail = await _roleService.GetRolePermissionsAndMenus(roleID, token);
             return Json(userDetail.Data);
         }
 

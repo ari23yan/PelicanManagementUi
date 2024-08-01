@@ -18888,12 +18888,13 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
 
 .photo-content {
   position: relative; }
-  .photo-content .cover-photo {
-    background: url(../images/profile/cover.jpg);
-    background-size: cover;
-    background-position: center;
-    min-height: 250px;
-    width: 100%; }
+    .photo-content .cover-photo {
+        background: url(../images/miladWall.png);
+        background-size: cover;
+        background-position: center;
+        min-height: 250px;
+        width: 100%;
+    }
 
 .profile .profile-photo {
   max-width: 100px;
@@ -29394,3 +29395,13 @@ body,h1,h2,h3,h4,h5,a,p{font-family: iranyekan!important;}
        url('fonts/iranyekanwebboldfanum.svg#iranyekan') format('svg'); /* Legacy iOS */
    font-weight:bold;
 }
+
+.notyf__toast {
+    min-width: 500px !important; /* Set the desired width */
+}
+
+.notyf__icon {
+    margin-left: 13px !important;
+    margin-right: 0px !important;
+}
+

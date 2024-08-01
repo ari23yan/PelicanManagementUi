@@ -1,0 +1,188 @@
+﻿@model PelicanManagementUi.ViewModels.User.UserDetailViewModel
+@using PelicanManagementUi.Utilities;
+
+
+
+<div class="content-body" style="min-height: 1100px;">
+    <div class="container-fluid">
+        <div class="row page-titles">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">خانه</a></li> &nbsp;
+                \
+                <li class="breadcrumb-item active"><a asp-action="Profile" asp-controller="Account">پروفایل</a></li>
+            </ol>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="profile card card-body px-3 pt-3 pb-0">
+                    <div class="profile-head">
+                        <div class="photo-content"><div class="cover-photo rounded"></div></div>
+                        <div class="profile-info">
+                            <img src="~/images/profile/pic1.jpg" width="100" height="auto" alt="">
+                            <div class="profile-details mt-4">
+                                <div class="profile-name px-3 pt-2">
+                                    <h4 class="text-primary mb-0">@Model.FirstName  @Model.LastName</h4>
+                                    <p>@Model.RoleName_Farsi</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="profile-tab">
+                            <div class="custom-tab-1">
+                                <ul class="nav nav-tabs">
+                                    <li class="nav-item"><a href="#about-me" data-bs-toggle="tab" class="nav-link active show">مشخصات</a></li>
+                                    <li class="nav-item"><a href="#my-changes" data-bs-toggle="tab" class="nav-link">تاریخچه تغییرات</a></li>
+                                    <li class="nav-item"><a href="#profile-settings" data-bs-toggle="tab" class="nav-link">تغییر رمز عبور</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div id="about-me" class="tab-pane fade active show">
+                                        <div class="profile-personal-info mt-3">
+                                            <h4 class="text-primary mb-4">اطلاعات حساب کاربری</h4>
+                                            <div class="row mb-2">
+                                                <div class="col-sm-3 col-5">
+                                                    <h5 class="f-w-500">
+                                                        نام<span class="pull-end">:</span>
+                                                    </h5>
+                                                </div>
+                                                <div class="col-sm-9 col-7"><span>@Model.FirstName</span></div>
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-sm-3 col-5">
+                                                    <h5 class="f-w-500">
+                                                        نام خانوادگی<span class="pull-end">:</span>
+                                                    </h5>
+                                                </div>
+                                                <div class="col-sm-9 col-7"><span>@Model.LastName</span></div>
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-sm-3 col-5">
+                                                    <h5 class="f-w-500">
+                                                        ایمیل<span class="pull-end">:</span>
+                                                    </h5>
+                                                </div>
+                                                <div class="col-sm-9 col-7"><span>@Model.Email</span></div>
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-sm-3 col-5">
+                                                    <h5 class="f-w-500">
+                                                        نام کاربری<span class="pull-end">:</span>
+                                                    </h5>
+                                                </div>
+                                                <div class="col-sm-9 col-7"><span>@Model.Username</span></div>
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-sm-3 col-5">
+                                                    <h5 class="f-w-500">
+                                                        شماره تلفن<span class="pull-end">:</span>
+                                                    </h5>
+                                                </div>
+                                                <div class="col-sm-9 col-7"><span>@Model.PhoneNumber</span></div>
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-sm-3 col-5">
+                                                    <h5 class="f-w-500">
+                                                        نقش<span class="pull-end">:</span>
+                                                    </h5>
+                                                </div>
+                                                <div class="col-sm-9 col-7"><span>@Model.RoleName_Farsi</span></div>
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-sm-3 col-5">
+                                                    <h5 class="f-w-500">
+                                                        تاریخ ایجاد حساب<span class="pull-end">:</span>
+                                                    </h5>
+                                                </div>
+                                                <div class="col-sm-9 col-7"><span>@UtilityManager.PersianDateConverter(@Model.CreatedDate)</span></div>
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-sm-3 col-5">
+                                                    <h5 class="f-w-500">
+                                                        دسترسی ها<span class="pull-end">:</span>
+                                                    </h5>
+                                                </div>
+                                                <div class="col-sm-9 col-7">
+                                                    <span>
+                                                        @{
+                                                            foreach (var item in Model.Permissions)
+                                                            {
+                                                                @if (@item.HasPermission)
+                                                                {
+                                                                    <a href="javascript:void(0);" class="btn btn-primary light btn-xs mb-1">@item.PermissionName_Farsi</a>
+                                                                }
+                                                            }
+                                                        }
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="my-changes" class="tab-pane fade active show">
+                                    </div>
+                                    <div id="profile-settings" class="tab-pane fade">
+                                        <div class="pt-3">
+                                            <div class="settings-form">
+                                                <h4 class="text-primary">تنظیمات حساب</h4>
+                                                <form asp-action="ChangePasswod" asp-controller="Account" enctype="multipart/form-data" method="post" >
+                                                    <div class="row">
+                                                        <div class="mb-3 col-md-6">
+                                                            <label class="form-label">رمز عبور</label><input name="password" type="password" placeholder="کلمه عبور" class="form-control">
+                                                        </div>
+                                                        <div class="mb-3 col-md-6">
+                                                            <label class="form-label">تکرار رمز عبور</label><input name="confirm" type="password" placeholder="کلمه عبور" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+
+                                                    <div class="mb-3 col-md-12 mt-3 text-center">
+                                                            <button class="btn btn-primary" onclick="validate()" type="submit">ثبت</button>
+                                                    </div>
+
+                                                    </div>
+
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="replyModal">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">ارسال پاسخ</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                        </div>
+                                        <div class="modal-body"><form><textarea class="form-control" rows="4">پیام</textarea></form></div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger light" data-bs-dismiss="modal">btn-close</button><button type="button" class="btn btn-primary">پاسخ</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    function validate() {
+        const password = document.querySelector('input[name=password]');
+        const confirm = document.querySelector('input[name=confirm]');
+        if (confirm.value === password.value) {
+            confirm.setCustomValidity('');
+        } else {
+            confirm.setCustomValidity('رمز عبور و تکرار آن باهم برابر نیستند');
+        }
+    }
+
+</script>

@@ -7,10 +7,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
-builder.Services.AddScoped<IExternalServices, ExternalServices>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IManagmentService, ManagmentService>();
+builder.Services.AddScoped<IRoleService, RoleService>();
+
+
 builder.Services.AddNotyf(config =>
 {
-    config.DurationInSeconds = 2;
+    config.DurationInSeconds = 10000;
     config.IsDismissable = true;
     config.Position = NotyfPosition.BottomCenter;
     config.HasRippleEffect = true;

@@ -18875,12 +18875,13 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
 
 .photo-content {
   position: relative; }
-  .photo-content .cover-photo {
-    background: url(../images/profile/cover.jpg);
-    background-size: cover;
-    background-position: center;
-    min-height: 250px;
-    width: 100%; }
+    .photo-content .cover-photo {
+        background: url(./images/miladWall.png);
+        background-size: cover;
+        background-position: center;
+        min-height: 250px;
+        width: 100%;
+    }
 
 .profile .profile-photo {
   max-width: 100px;

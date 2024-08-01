@@ -8,10 +8,10 @@ namespace PelicanManagementUi.ViewComponents
     public class SideBarViewComponent: ViewComponent
     {
 
-        private readonly IExternalServices _service;
-        public SideBarViewComponent(IExternalServices services)
+        private readonly IRoleService _roleService;
+        public SideBarViewComponent(IRoleService roleService)
         {
-                _service = services;
+            _roleService = roleService;
         }
 
 
@@ -20,8 +20,7 @@ namespace PelicanManagementUi.ViewComponents
             var roleId = Guid.Parse(HttpContext.User.FindFirstValue(ClaimTypes.Role));
             var token = HttpContext.User.FindFirstValue(ClaimTypes.Authentication);
             var fullName = HttpContext.User.FindFirstValue(ClaimTypes.Name);
-            var menu = await _service.GetRoleMenu(roleId,token);
-
+            var menu = await _roleService.GetRoleMenu(roleId,token);
             var ViewModel = new UserViewModel { FullName = fullName, RoleData = menu.Data };
             return View("SideBar", ViewModel);
         }

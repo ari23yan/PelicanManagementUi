@@ -11,7 +11,7 @@
         <div class="row page-titles">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">خانه</a></li> &nbsp;
-                ->
+                \
                 <li class="breadcrumb-item active"><a asp-action="List" asp-controller="User">لیست کاربران</a></li>
             </ol>
         </div>
@@ -154,8 +154,6 @@
         </div>
     </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 <script>
 
     function deleteRecord(recordId) {
@@ -210,9 +208,10 @@
         Swal.fire({
             title: 'غیر فعال / فعال سازی کاربر',
             text: "آیا از انجام عملیات اطمینان دارید؟",
+            dir: rtl,
             showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
+            confirmButtonColor: '#2258bf',
+            cancelButtonColor: '#d1d4d3',
             cancelButtonText: 'خیر',
             confirmButtonText: 'بله!'
         }).then((result) => {
