@@ -1,0 +1,185 @@
+﻿@model PelicanManagementUi.ViewModels.Role.RolesListWithPermissionAndMenusViewModel
+
+
+<style>
+    .checkbox-success .form-check-input:checked {
+        background-color: #2258bf;
+        border-color: #2258bf;
+    }
+
+    .checkbox-success .form-check-input:focus {
+        border-color: #2258bf;
+        box-shadow: none !important;
+    }
+</style>
+
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row page-titles">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">خانه</a></li> &nbsp;
+                ->
+                <li class="breadcrumb-item active"><a asp-action="Detail" asp-controller="Role">ایجاد نقش</a></li>
+            </ol>
+        </div>
+        <div class="row">
+            <div class="col-xl-12 col-xxl-12">
+                <div class="card">
+                    <div class="card-header"><h4 class="card-title">ایجاد نقش</h4></div>
+                    <div class="card-body">
+                        <form asp-action="Add" asp-controller="Role" enctype="multipart/form-data" method="post">
+                            <div class="tab-content">
+                                <div class="row">
+                                    <div class="col-lg-6 mb-2">
+                                        <div class="mb-3">
+                                            <label style="font-size: medium;font-weight: bold;" class="text-label form-label">نام نقش</label><input type="text" name="RoleName" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 mb-2">
+                                        <div class="mb-3">
+                                            <label style="font-size: medium;font-weight: bold;" class="text-label form-label"> شناسه نقش ( انگلیسی)</label><input type="text" name="RoleName_Farsi" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 mb-2">
+                                        <div class="mb-3">
+                                            <label style="font-size: medium;font-weight: bold;" class="text-label form-label">توضیحات</label><input name="Description" type="text" class="form-control" aria-describedby="inputGroupPrepend2" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-10 mt-5 mb-3">
+                                     </div>
+
+                                    <div class="col-lg-2 mt-5 mb-3">
+                                        <div class="mb-3">
+                                            <label style="font-size: medium;font-weight: bold;" class="text-label form-label"> بر اساس  :</label>
+                                            <select name="RoleId" required onchange="getRolePermissionsAndMenus(this)" id="roleSelect" class="default-select form-control wide mb-3">
+                                                <option selected value="">انتخاب کنید</option>
+                                                @{
+                                                    foreach (var item in Model.Role)
+                                                    {
+                                                            <option value="@item.Id">@item.RoleName_Farsi</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <label style="font-size: medium;font-weight: bold;" class="text-label form-label mb-5">انتخاب  دسترسی ها و منوها:</label>
+
+
+                                    <div class="col-lg-12 mb-4 mt-4">
+                                        <div class="mb-3">
+                                            <label style="font-size: medium;font-weight: bold;" class="text-label bold form-label">منو ها :</label>
+                                            <div class="mb-3"></div>
+                                            <div class="row" id="menusList">
+                                                @foreach (var item in Model.Menus)
+                                                {
+                                                    <div class="col-lg-2 mb-3">
+                                                        <div class="form-check custom-checkbox mb-3 checkbox-success">
+                                                            <input value="@item.Id" name="MenuIds" type="checkbox" class="form-check-input" id="menu_@item.Id" @(item.HasMenu ? "checked" : "")>
+                                                            <label class="form-check-label" for="menu_@item.Id">@item.Name_Farsi</label>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 mb-3 mt-3">
+                                        <div class="mb-3">
+                                            <label style="font-size: medium;font-weight: bold;" class="text-label bold form-label">دسترسی ها :</label>
+                                            <div class="mb-3"></div>
+                                            <div class="row" id="permissionList">
+                                                @foreach (var item in Model.Permission)
+                                                {
+                                                    <div class="col-lg-2 mb-3">
+                                                        <div class="form-check custom-checkbox mb-3 checkbox-success">
+                                                            <input value="@item.Id" name="PermissionIds" type="checkbox" class="form-check-input" id="permission_@item.Id" @(item.HasPermission ? "checked" : "")>
+                                                            <label class="form-check-label" for="permission_@item.Id">@item.PermissionName_Farsi</label>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-10 mb-3">
+                                        <div class="mb-3">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-1 mb-3 w-auto pl-0">
+                                        <div class="mb-3">
+                                            <div class="text-center"><button type="reset" class="btn btn-dark btn-block">انصراف</button></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-1 mb-3 w-auto">
+                                        <div class="mb-3">
+                                            <div class="text-center"><button type="submit" class="btn btn-primary btn-block">ثبت</button></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    function getRolePermissionsAndMenus(role) {
+        var divPermission = document.getElementById('permissionList');
+        var divMenus = document.getElementById('menusList');
+        fetch(`/Role/GetRolePermissionsAndMenus?roleId=${role.value}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(response => response.text())
+            .then(result => {
+                let res = JSON.parse(result);
+                console.log(res);
+
+
+
+                // Permissions
+                var strPermisson = '';
+                for (var i = 0; i < res.permission.length; i++) {
+                    strPermisson += '<div class="col-lg-2 mb-3"><div class="form-check custom-checkbox mb-3 checkbox-success">';
+                    if (res.permission[i].hasPermission) {
+                        strPermisson += '<input value="'+ res.permission[i].id +'" name="PermissionIds"  type="checkbox" class="form-check-input" checked id="customCheckBox' + i + '" >';
+                    } else {
+                        strPermisson += '<input  value="' + res.permission[i].id + '" name="PermissionIds"  type="checkbox" class="form-check-input" id="customCheckBox' + i + '" >';
+                    }
+                    strPermisson += '<label class="form-check-label" for="customCheckBox' + i + '">';
+                    strPermisson += res.permission[i].permissionName_Farsi;
+                    strPermisson += '</label></div ></div>';
+                }
+                divPermission.innerHTML = '';
+                divPermission.innerHTML = strPermisson;
+
+
+                // Menus
+                var strMenus = '';
+                for (var i = 0; i < res.menus.length; i++) {
+                    strMenus += '<div class="col-lg-2 mb-3"><div class="form-check custom-checkbox mb-3 checkbox-success">';
+                    if (res.menus[i].hasMenu) {
+                        strMenus += '<input name="MenuIds" value="' + res.menus[i].id + '"  type="checkbox" class="form-check-input" checked id="customCheckBox' + i + '">';
+                    } else {
+                        strMenus += '<input name="MenuIds" value="' + res.menus[i].id + '"  type="checkbox" class="form-check-input" id="customCheckBox' + i + '">';
+                    }
+                    strMenus += '<label class="form-check-label" for="customCheckBox' + i + '">';
+                    strMenus += res.menus[i].name_Farsi;
+                    strMenus += '</label></div ></div>';
+                }
+                divMenus.innerHTML = '';
+                divMenus.innerHTML = strMenus;
+
+            })
+            .catch(error => {
+                console.log('error', error);
+            });
+    }
+
+</script>
+

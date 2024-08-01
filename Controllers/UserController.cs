@@ -47,6 +47,11 @@ namespace PelicanManagementUi.Controllers
         {
             var token = HttpContext.User.FindFirstValue(ClaimTypes.Authentication);
             var userDetail = await _service.GetUser(id, token);
+            if (!userDetail.IsSuccessFull.Value)
+            {
+                _toastNotification.Error(userDetail.Message);
+                return RedirectToAction("List", "User");
+            }
             return View(userDetail.Data);
         }
 
@@ -61,23 +66,15 @@ namespace PelicanManagementUi.Controllers
         public async Task<IActionResult> Add(AddUserViewModel model)
         {
             var token = HttpContext.User.FindFirstValue(ClaimTypes.Authentication);
-            var userDetail = await _service.AddUser(model, token);
-            if (!userDetail.IsSuccessFull.Value)
+            var result = await _service.AddUser(model, token);
+            if (!result.IsSuccessFull.Value)
             {
-                _toastNotification.Error(userDetail.Message);
+                _toastNotification.Error(result.Message);
                 return RedirectToAction("Detail", "User");
             }
-            _toastNotification.Success(userDetail.Message);
+            _toastNotification.Success(result.Message);
             return RedirectToAction("List", "User");
 
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> GetRolePermissions(Guid roleID)
-        {
-            var token = HttpContext.User.FindFirstValue(ClaimTypes.Authentication);
-            var userDetail = await _service.GetRolePermissions(roleID, token);
-            return Json(userDetail.Data);
         }
 
         [HttpPost]

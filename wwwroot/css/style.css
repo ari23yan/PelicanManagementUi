@@ -9356,7 +9356,7 @@ label {
   top: 0;
   background-color: var(--nav-headbg);
   transition: all .2s ease;
-  z-index: 99999999; }
+  z-index: 1050; }
   .nav-header .logo-abbr {
     max-width: 47px; }
     @media only screen and (max-width: 1400px) {

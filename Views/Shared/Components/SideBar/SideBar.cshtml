@@ -14,48 +14,55 @@
             </div>
         </div>
         <ul class="metismenu" id="menu">
-            @{
-
-                foreach (var item in Model.RoleData.Menus)
+            @foreach (var item in Model.RoleData.Menus)
+            {
+                @if (item.HasMenu)
                 {
-                    @if (item.HasMenu)
+                    var attributes = Newtonsoft.Json.JsonConvert.DeserializeObject<AttributesViewModel>(item.Link);
+                    @if (item.SubMenus == null || !item.SubMenus.Any())
                     {
-                        var attrebutes = Newtonsoft.Json.JsonConvert.DeserializeObject<AttributesViewModel>(item.Link);
-                        @if (item.SubMenus == null)
-                        {
-
-
-                            <li>
-                                <a asp-action="@attrebutes.Action" asp-controller="@attrebutes.Controller" class="ai-icon" aria-expanded="false">
-                                    <i class="@attrebutes.Icon"></i>
-                                    <span class="nav-text">@item.Name_Farsi</span>
-                                </a>
-                            </li>
-                        }
-                        else
-                        {
-                            <li>
-                                <a class="has-arrow ai-icon" asp-action="@attrebutes.Action" asp-controller="@attrebutes.Controller" aria-expanded="false">
-                                    <i class="@attrebutes.Icon"></i>
-                                    <span class="nav-text">@item.Name_Farsi</span>
-                                </a>
-                                <ul aria-expanded="false">
-                                    @if (item.SubMenus != null)
+                        <li>
+                            <a asp-action="@attributes.Action" asp-controller="@attributes.Controller" class="ai-icon" aria-expanded="false">
+                                <i class="@attributes.Icon"></i>
+                                <span class="nav-text">@item.Name_Farsi</span>
+                            </a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            <a class="has-arrow ai-icon" href="javascript:void(0);" aria-expanded="false">
+                                <i class="@attributes.Icon"></i>
+                                <span class="nav-text">@item.Name_Farsi</span>
+                            </a>
+                            <ul aria-expanded="false">
+                                @foreach (var subItem in item.SubMenus)
+                                {
+                                    var subItemAttributes = Newtonsoft.Json.JsonConvert.DeserializeObject<AttributesViewModel>(subItem.Link);
+                                    @if (subItem.SubMenus == null || !subItem.SubMenus.Any())
                                     {
-
-
-                                        foreach (var subItem in item.SubMenus)
-                                        {
-                                            var subItemattrebutes = Newtonsoft.Json.JsonConvert.DeserializeObject<AttributesViewModel>(subItem.Link);
-
-
-
-                                            <li><a asp-action="@subItemattrebutes.Action" asp-controller="@subItemattrebutes.Controller" >@subItem.Name_Farsi</a></li>
-                                        }
+                                        <li>
+                                            <a asp-action="@subItemAttributes.Action" asp-controller="@subItemAttributes.Controller">@subItem.Name_Farsi</a>
+                                        </li>
                                     }
-                                </ul>
-                            </li>
-                        }
+                                    else
+                                    {
+                                        <li>
+                                            <a class="has-arrow ai-icon" href="javascript:void(0);" aria-expanded="false">@subItem.Name_Farsi</a>
+                                            <ul aria-expanded="false">
+                                                @foreach (var subSubItem in subItem.SubMenus)
+                                                {
+                                                    var subSubItemAttributes = Newtonsoft.Json.JsonConvert.DeserializeObject<AttributesViewModel>(subSubItem.Link);
+                                                    <li>
+                                                        <a asp-action="@subSubItemAttributes.Action" asp-controller="@subSubItemAttributes.Controller">@subSubItem.Name_Farsi</a>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        </li>
+                                    }
+                                }
+                            </ul>
+                        </li>
                     }
                 }
             }

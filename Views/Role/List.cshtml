@@ -22,7 +22,7 @@
                         <div class="table-responsive">
                             <div id="example3_wrapper" class="dataTables_wrapper no-footer">
                                 <div class="dataTables_length" id="example3_length">
-                                    <a class="d-none" id="pageSizeBtn" asp-action="List" asp-controller="User"></a>
+                                    <a class="d-none" id="pageSizeBtn" asp-action="List" asp-controller="Role"></a>
                                     <label>
                                         نمایش &nbsp;
                                         <select onchange="changePageSize(this)" name="example3_length" aria-controls="example3" class="">
@@ -49,9 +49,9 @@
                                     </label>
                                 </div>
                                 <div id="example3_filter" class="dataTables_filter">
-                                    <a class="d-none" id="pageSearchBtn" asp-action="List" asp-controller="User"></a>
+                                    <a class="d-none" id="pageSearchBtn" asp-action="List" asp-controller="Role"></a>
                                     <label>
-                                        جست و جو :&nbsp;<input placeholder="بر اساس نام نقش" type="search" class="" onkeydown="if(event.key === 'Enter') searchList(this);"
+                                        جست و جو :&nbsp;<input placeholder="بر اساس نام نقش" type="search" class="" onkeydown="if(event.key === 'Enter') searchList(this);" />
                                     </label>
                                 </div>
                                 <table id="example3" class="display dataTable no-footer" style="min-width: 845px" role="grid" aria-describedby="example3_info">
@@ -117,31 +117,27 @@
                                     @Model.TotalCount
                                     رکورد
                                 </div>
+                                <div class="card-body">
+                                    <nav>
+                                        <ul class="pagination pagination-circle">
+                                            @{
+                                                if (Model.HasPreviousPage)
+                                                {
+                                                    <li class="page-item page-indicator"><a class="page-link" href="?PageNumber=@(Model.CurrentPage - 1)"><i class="la la-angle-left"></i></a></li>
+                                                }
 
-                                <div class="dataTables_paginate paging_simple_numbers" id="example3_paginate">
+                                                for (var i = 1; i <= Model.TotalPages; i++)
+                                                {
+                                                    <li class="page-item @(i == Model.CurrentPage ? "active" : "")"><a class="page-link" href="?PageNumber=@i">@i</a></li>
+                                                }
 
-                                    @if (@Model.HasPreviousPage)
-                                    {
-
-                                        <a class="paginate_button previous" href="?PageNumber=@(Model.CurrentPage - 1)" aria-controls="example3" data-dt-idx="0" tabindex="0" id="example3_previous">
-                                            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-                                        </a>
-                                    }
-                                    <span>
-                                        @for (int i = Model.CurrentPage - 5; i <= Model.CurrentPage + 5; i++)
-                                        {
-                                            if (i >= 1 && i <= Model.TotalPages)
-                                            {
-                                                <a class="paginate_button @(i == Model.CurrentPage ? "current" : "")" href="?PageNumber=@i">@i</a>
+                                                if (Model.HasNextPage)
+                                                {
+                                                    <li class="page-item page-indicator"><a class="page-link" href="?PageNumber=@(Model.CurrentPage + 1)"><i class="la la-angle-right"></i></a></li>
+                                                }
                                             }
-                                        }
-                                    </span>
-                                    @if (Model.HasNextPage)
-                                    {
-                                        <a class="paginate_button next" href="?PageNumber=@(Model.CurrentPage + 1)" aria-controls="example3" data-dt-idx="4" tabindex="0" id="example3_next">
-                                            <i class="fa fa-angle-double-left" aria-hidden="true"></i>
-                                        </a>
-                                    }
+                                        </ul>
+                                    </nav>
                                 </div>
                             </div>
                         </div>
@@ -234,7 +230,7 @@
                             }, 1000);
                             return
                         }
-                        
+
                         Swal.fire(
                             '',
                             res.message,

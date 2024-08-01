@@ -2,7 +2,19 @@
 
 
 
+<style>
 
+    .checkbox-success .form-check-input:checked {
+        background-color: #2258bf;
+        border-color: #2258bf;
+    }
+
+    .checkbox-success .form-check-input:focus {
+        border-color: #2258bf;
+        box-shadow: none !important;
+    }
+
+</style>
 <div class="content-body">
     <div class="container-fluid">
         <div class="row page-titles">
@@ -15,7 +27,7 @@
         <div class="row">
             <div class="col-xl-12 col-xxl-12">
                 <div class="card">
-                    <div class="card-header"><h4 class="card-title">ویرایش کاربر</h4></div>
+                    <div class="card-header"><h4 class="card-title">ایجاد کاربر</h4></div>
                     <div class="card-body">
                         <form asp-action="Add" asp-controller="User" enctype="multipart/form-data" method="post">
                             <div class="tab-content">
@@ -111,7 +123,7 @@
 
     function getRolePermissions(role) {
         var divPermission = document.getElementById('permissionList');
-        fetch(`/User/GetRolePermissions?roleId=${role.value}`, {
+        fetch(`/Role/GetRolePermissions?roleId=${role.value}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

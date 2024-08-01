@@ -148,7 +148,7 @@ namespace PelicanManagementUi.WebServices.Implementation
                     }
                     else
                     {
-                        return new ResponseViewModel<UserDetailViewModel> { IsSuccessFull = false, Message = ErrorsMessages.Faild, Status = "Api Response Status Code Is Not 200" };
+                        return new ResponseViewModel<UserDetailViewModel> { IsSuccessFull = false, Message = ErrorsMessages.PermissionDenied, Status = "Api Response Status Code Is Not 200" };
                     }
                 }
                 catch (Exception ex)
@@ -221,7 +221,7 @@ namespace PelicanManagementUi.WebServices.Implementation
                     }
                     else
                     {
-                        return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.Faild, Status = "Api Response Status Code Is Not 200" };
+                        return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.PermissionDenied, Status = "Api Response Status Code Is Not 200" };
                     }
                 }
                 catch (Exception ex)
@@ -257,7 +257,7 @@ namespace PelicanManagementUi.WebServices.Implementation
                     }
                     else
                     {
-                        return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.Faild, Status = "Api Response Status Code Is Not 200" };
+                        return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.PermissionDenied, Status = "Api Response Status Code Is Not 200" };
                     }
                 }
                 catch (Exception ex)
@@ -355,12 +355,38 @@ namespace PelicanManagementUi.WebServices.Implementation
                     }
                     else
                     {
-                        return new ResponseViewModel<List<PermissionsViewModel>> { IsSuccessFull = false, Message = ErrorsMessages.Faild, Status = "Api Response Status Code Is Not 200" };
+                        return new ResponseViewModel<List<PermissionsViewModel>> { IsSuccessFull = false, Message = ErrorsMessages.PermissionDenied, Status = "Api Response Status Code Is Not 200" };
                     }
                 }
                 catch (Exception ex)
                 {
                     return new ResponseViewModel<List<PermissionsViewModel>> { IsSuccessFull = false, Message = ErrorsMessages.InternalServerError, Status = "Exception" };
+                }
+            }
+        }
+        public async Task<ResponseViewModel<RolesListWithPermissionAndMenusViewModel>> GetRolePermissionsAndMenus(Guid? roleId, string token)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                try
+                {
+                    var url = $"{serviceAddress}/role/get-permissons-and-menus-list?TargetId={roleId}";
+                    var response = await httpClient.GetAsync(url);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string responseBody = await response.Content.ReadAsStringAsync();
+                        var responseDto = JsonConvert.DeserializeObject<ResponseViewModel<RolesListWithPermissionAndMenusViewModel>>(responseBody);
+                        return new ResponseViewModel<RolesListWithPermissionAndMenusViewModel> { IsSuccessFull = true, Data = responseDto.Data, Message = ErrorsMessages.Success, Status = "SuccessFul" };
+                    }
+                    else
+                    {
+                        return new ResponseViewModel<RolesListWithPermissionAndMenusViewModel> { IsSuccessFull = false, Message = ErrorsMessages.PermissionDenied, Status = "Api Response Status Code Is Not 200" };
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return new ResponseViewModel<RolesListWithPermissionAndMenusViewModel> { IsSuccessFull = false, Message = ErrorsMessages.InternalServerError, Status = "Exception" };
                 }
             }
         }
@@ -562,14 +588,14 @@ namespace PelicanManagementUi.WebServices.Implementation
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 try
                 {
-                    var url = $"{serviceAddress}/role/update?userId={updateUserViewModel.RoleId}";
+                    var url = $"{serviceAddress}/role/update?roleId={updateUserViewModel.RoleId}";
                     var requestBody = updateUserViewModel;
                     var jsonContent = new StringContent(JsonConvert.SerializeObject(requestBody), Encoding.UTF8, "application/json");
                     var request = new HttpRequestMessage(HttpMethod.Put, url)
                     {
                         Content = jsonContent
                     };
-                    var response = await httpClient.SendAsync(request);
+                    var response = await httpClient.SendAsync(request); 
                     if (response.IsSuccessStatusCode)
                     {
                         var responseBody = await response.Content.ReadAsStringAsync();
@@ -582,12 +608,47 @@ namespace PelicanManagementUi.WebServices.Implementation
                     }
                     else
                     {
-                        return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.Faild, Status = "Api Response Status Code Is Not 200" };
+                        return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.PermissionDenied, Status = "Api Response Status Code Is Not 200" };
                     }
                 }
                 catch (Exception ex)
                 {
                     return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.InternalServerError, Status = "Exception" };
+                }
+            }
+        }
+        public async Task<ResponseViewModel<RoleMenuViewModel>> GetRole(Guid roleId, string token)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                try
+                {
+                    var url = $"{serviceAddress}/role/get";
+                    var requestBody = new GetByIdViewModel { TargetId = roleId };
+                    var jsonContent = new StringContent(JsonConvert.SerializeObject(requestBody), Encoding.UTF8, "application/json");
+
+                    var response = await httpClient.PostAsync(url, jsonContent);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string responseBody = await response.Content.ReadAsStringAsync();
+                        var responseDto = JsonConvert.DeserializeObject<ResponseViewModel<RoleMenuViewModel>>(responseBody);
+                        if (responseDto.IsSuccessFull.HasValue && responseDto.IsSuccessFull.Value)
+                        {
+                            return new ResponseViewModel<RoleMenuViewModel> { IsSuccessFull = true, Data = responseDto.Data, Message = ErrorsMessages.Success, Status = "SuccessFul" };
+                        }
+                        return new ResponseViewModel<RoleMenuViewModel> { IsSuccessFull = false, Message = responseDto.Message, Status = "Failed" };
+                    }
+                    else
+                    {
+                        return new ResponseViewModel<RoleMenuViewModel> { IsSuccessFull = false, Message = ErrorsMessages.PermissionDenied, Status = "Api Response Status Code Is Not 200" };
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    return new ResponseViewModel<RoleMenuViewModel> { IsSuccessFull = false, Message = ErrorsMessages.InternalServerError, Status = "Exception" };
                 }
             }
         }

@@ -22,7 +22,6 @@ namespace PelicanManagementUi.Controllers
             _toastNotification = notyfService;
 
         }
-
         [HttpGet]
         public async Task<IActionResult> List(PaginationViewModel model)
         {
@@ -42,10 +41,23 @@ namespace PelicanManagementUi.Controllers
             };
             return View(paginationModel);
         }
-
+        [HttpGet]
+        public async Task<IActionResult> Detail(Guid id)
+        {
+            var token = HttpContext.User.FindFirstValue(ClaimTypes.Authentication);
+            var userDetail = await _service.GetRole(id, token);
+            if (!userDetail.IsSuccessFull.Value)
+            {
+                _toastNotification.Error(userDetail.Message);
+                return RedirectToAction("List", "Role");
+            }
+            return View(userDetail.Data);
+        }
         public async Task<IActionResult> Add()
         {
-            return View();
+            var token = HttpContext.User.FindFirstValue(ClaimTypes.Authentication);
+            var userDetail = await _service.GetRolePermissionsAndMenus(null, token);
+            return View(userDetail.Data);
         }
         [HttpPost]
         public async Task<IActionResult> Add(AddRoleViewModel model)
@@ -55,8 +67,8 @@ namespace PelicanManagementUi.Controllers
             if (!result.IsSuccessFull.Value)
             {
                 _toastNotification.Error(result.Message);
-                var rolesList = await _service.GetRolesList(token);
-                return View(rolesList.Data);
+                return RedirectToAction("Add", "Role");
+
             }
             _toastNotification.Success(result.Message);
             return RedirectToAction("List", "Role");
@@ -65,16 +77,15 @@ namespace PelicanManagementUi.Controllers
         public async Task<IActionResult> Update(UpdateRoleViewModel model)
         {
             var token = HttpContext.User.FindFirstValue(ClaimTypes.Authentication);
-            var userDetail = await _service.UpdateRole(model, token);
-            if (!userDetail.IsSuccessFull.Value)
+            var result = await _service.UpdateRole(model, token);
+            if (!result.IsSuccessFull.Value)
             {
-                _toastNotification.Error(userDetail.Message);
-                return RedirectToAction("List", "Role");
+                _toastNotification.Error(result.Message);
+                return RedirectToAction("Detail", "Role", new { id = model.RoleId });
             }
-            _toastNotification.Success(userDetail.Message);
-            return RedirectToAction("List", "Role");
+            _toastNotification.Success(result.Message);
+            return RedirectToAction("Detail", "Role", new { id = model.RoleId });
         }
-
         [HttpDelete]
         public async Task<IActionResult> Delete(Guid id)
         {
@@ -82,13 +93,27 @@ namespace PelicanManagementUi.Controllers
             var result = await _service.DeleteRole(id, token);
             return Json(result);
         }
-
         [HttpPut]
         public async Task<IActionResult> ToggleActiveStatus(Guid id)
         {
             var token = HttpContext.User.FindFirstValue(ClaimTypes.Authentication);
             var result = await _service.ToggleRoleActiveStatus(id, token);
             return Json(result);
+        }
+        [HttpPost]
+        public async Task<IActionResult> GetRolePermissions(Guid roleID)
+        {
+            var token = HttpContext.User.FindFirstValue(ClaimTypes.Authentication);
+            var userDetail = await _service.GetRolePermissions(roleID, token);
+            return Json(userDetail.Data);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> GetRolePermissionsAndMenus(Guid roleID)
+        {
+            var token = HttpContext.User.FindFirstValue(ClaimTypes.Authentication);
+            var userDetail = await _service.GetRolePermissionsAndMenus(roleID, token);
+            return Json(userDetail.Data);
         }
 
     }

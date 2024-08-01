@@ -6,7 +6,6 @@
 <link href="~/css/list.css" rel="stylesheet" />
 
 
-
 <div class="content-body" style="min-height: 60px;">
     <div class="container-fluid">
         <div class="row page-titles">
@@ -77,28 +76,28 @@
                                             int rowNum = 1;
                                             foreach (var item in Model.Data)
                                             {
-                                                    <tr role="row" class="odd">
-                                                        <td>@rowNum</td>
-                                                        <td>@item.FullName</td>
-                                                        <td>@item.PhoneNumber</td>
-                                                        <td>@item.Username</td>
-                                                        <td>@item.Email</td>
-                                                        <td>@item.RoleName</td>
-                                                        <td>
-                                                            @if (item.IsActive.Value)
+                                                <tr role="row" class="odd">
+                                                    <td>@rowNum</td>
+                                                    <td>@item.FullName</td>
+                                                    <td>@item.PhoneNumber</td>
+                                                    <td>@item.Username</td>
+                                                    <td>@item.Email</td>
+                                                    <td>@item.RoleName</td>
+                                                    <td>
+                                                        @if (item.IsActive.Value)
                                                         {
-                                                                <span class="badge light badge-success">فعال</span>
+                                                            <span class="badge light badge-success">فعال</span>
                                                         }
                                                         else
                                                         {
-                                                                <span class="badge light badge-danger">غیرفعال</span>
+                                                            <span class="badge light badge-danger">غیرفعال</span>
                                                         }
-                                                        </td>
-                                                        <td>@UtilityManager.PersianDateConverter(@item.CreatedDate.Value)</td>
-                                                        <td>
-                                                            <div class="d-flex">
-                                                                <a data-tippy-content="ویرایش" asp-action="Detail" asp-controller="User" asp-route-Id="@item.Id" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-pencil"></i></a>
-                                                                &nbsp;
+                                                    </td>
+                                                    <td>@UtilityManager.PersianDateConverter(@item.CreatedDate.Value)</td>
+                                                    <td>
+                                                        <div class="d-flex">
+                                                            <a data-tippy-content="ویرایش" asp-action="Detail" asp-controller="User" asp-route-Id="@item.Id" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-pencil"></i></a>
+                                                            &nbsp;
                                                             @if (item.IsActive.Value)
                                                             {
                                                                 <a data-tippy-content="غیرفعال سازی" onclick="activationStatus('@item.Id')" class="btn btn-warning shadow btn-xs sharp"><i class="flaticon-381-lock-3"></i></a>
@@ -106,12 +105,12 @@
                                                             else
                                                             {
                                                                 <a data-tippy-content="فعال سازی" onclick="activationStatus('@item.Id')" class="btn btn-success shadow btn-xs sharp"><i class="flaticon-381-lock-3"></i></a>
-                                                            } 
+                                                            }
                                                             &nbsp;
                                                             <a data-tippy-content="حذف" onclick="deleteRecord('@item.Id')" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"></i></a>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
+                                                        </div>
+                                                    </td>
+                                                </tr>
                                                 rowNum++;
                                             }
                                         }
@@ -125,32 +124,27 @@
                                     @Model.TotalCount
                                     رکورد
                                 </div>
+                                <div class="card-body">
+                                    <nav>
+                                        <ul class="pagination pagination-circle">
+                                            @{
+                                                if (Model.HasPreviousPage)
+                                                {
+                                                    <li class="page-item page-indicator"><a class="page-link" href="?PageNumber=@(Model.CurrentPage - 1)"><i class="la la-angle-left"></i></a></li>
+                                                }
 
-                                <div class="dataTables_paginate paging_simple_numbers" id="example3_paginate">
+                                                for (var i = 1; i <= Model.TotalPages; i++)
+                                                {
+                                                    <li class="page-item @(i == Model.CurrentPage ? "active" : "")"><a class="page-link" href="?PageNumber=@i">@i</a></li>
+                                                }
 
-                                    @if (@Model.HasPreviousPage)
-                                    {
-
-                                        <a class="paginate_button previous" href="?PageNumber=@(Model.CurrentPage - 1)" aria-controls="example3" data-dt-idx="0" tabindex="0" id="example3_previous">
-                                            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-                                        </a>
-                                    }
-                                    <span>
-                                        @for (int i = Model.CurrentPage - 5; i <= Model.CurrentPage + 5; i++)
-                                        {
-                                            if (i >= 1 && i <= Model.TotalPages)
-                                            {
-                                                <a class="paginate_button @(i == Model.CurrentPage ? "current" : "")" href="?PageNumber=@i">@i</a>
+                                                if (Model.HasNextPage)
+                                                {
+                                                    <li class="page-item page-indicator"><a class="page-link" href="?PageNumber=@(Model.CurrentPage + 1)"><i class="la la-angle-right"></i></a></li>
+                                                }
                                             }
-                                        }
-                                    </span>
-                                    @if (Model.HasNextPage)
-                                    {
-                                        <a class="paginate_button next" href="?PageNumber=@(Model.CurrentPage + 1)" aria-controls="example3" data-dt-idx="4" tabindex="0" id="example3_next">
-                                            <i class="fa fa-angle-double-left" aria-hidden="true"></i>
-                                        </a>
-                                    }
-
+                                        </ul>
+                                    </nav>
                                 </div>
                             </div>
                         </div>
@@ -161,7 +155,7 @@
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
+
 <script>
 
     function deleteRecord(recordId) {
@@ -232,7 +226,7 @@
                     .then(response => response.text())
                     .then(result => {
                         let res = JSON.parse(result);
-                        if (res.isSuccessFull == true ){
+                        if (res.isSuccessFull == true) {
                             Swal.fire(
                                 '',
                                 'عملیات موفقیت آمیز بود',

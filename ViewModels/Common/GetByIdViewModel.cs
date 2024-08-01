@@ -2,7 +2,7 @@
 {
     public class GetByIdViewModel
     {
-        public Guid TargetId { get; set; }
+        public Guid? TargetId { get; set; }
 
     }
 }

@@ -3,14 +3,10 @@ using System.Security;
 
 namespace PelicanManagementUi.ViewModels.Role
 {
-    public class RoleMenuViewModel
+    public class RolesListWithPermissionAndMenusViewModel
     {
-        public Guid Id { get; set; }
-        public string RoleName { get; set; }
-        public string RoleName_Farsi { get; set; }
-        public string Description { get; set; }
+        public List<RoleViewModel> Role { get; set; }
         public List<RoleMenusViewModel> Menus { get; set; }
         public List<PermissionsViewModel> Permission { get; set; }
-
     }
 }
