@@ -1,4 +1,7 @@
-﻿@{
+﻿@model PelicanManagementUi.ViewModels.Account.ForgetPasswordPhoneNumberViewModel
+
+
+@{
     Layout = "_AuthLayout";
 }
 
@@ -22,13 +25,14 @@
                                         <h2 class="text-center mb-4">داشبورد مدیریت سامانه اسکن</h2>
                                     </a>
                                 </div>
-                                <h4 class="text-center mb-4">رمز عبور جدید</h4>
-                                <form asp-action="ForgetPassword" asp-controller="Account" enctype="multipart/form-data" method="post">
+                                <h4 class="text-center mb-4 mt-3">کد ارسالی به شماره تلفن  @Model.PhoneNumber</h4>
+                                <form asp-action="ConfirmOtp" asp-controller="Account" enctype="multipart/form-data" method="post">
                                     <div class="mb-3">
-                                        <label class="mb-1"><strong> </strong></label>
-                                        <input maxlength="11" name="PhoneNumber" type="text" placeholder="شماره تلفن همراه خود را وارد کنید" id="inputMobile" class="form-control">
+                                        <label class="mb-1"><strong> شماره تلفن </strong></label>
+                                        <input type="hidden" name="PhoneNumber" value="@Model.PhoneNumber">
+                                        <input maxlength="6" name="Otp" type="number" placeholder="کد 6 رقمی ارسال شده به شماره همراه" id="inputMobile" class="form-control">
                                     </div>
-                                    <div class="text-center"><button onclick="validate()" type="submit" class="btn btn-primary btn-block">ارسال</butto></div>
+                                    <div class="text-center"><button onclick="validate()" type="submit" class="btn btn-primary btn-block">ثبت</butto></div>
                                 </form>
                             </div>
                         </div>
@@ -40,11 +44,11 @@
 </div>
 <script type="text/javascript">
     function validate() {
-        const mobile = document.querySelector('input[name=PhoneNumber]');
-        if (mobile.value === '' || mobile.value === undefined || mobile.value === null || mobile.value.length != 11) {
+        const mobile = document.querySelector('input[name=Otp]');
+        if (mobile.value === '' || mobile.value === undefined || mobile.value === null || mobile.value.length != 6) {
             {
                 event.preventDefault(); // Prevent form submission
-                return alert('لطفا شماره تلفن را به صورت صحیح وارد نمایید')
+                return alert('لطفا کد ارسالی را به صورت صحیح وارد نمایید')
             }
         }
     }

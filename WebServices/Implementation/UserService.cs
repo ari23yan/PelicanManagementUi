@@ -8,10 +8,13 @@ using PelicanManagementUi.ViewModels;
 using PelicanManagementUi.WebServices.Interfaces;
 using System.Net.Http.Headers;
 using System.Text;
+using PelicanManagementUi.ViewModels.Account;
+using NuGet.Common;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 
 namespace PelicanManagementUi.WebServices.Implementation
 {
-    public class UserService: IUserService
+    public class UserService : IUserService
     {
         private readonly IConfiguration _configuration;
         private readonly string? serviceAddress;
@@ -319,7 +322,107 @@ namespace PelicanManagementUi.WebServices.Implementation
                 {
                     return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.InternalServerError, Status = "Exception" };
                 }
-            }   
+            }
+        }
+
+        public async Task<ResponseViewModel<bool>> SendSmsForChangePassword(string phoneNumber)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                try
+                {
+                    var url = $"{serviceAddress}/forget-password";
+                    var requestBody = new ForgetPasswordPhoneNumberViewModel { PhoneNumber = phoneNumber};
+                    var jsonContent = new StringContent(JsonConvert.SerializeObject(requestBody), Encoding.UTF8, "application/json");
+                    var response = await httpClient.PostAsync(url, jsonContent);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string responseBody = await response.Content.ReadAsStringAsync();
+                        var responseDto = JsonConvert.DeserializeObject<ResponseViewModel<bool>>(responseBody);
+                        if (responseDto.IsSuccessFull.HasValue && responseDto.IsSuccessFull.Value)
+                        {
+                            return new ResponseViewModel<bool> { IsSuccessFull = true, Message = ErrorsMessages.Success, Status = phoneNumber };
+                        }
+                        return new ResponseViewModel<bool> { IsSuccessFull = false, Message = responseDto.Message, Status = "Failed" };
+                    }
+                    else
+                    {
+                        return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.PermissionDenied, Status = "Api Response Status Code Is Not 200" };
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.InternalServerError, Status = "Exception" };
+                }
+            }
+        }
+
+        public async Task<ResponseViewModel<bool>> ConfirmOtp(ConfrimOtpViewModel viewModel)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                try
+                {
+                    var url = $"{serviceAddress}/confirm-otp";
+                    var requestBody = viewModel;
+                    var jsonContent = new StringContent(JsonConvert.SerializeObject(requestBody), Encoding.UTF8, "application/json");
+                    var response = await httpClient.PostAsync(url, jsonContent);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string responseBody = await response.Content.ReadAsStringAsync();
+                        var responseDto = JsonConvert.DeserializeObject<ResponseViewModel<bool>>(responseBody);
+                        if (responseDto.IsSuccessFull.HasValue && responseDto.IsSuccessFull.Value)
+                        {
+                            return new ResponseViewModel<bool> { IsSuccessFull = true, Message = ErrorsMessages.Success, Status = viewModel.PhoneNumber };
+                        }
+                        return new ResponseViewModel<bool> { IsSuccessFull = false, Message = responseDto.Message, Status = "Failed" };
+                    }
+                    else
+                    {
+                        return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.PermissionDenied, Status = "Api Response Status Code Is Not 200" };
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.InternalServerError, Status = "Exception" };
+                }
+            }
+        }
+
+        public async Task<ResponseViewModel<bool>> SubmitPasswod(ForgetPasswordViewModel viewModel)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                try
+                {
+                    var url = $"{serviceAddress}/forget-password";
+                    var requestBody = viewModel;
+                    var jsonContent = new StringContent(JsonConvert.SerializeObject(requestBody), Encoding.UTF8, "application/json");
+                    var request = new HttpRequestMessage(HttpMethod.Put, url)
+                    {
+                        Content = jsonContent
+                    };
+                    var response = await httpClient.SendAsync(request);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var responseBody = await response.Content.ReadAsStringAsync();
+                        var responseDto = JsonConvert.DeserializeObject<ResponseViewModel<bool>>(responseBody);
+                        if (responseDto.IsSuccessFull.HasValue && responseDto.IsSuccessFull.Value)
+                        {
+                            return new ResponseViewModel<bool> { IsSuccessFull = true, Message = ErrorsMessages.Success, Status = "SuccessFul" };
+                        }
+                        return new ResponseViewModel<bool> { IsSuccessFull = false, Message = responseDto.Message, Status = "Failed" };
+                    }
+                    else
+                    {
+                        return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.PermissionDenied, Status = "Api Response Status Code Is Not 200" };
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.InternalServerError, Status = "Exception" };
+                }
+            }
         }
     }
 }

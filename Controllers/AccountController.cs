@@ -8,10 +8,12 @@ using System.Security.Claims;
 using AspNetCoreHero.ToastNotification.Abstractions;
 using PelicanManagementUi.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using PelicanManagementUi.ViewModels.Account;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PelicanManagementUi.Controllers
 {
-    [Authorize]
+    [AllowAnonymous]
 
     public class AccountController : Controller
     {
@@ -24,16 +26,16 @@ namespace PelicanManagementUi.Controllers
             _toastNotification = notyfService;
         }
 
-        [AllowAnonymous]
 
         public IActionResult Login()
         {
             return View();
         }
 
-        [AllowAnonymous]
+
+
         [HttpPost]
-        public async  Task<IActionResult> Login(AuthenticateViewModel model)
+        public async Task<IActionResult> Login(AuthenticateViewModel model)
         {
             var authentication = await _userService.Authenticate(model);
             if (authentication.IsSuccessFull.HasValue && authentication.IsSuccessFull.Value)
@@ -62,6 +64,85 @@ namespace PelicanManagementUi.Controllers
             return View();
         }
 
+
+
+
+
+        [HttpGet]
+        public async Task<IActionResult> ForgotPassword()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> ForgetPassword(string phoneNumber)
+        {
+            var result = await _userService.SendSmsForChangePassword(phoneNumber);
+            if (!result.IsSuccessFull.Value)
+            {
+                _toastNotification.Error(result.Message);
+                return RedirectToAction("ForgotPassword", "Account");
+            }
+            _toastNotification.Success(result.Message);
+            TempData["PhoneNumber"] = phoneNumber;
+            return RedirectToAction("ConfirmOtp", "Account");
+
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ConfirmOtp()
+        {
+            var phoneNumber = TempData["PhoneNumber"] as string;
+            if(string.IsNullOrEmpty(phoneNumber))
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            return View(new ForgetPasswordPhoneNumberViewModel { PhoneNumber = phoneNumber });
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> ConfirmOtp(ConfrimOtpViewModel model)
+        {
+            var result = await _userService.ConfirmOtp(model);
+            if (!result.IsSuccessFull.Value)
+            {
+                _toastNotification.Error(result.Message);
+                return RedirectToAction("ConfirmOtp", "Account");
+            }
+            _toastNotification.Success(result.Message);
+            TempData["PhoneNumber"] = model.PhoneNumber;
+            return RedirectToAction("SubmitPassword", "Account");
+        }
+
+
+
+        [HttpGet]
+        public async Task<IActionResult> SubmitPassword()
+        {
+            var phoneNumber = TempData["PhoneNumber"] as string;
+            if (string.IsNullOrEmpty(phoneNumber))
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            return View(new ForgetPasswordPhoneNumberViewModel { PhoneNumber = phoneNumber });
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> SubmitPassword(ForgetPasswordViewModel model)
+        {
+            var result = await _userService.SubmitPasswod(model);
+            if (!result.IsSuccessFull.Value)
+            {
+                _toastNotification.Error(result.Message);
+                return RedirectToAction("SubmitPassword", "Account");
+            }
+            _toastNotification.Success(result.Message);
+            return RedirectToAction("Login", "Account");
+        }
+
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> ChangePasswod(string password)
@@ -83,9 +164,12 @@ namespace PelicanManagementUi.Controllers
         {
             var token = HttpContext.User.FindFirstValue(ClaimTypes.Authentication);
             var userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var userProfile = await _userService.GetUser(Guid.Parse(userId),token);
+            var userProfile = await _userService.GetUser(Guid.Parse(userId), token);
             return View(userProfile.Data);
         }
+
+
+
         public IActionResult SignOut()
         {
             HttpContext.SignOutAsync();
