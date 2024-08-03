@@ -14,7 +14,7 @@ builder.Services.AddScoped<IRoleService, RoleService>();
 
 builder.Services.AddNotyf(config =>
 {
-    config.DurationInSeconds = 10000;
+    config.DurationInSeconds = 4;
     config.IsDismissable = true;
     config.Position = NotyfPosition.BottomCenter;
     config.HasRippleEffect = true;
@@ -36,6 +36,16 @@ builder.Services
 
 var app = builder.Build();
 
+app.Use(async (context, next) =>
+{
+    await next();
+    if (context.Response.StatusCode == 404)
+    {
+        context.Request.Path = "/NotFound";
+        await next();
+    }
+});
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -46,6 +56,8 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+
 
 app.UseRouting();
 

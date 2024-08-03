@@ -72,7 +72,7 @@ namespace PelicanManagementUi.Controllers
             if (!result.IsSuccessFull.Value)
             {
                 _toastNotification.Error(result.Message);
-                return RedirectToAction("Detail", "User");
+                return View();
             }
             _toastNotification.Success(result.Message);
             return RedirectToAction("List", "User");

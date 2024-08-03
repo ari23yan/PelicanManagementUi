@@ -12,5 +12,12 @@ namespace PelicanManagementUi.Controllers
         {
             return View();
         }
+
+        [AllowAnonymous]
+        [Route("NotFound")]
+        public IActionResult PageNotFound()
+        {
+            return View();
+        }
     }
 }

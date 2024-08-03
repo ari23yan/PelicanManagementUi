@@ -1,7 +1,5 @@
 ﻿@model PelicanManagementUi.ViewModels.User.UserDetailViewModel
 
-
-
 <style>
 
     .checkbox-success .form-check-input:checked {
@@ -15,14 +13,15 @@
     }
 
 </style>
+
 <div class="content-body">
     <div class="container-fluid">
         <div class="row page-titles">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">خانه</a></li> &nbsp;
-                \
+                ->
                 <li class="breadcrumb-item"><a asp-action="List" asp-controller="User">لیست کاربران</a></li> &nbsp;
-                \
+                ->
                 <li class="breadcrumb-item active"><a asp-action="Detail" asp-controller="User">جزئیات کاربر</a></li>
             </ol>
         </div>
@@ -38,40 +37,33 @@
                                 <div class="row">
                                     <div class="col-lg-6 mb-2">
                                         <div class="mb-3">
-                                            <label style="font-size: medium;font-weight: bold;" class="text-label form-label">نام نقش</label><input value="@Model.RoleName_Farsi" type="text" name="RoleName_Farsi" class="form-control" required>
+                                            <label style="font-size: medium;font-weight: bold;" class="text-label form-label">نام</label><input value="@Model.FirstName" type="text" name="FirstName" class="form-control" required>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 mb-2">
                                         <div class="mb-3">
-                                            <label style="font-size: medium;font-weight: bold;" class="text-label form-label">شناسه نقش</label><input value="@Model.LastName" type="text" name="RoleName" class="form-control" required>
+                                            <label style="font-size: medium;font-weight: bold;" class="text-label form-label">نام خانوادگی</label><input value="@Model.LastName" type="text" name="LastName" class="form-control" required>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 mb-2">
                                         <div class="mb-3">
-                                            <label style="font-size: medium;font-weight: bold;" class="text-label form-label">توضحیات</label><input value="@Model.Username" name="Description" type="text" class="form-control" id="inputGroupPrepend2" aria-describedby="inputGroupPrepend2" required>
+                                            <label style="font-size: medium;font-weight: bold;" class="text-label form-label">نام کاربری</label><input value="@Model.Username" name="Username" type="text" class="form-control" id="inputGroupPrepend2" aria-describedby="inputGroupPrepend2" required>
                                         </div>
                                     </div>
-                                    
                                     <div class="col-lg-6 mb-2">
                                         <div class="mb-3">
-                                            <label style="font-size: medium;font-weight: bold;" class="text-label form-label">وضعیت ایمیل</label>
-                                            <select name="EmailConfirmed" class="default-select form-control wide mb-3" dir="ltr">
-                                                @{
-                                                    if (Model.EmailConfirmed.Value)
-                                                    {
-                                                        <option value="True" selected>تایید شده</option>
-                                                        <option value="False">تایید نشده</option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option value="True" >تایید شده</option>
-                                                        <option value="False" selected>تایید نشده</option>
+                                            <label style="font-size: medium;font-weight: bold;" class="text-label form-label">شماره تلفن</label><input value="@Model.PhoneNumber" type="text" name="PhoneNumber" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 mb-2">
+                                        <div class="mb-3">
+                                            <label style="font-size: medium;font-weight: bold;" class="text-label form-label">آدرس ایمیل</label><input value="@Model.Email" name="Email" type="email" class="form-control" id="inputGroupPrepend2" aria-describedby="inputGroupPrepend2" required>
+                                        </div>
+                                    </div>
 
-                                                    }
-                                                }
-                                            </select>
-                                        </div>
+                                    <div class="col-lg-6 mb-2">
                                     </div>
+             
                                     <div class="col-lg-6 mt-5 mb-3">
                                         <div class="mb-3">
                                             <label style="font-size: medium;font-weight: bold;" class="text-label form-label">نقش کاربر</label>
@@ -100,7 +92,7 @@
                                     <div class="col-lg-12 mb-3">
                                         <div class="mb-3">
                                             <label style="font-size: medium;font-weight: bold;" class="text-label bold form-label">دسترسی ها :</label>
-                                            <a asp-action="Detail" asp-controller="Role" asp-route-RoleId="@Model.RoleId" style="color:blue">(ویرایش دسترسی ها)</a>
+                                            <a asp-action="Detail" asp-controller="Role" asp-route-Id="@Model.RoleId" style="color:blue">(ویرایش دسترسی ها)</a>
                                             <div class="mb-3">
                                             </div>
                                             <div class="row" id="permissionList">
@@ -156,7 +148,7 @@
 
     function getRolePermissions(role) {
         var divPermission = document.getElementById('permissionList');
-        fetch(`/Role/GetRolePermissions?roleId=${role.value}`, {
+        fetch(`/User/GetRolePermissions?roleId=${role.value}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -186,4 +178,3 @@
             });
     }
 </script>
-

@@ -6,10 +6,8 @@ using PelicanManagementUi.ViewModels.Common.Response;
 using PelicanManagementUi.WebServices.Interfaces;
 using System.Security.Claims;
 using AspNetCoreHero.ToastNotification.Abstractions;
-using PelicanManagementUi.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using PelicanManagementUi.ViewModels.Account;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PelicanManagementUi.Controllers
 {
