@@ -2,7 +2,22 @@
 @using PelicanManagementUi.Utilities;
 
 
+<style>
+    .password-container {
+        position: relative;
+    }
 
+    .show-pass {
+        position: absolute;
+        left: 20px; /* Adjust this value as needed */
+        font-size: larger !important;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        color: #888; /* Optional: change the color of the icon */
+    }
+
+</style>
 <div class="content-body" style="min-height: 1100px;">
     <div class="container-fluid">
         <div class="row page-titles">
@@ -129,20 +144,28 @@
                                         <div class="pt-3">
                                             <div class="settings-form">
                                                 <h4 class="text-primary">تنظیمات حساب</h4>
-                                                <form asp-action="ChangePasswod" asp-controller="Account" enctype="multipart/form-data" method="post" >
+                                                <form asp-action="ChangePasswod" asp-controller="Account" enctype="multipart/form-data" method="post">
                                                     <div class="row">
                                                         <div class="mb-3 col-md-6">
-                                                            <label class="form-label">رمز عبور</label><input name="password" type="password" placeholder="کلمه عبور" class="form-control">
+                                                            <label class="form-label">رمز عبور</label>
+                                                            <div class="password-container">
+                                                                <i class="fa fa-eye show-pass toggle-password"></i>
+                                                                <input name="password" id="password" type="password" placeholder="کلمه عبور" class="form-control">
+                                                            </div>
                                                         </div>
                                                         <div class="mb-3 col-md-6">
-                                                            <label class="form-label">تکرار رمز عبور</label><input name="confirm" type="password" placeholder="کلمه عبور" class="form-control">
+                                                            <label class="form-label">تکرار رمز عبور</label>
+                                                            <div class="password-container">
+                                                                <i class="fa fa-eye show-pass toggle-confirm-password"></i>
+                                                                <input name="confirm" id="confirm-passwprd" type="password" placeholder="کلمه عبور" class="form-control">
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div class="row">
 
-                                                    <div class="mb-3 col-md-12 mt-3 text-center">
+                                                        <div class="mb-3 col-md-12 mt-3 text-center">
                                                             <button class="btn btn-primary" onclick="validate()" type="submit">ثبت</button>
-                                                    </div>
+                                                        </div>
 
                                                     </div>
 
@@ -184,5 +207,39 @@
             confirm.setCustomValidity('رمز عبور و تکرار آن باهم برابر نیستند');
         }
     }
+
+
+
+    var eye = document.querySelector('.toggle-password');
+    var passwordField = document.getElementById('password');
+
+    eye.addEventListener('click', function () {
+        if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+            eye.classList.remove('fa-eye');
+            eye.classList.add('fa-eye-slash');
+        } else {
+            passwordField.type = 'password';
+            eye.classList.remove('fa-eye-slash');
+            eye.classList.add('fa-eye');
+        }
+    });
+
+
+
+    var confirmEye = document.querySelector('.toggle-confirm-password');
+    var confirmPasswordField = document.getElementById('confirm-passwprd');
+
+    confirmEye.addEventListener('click', function () {
+        if (confirmPasswordField.type === 'password') {
+            confirmPasswordField.type = 'text';
+            confirmEye.classList.remove('fa-eye');
+            confirmEye.classList.add('fa-eye-slash');
+        } else {
+            confirmPasswordField.type = 'password';
+            confirmEye.classList.remove('fa-eye-slash');
+            confirmEye.classList.add('fa-eye');
+        }
+    });
 
 </script>

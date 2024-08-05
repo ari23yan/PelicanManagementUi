@@ -19,9 +19,9 @@
         <div class="row page-titles">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">خانه</a></li> &nbsp;
-                ->
+                \
                 <li class="breadcrumb-item"><a asp-action="List" asp-controller="User">لیست کاربران</a></li> &nbsp;
-                ->
+                \
                 <li class="breadcrumb-item active"><a asp-action="Detail" asp-controller="User">جزئیات کاربر</a></li>
             </ol>
         </div>
@@ -148,7 +148,7 @@
 
     function getRolePermissions(role) {
         var divPermission = document.getElementById('permissionList');
-        fetch(`/User/GetRolePermissions?roleId=${role.value}`, {
+        fetch(`/Role/GetRolePermissions?roleId=${role.value}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

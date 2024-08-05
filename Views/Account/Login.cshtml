@@ -2,41 +2,68 @@
     Layout = "_AuthLayout";
 }
 
+<style>
+    .password-container {
+        position: relative;
+    }
 
-    <div id="preloader">
-        <div class="loader">
-            <img src="~/images/loader.svg" />
-        </div>
+    .show-pass {
+        position: absolute;
+        left: 20px; /* Adjust this value as needed */
+        font-size: larger !important;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        color: #888; /* Optional: change the color of the icon */
+    }
+
+</style>
+
+
+<div id="preloader">
+    <div class="loader">
+        <img src="~/images/loader.svg" />
     </div>
-    <div class="authincation h-100">
-        <div class="container h-100">
-            <div class="row justify-content-center h-100 align-items-center">
-                <div class="col-md-6">
-                    <div class="authincation-content">
-                        <div class="row no-gutters">
-                            <div class="col-xl-12">
-                                <div class="auth-form">
-                                    <div class="text-center mb-3"><a href="index.html">
-                                            <img src="~/images/milad_hospital_logo.png" />
-                                            <h2 class="text-center mb-4">داشبورد مدیریت سامانه اسکن</h2>
-                                    </a></div>
-                                    <h4 class="text-center mb-4">وارد حساب کاربری خود شوید</h4>
-                                    <form asp-action="Login" asp-controller="Account" enctype="multipart/form-data" method="post">
-                                        <div class="mb-3">
-                                            <label class="mb-1"><strong> نام کاربری </strong></label><input name="Input" type="text" placeholder="ایمیل یا شماره تلفن و یا نام کاربری" id="inputUsername" class="form-control" >
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="mb-1"><strong>کلمه عبور</strong></label><input name="Password" placeholder="رمز عبور" type="password" id="inputPaasword" class="form-control" >
-                                        </div>
-                                        <div class="row d-flex justify-content-between mt-4 mb-2">
-                                            <div class="mb-3">
-                                             
-                                            </div>
-                                            <div class="mb-3"><a asp-action="ForgotPassword" asp-controller="Account" >رمز عبور را فراموش کرده اید؟</a></div>
-                                        </div>
-                                        <div class="text-center"><button type="submit" class="btn btn-primary btn-block">ورود به سیستم</button></div>
-                                    </form>
+</div>
+<div class="authincation h-100">
+    <div class="container h-100">
+        <div class="row justify-content-center h-100 align-items-center">
+            <div class="col-md-6">
+                <div class="authincation-content">
+                    <div class="row no-gutters">
+                        <div class="col-xl-12">
+                            <div class="auth-form">
+                                <div class="text-center mb-3">
+                                    <a href="index.html">
+                                        <img src="~/images/milad_hospital_logo.png" />
+                                        <h2 class="text-center mb-4">داشبورد مدیریت سامانه اسکن</h2>
+                                    </a>
                                 </div>
+                                <h4 class="text-center mb-4">وارد حساب کاربری خود شوید</h4>
+                                <form asp-action="Login" asp-controller="Account" enctype="multipart/form-data" method="post">
+                                    <div class="mb-3">
+                                        <label class="mb-1"><strong> نام کاربری </strong></label><input name="Input" type="text" placeholder="ایمیل یا شماره تلفن و یا نام کاربری" id="inputUsername" class="form-control">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="mb-1"><strong>کلمه عبور</strong></label>
+
+                                        <div class="password-container">
+
+
+                                            <i class="fa fa-eye show-pass toggle-password"></i>
+
+                                            <input name="Password" placeholder="رمز عبور" type="password" id="user_password" class="form-control">
+
+                                        </div>
+
+                                    </div>
+                                    <div class="row d-flex justify-content-between mt-4 mb-2">
+                                        <div class="mb-3">
+                                        </div>
+                                        <div class="mb-3"><a asp-action="ForgotPassword" asp-controller="Account">رمز عبور را فراموش کرده اید؟</a></div>
+                                    </div>
+                                    <div class="text-center"><button type="submit" class="btn btn-primary btn-block">ورود به سیستم</button></div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -44,3 +71,28 @@
             </div>
         </div>
     </div>
+</div>
+
+
+<script>
+
+
+    var eye = document.querySelector('.toggle-password');
+    var passwordField = document.getElementById('user_password');
+
+    eye.addEventListener('click', function () 
+    {
+        if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+            eye.classList.remove('fa-eye');
+            eye.classList.add('fa-eye-slash');
+        } else {
+            passwordField.type = 'password';
+            eye.classList.remove('fa-eye-slash');
+            eye.classList.add('fa-eye');
+        }
+    });
+
+
+
+</script>

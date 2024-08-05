@@ -252,7 +252,8 @@
 	}
 	
 	var handleshowPass = function(){
-		jQuery('.show-pass').on('click',function(){
+		jQuery('.show-pass').on('click', function () {
+			alert('sss')
 			jQuery(this).toggleClass('active');
 			if(jQuery('#dz-password').attr('type') == 'password'){
 				jQuery('#dz-password').attr('type','text');
