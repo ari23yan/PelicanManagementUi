@@ -1,0 +1,160 @@
+﻿@model PelicanManagementUi.ViewModels.Management.IdentityUserDetailViewModel
+
+<link rel="stylesheet" href="~/vendor/select2/css/select2.min.css">
+<link href="~/vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet">
+
+<style>
+    .checkbox-success .form-check-input:checked {
+        background-color: #2258bf;
+        border-color: #2258bf;
+    }
+
+    .checkbox-success .form-check-input:focus {
+        border-color: #2258bf;
+        box-shadow: none !important;
+    }
+
+    .select2-container--default.select2-container .select2-selection--multiple
+    {
+        border: solid #e8e8e8 1px !important;
+    }
+
+        
+
+</style>
+
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row page-titles">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">خانه</a></li> &nbsp;
+                \
+                <li class="breadcrumb-item"><a asp-action="List" asp-controller="Management">لیست کاربر ها</a></li> &nbsp;
+                \
+                <li class="breadcrumb-item active"><a asp-action="Detail" asp-controller="Management">جزئیات کاربر</a></li>
+            </ol>
+        </div>
+        <div class="row">
+            <div class="col-xl-12 col-xxl-12">
+                <div class="card">
+                    <div class="card-header"><h4 class="card-title">ویرایش کاربر</h4></div>
+                    <div class="card-body">
+                        <form asp-action="Update" asp-controller="Management" enctype="multipart/form-data" method="post">
+                            <input value="@Model.User.Id" type="text" name="UserId" class="d-none">
+
+                            <div class="tab-content">
+                                <div class="row">
+                                    <div class="col-lg-6 mb-2">
+                                        <div class="mb-3">
+                                            <label style="font-size: medium;font-weight: bold;" class="text-label form-label">نام </label><input value="@Model.User.FirstName" type="text" name="FirstName" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 mb-2">
+                                        <div class="mb-3">
+                                            <label style="font-size: medium;font-weight: bold;" class="text-label form-label">نام خوانوادگی </label><input  value="@Model.User.LastName" type="text" name="LastName" class="form-control disabled" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 mb-2">
+                                        <div class="mb-3">
+                                            <label style="font-size: medium;font-weight: bold;" class="text-label form-label">نام کاربری</label><input disabled value="@Model.User.UserName" type="text" name="UserName" class="form-control disabled" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 mb-2">
+                                        <div class="mb-3">
+                                            <label style="font-size: medium;font-weight: bold;" class="text-label form-label">کدپرسنلی</label><input  value="@Model.User.PersonalCode" type="text" name="PersonalCode" class="form-control" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 mb-2">
+                                        <div class="mb-3">
+                                            <label style="font-size: medium;font-weight: bold;" class="text-label form-label">رمز عبور</label><input placeholder="رمز عبور جدید را وارد کنید" type="text" name="Password" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 mb-2">
+                                        <div class="mb-3">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 mt-5 mb-3">
+                                        <div class="mb-3">
+                                            <label style="font-size: medium;font-weight: bold;" class="text-label form-label">دسترسی های کاربر</label>
+                                            <select class="multi-select-placeholder js-states wide mb-3" data-placeholder="my placeholder"  multiple="multiple" name="permissionIds"  id="permissionSelect">
+                                                @{
+                                                    foreach (var permission in Model.UserPermissions)
+                                                    {
+                                                        if (permission.HasPermission)
+                                                        {
+                                                            <option selected value="@permission.PermissionId">@permission.Description</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@permission.PermissionId">@permission.Description</option>
+                                                        }
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 mt-5 mb-3">
+                                        <div class="mb-3">
+                                            <label style="font-size: medium;font-weight: bold;" class="text-label form-label">بخش ها</label>
+                                            <select class="multi-select-placeholder js-states wide mb-3" data-placeholder="my placeholder" multiple="multiple" name="UnitIds" id="unitSelect">
+                                                @{
+                                                    foreach (var unit in Model.UserUnits)
+                                                    {
+                                                        if (unit.HaveUnit)
+                                                        {
+                                                            <option selected value="@unit.unitId">@unit.UnitName</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@unit.unitId">@unit.UnitName</option>
+                                                        }
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-10 mb-3">
+                                        <div class="mb-3">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-1 mb-3 w-auto pl-0">
+                                        <div class="mb-3">
+                                            <div class="text-center"><button type="reset" class="btn btn-dark btn-block">انصراف</button></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-1 mb-3 w-auto">
+                                        <div class="mb-3">
+                                            <div class="text-center"><button type="submit" class="btn btn-primary btn-block">ثبت</button></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/vendor/global/global.min.js"></script>
+<script src="~/vendor/jquery-nice-select/js/jquery.nice-select.min.js"></script>
+<script src="~/vendor/select2/js/select2.full.min.js"></script>
+<script src="~/js/plugins-init/select2-init.js"></script>
+<script src="~/js/custom.min.js"></script>
+<script src="~/js/deznav-init.js"></script>
+
+<script>
+
+
+
+
+
+
+</script>
+

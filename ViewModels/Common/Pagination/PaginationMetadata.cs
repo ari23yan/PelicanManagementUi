@@ -8,7 +8,6 @@
         public bool HasNextPage => CurrentPage < TotalPages;
         public bool HasPreviousPage => CurrentPage > 1;
         public int TotalPages => (int)Math.Ceiling((double)TotalCount / PageSize);
-
         public List<T> Data { get; set; }
     }
 }

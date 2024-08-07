@@ -1,5 +1,213 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@using PelicanManagementUi.Utilities;
+@model PelicanManagementUi.ViewModels.Common.Pagination.PaginationMetadata<PelicanManagementUi.ViewModels.Management.UsersListViewModel>
+
+
+
+<link href="~/css/list.css" rel="stylesheet" />
+
+
+<div class="content-body" style="min-height: 60px;">
+    <div class="container-fluid">
+        <div class="row page-titles">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">خانه</a></li> &nbsp;
+                \
+                <li class="breadcrumb-item active"><a asp-action="List" asp-controller="Management">لیست کاربران</a></li>
+            </ol>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header"><h4 class="card-title">لیست کاربران</h4></div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <div id="example3_wrapper" class="dataTables_wrapper no-footer">
+                                <div class="dataTables_length" id="example3_length">
+                                    <a class="d-none" id="pageSizeBtn" asp-action="List" asp-controller="Management"></a>
+                                    <label>
+                                        نمایش &nbsp;
+                                        <select onchange="changePageSize(this)" name="example3_length" aria-controls="example3" class="">
+                                            @if (Model.PageSize == 20)
+                                            {
+                                                <option value="20" selected>20</option>
+                                                <option value="30">30</option>
+                                                <option value="50">50</option>
+                                            }
+                                            else if (Model.PageSize == 30)
+                                            {
+                                                <option value="20">20</option>
+                                                <option value="30" selected>30</option>
+                                                <option value="50">50</option>
+                                            }
+                                            else if (Model.PageSize == 50)
+                                            {
+                                                <option value="20">20</option>
+                                                <option value="30">30</option>
+                                                <option value="50" selected>50</option>
+                                            }
+                                        </select>
+                                        &nbsp;رکورد
+                                    </label>
+                                </div>
+                                <div id="example3_filter" class="dataTables_filter">
+
+                                    <a class="d-none" id="pageSearchBtn" asp-action="List" asp-controller="Management"></a>
+
+                                    <label>
+                                        جست و جو :&nbsp;<input placeholder="بر اساس نام خانوادگی" type="search" class="" onkeydown="if(event.key === 'Enter') searchList(this);"
+                                    </label>
+                                </div>
+                                <table id="example3" class="display dataTable no-footer" style="min-width: 845px" role="grid" aria-describedby="example3_info">
+                                    <thead>
+                                        <tr role="row">
+                                            <th class="" tabindex="0" aria-controls="example3" rowspan="1" colspan="1" aria-label=": activate to sort column descending" aria-sort="ascending">ردیف</th>
+                                            <th tabindex="0" aria-controls="example3" rowspan="1" colspan="1" aria-label="نام: activate to sort column ascending">نام</th>
+                                            <th tabindex="0" aria-controls="example3" rowspan="1" colspan="1" aria-label="نام: activate to sort column ascending">نام خانوادگی</th>
+                                            <th tabindex="0" aria-controls="example3" rowspan="1" colspan="1" aria-label="بخش: activate to sort column ascending">نام کاربری</th>
+                                            <th tabindex="0" aria-controls="example3" rowspan="1" colspan="1" aria-label="بخش: activate to sort column ascending">شماره پرسنلی</th>
+                                            <th tabindex="0" aria-controls="example3" rowspan="1" colspan="1" aria-label="عمل: activate to sort column ascending">عملیات</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            foreach (var item in Model.Data)
+                                            {
+                                                <tr role="row" class="odd">
+                                                    <td>@item.Id</td>
+                                                    <td>@item.FirstName</td>
+                                                    <td>@item.LastName</td>
+                                                    <td>@item.UserName</td>
+                                                    <td>@item.PersonalCode</td>
+                                                    <td>
+                                                        <div class="d-flex">
+                                                            <a data-tippy-content="ویرایش" asp-action="Detail" asp-controller="Management" asp-route-username="@item.UserName" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-pencil"></i></a>
+                                                           &nbsp;
+                                                            <a data-tippy-content="حذف" onclick="deleteRecord('@item.Id')" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"></i></a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                                <div class="dataTables_info mt-2 " id="example3_info" role="status" aria-live="polite">
+                                    نمایش
+                                    @Model.Data.Count()
+                                    رکورد
+                                    از
+                                    @Model.TotalCount
+                                    رکورد
+                                </div>
+                                <div class="card-body">
+                                    <nav>
+                                        <ul class="pagination pagination-circle">
+                                            @{
+                                                if (Model.HasPreviousPage)
+                                                {
+                                                    <li class="page-item page-indicator"><a class="page-link" href="?PageNumber=1"><i class="la la-angle-double-left"></i></a></li>
+
+                                                    <li class="page-item page-indicator"><a class="page-link" href="?PageNumber=@(Model.CurrentPage - 1)"><i class="la la-angle-left"></i></a></li>
+                                                }
+
+                                                @for (int i = Model.CurrentPage - 5; i <= Model.CurrentPage + 5; i++)
+                                                {
+                                                    if (i >= 1 && i <= Model.TotalPages)
+                                                    {
+                                                        <li class="page-item @(i == Model.CurrentPage ? "active" : "")"><a class="page-link" href="?PageNumber=@i">@i</a></li>
+                                                    }
+                                                }
+                                                if (Model.HasNextPage)
+                                                {
+                                                    <li class="page-item page-indicator"><a class="page-link" href="?PageNumber=@(Model.CurrentPage + 1)"><i class="la la-angle-right"></i></a></li>
+                                                    <li class="page-item page-indicator"><a class="page-link" href="?PageNumber=@(Model.TotalPages)"><i class="la la-angle-double-right"></i></a></li>
+                                                }
+                                            }
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    function deleteRecord(recordId) {
+        Swal.fire({
+            title: 'حذف کاربر',
+            text: "آیا از انجام عملیات اطمینان دارید؟",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'خیر',
+            confirmButtonText: 'بله, حذف شود!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(`/Management/Delete?id=${recordId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                })
+                    .then(response => response.text())
+                    .then(result => {
+                        let res = JSON.parse(result);
+                        console.log('ss->', res)
+                        if (res.isSuccessFull == true) {
+                            Swal.fire(
+                                '',
+                                'عملیات موفقیت آمیز بود',
+                                'success'
+                            )
+                            setTimeout(function () {
+                                location.reload();
+                            }, 1000);
+                            return
+
+                        }
+                        Swal.fire(
+                            '',
+                            res.message,
+                            'error'
+                        )
+                        return
+
+                    }).catch(error => {
+                        console.log('error', error);
+                    });
+            }
+        });
+    }
+
+
+
+
+
+    function searchList(input) {
+        if (input.value.length >= 2) {
+            var button = document.getElementById('pageSearchBtn');
+            var currentHref = button.getAttribute('href');
+            var url = new URL(currentHref, window.location.origin);
+            url.searchParams.set('Searchkey', input.value);
+            button.setAttribute('href', url.pathname + url.search);
+            window.location.href = button.href;
+        }
+
+    }
+
+
+    function changePageSize(count) {
+        var button = document.getElementById('pageSizeBtn');
+        var currentHref = button.getAttribute('href');
+        var url = new URL(currentHref, window.location.origin);
+        url.searchParams.set('PageSize', count.value);
+        button.setAttribute('href', url.pathname + url.search);
+        window.location.href = button.href;
+    }
+
+
+
+</script>
