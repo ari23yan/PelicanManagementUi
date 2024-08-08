@@ -167,7 +167,6 @@ namespace PelicanManagementUi.Controllers
         }
 
 
-
         public IActionResult SignOut()
         {
             HttpContext.SignOutAsync();

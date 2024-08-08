@@ -21,7 +21,7 @@ namespace PelicanManagementUi.Controllers
         private readonly IRoleService _roleService;
         private readonly INotyfService _toastNotification;
 
-        public UserController(IUserService userService,IRoleService roleService , INotyfService notyfService)
+        public UserController(IUserService userService, IRoleService roleService, INotyfService notyfService)
         {
             _userService = userService;
             _roleService = roleService;
@@ -33,7 +33,11 @@ namespace PelicanManagementUi.Controllers
         {
             var token = HttpContext.User.FindFirstValue(ClaimTypes.Authentication);
             var users = await _userService.GetUserList(model, token);
-
+            if (!users.IsSuccessFull.Value)
+            {
+                _toastNotification.Error(users.Message);
+                return RedirectToAction("List", "User");
+            }
             var paginationModel = new PaginationMetadata<UsersListViewModel>
             {
                 Data = users.Data,
@@ -72,7 +76,8 @@ namespace PelicanManagementUi.Controllers
             if (!result.IsSuccessFull.Value)
             {
                 _toastNotification.Error(result.Message);
-                return View();
+                var rolesList = await _roleService.GetRolesList(token);
+                return View(rolesList.Data);
             }
             _toastNotification.Success(result.Message);
             return RedirectToAction("List", "User");

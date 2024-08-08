@@ -1,5 +1,7 @@
 ﻿@model PelicanManagementUi.ViewModels.User.UserDetailViewModel
 @using PelicanManagementUi.Utilities;
+@using PelicanManagementUi.Enums;
+
 
 
 <style>
@@ -138,7 +140,41 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div id="my-changes" class="tab-pane fade active show">
+                                    <div id="my-changes" class="tab-pane fade ">
+                                        <div class="profile-personal-info mt-3">
+                                            <h4 class="text-primary mb-4">لیست 10 فعالیت اخیر</h4>
+                                            <div class="card-body">
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover table-responsive-sm">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="text-center">#</th>
+                                                                <th class="text-center">نوع</th>
+                                                                <th class="text-center">تاریخ</th>
+                                                                <th class="text-center">توضیحات</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @{
+                                                                int row = 1;
+                                                                foreach (var item in Model.UserActivities)
+                                                                {
+                                                                    <tr>
+                                                                        <th class="text-center">@row</th>
+                                                                        <td class="text-center">
+                                                                            @item.UserActivityLogTypeId.GetDisplayName()
+                                                                        </td>
+                                                                        <td class="text-center">@UtilityManager.PersianDateConverter(@item.Timestamp)</td>
+                                                                        <td class="text-center">@item.Description</td>
+                                                                    </tr>
+                                                                    row++;
+                                                                }
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div id="profile-settings" class="tab-pane fade">
                                         <div class="pt-3">

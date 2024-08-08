@@ -1,4 +1,7 @@
-﻿using System.Globalization;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Globalization;
+using System.Reflection;
 
 namespace PelicanManagementUi.Utilities
 {
@@ -13,6 +16,15 @@ namespace PelicanManagementUi.Utilities
             int day = persianCalendar.GetDayOfMonth(date);
             return $"{year}/{month.ToString("D2")}/{day.ToString("D2")}";
 
+        }
+  
+
+        public static string GetDisplayName(this Enum enumValue)
+        {
+            var displayAttribute = enumValue.GetType()
+                                            .GetField(enumValue.ToString())
+                                            .GetCustomAttribute<DisplayAttribute>();
+            return displayAttribute == null ? enumValue.ToString() : displayAttribute.GetName();
         }
     }
 }

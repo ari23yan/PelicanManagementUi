@@ -28,6 +28,8 @@ namespace PelicanManagementUi.ViewModels.User
         public List<PermissionsViewModel> Permissions { get; set; }
         public List<RoleMenusViewModel> Menus { get; set; }
         public List<RolesListViewModel> AllRoles { get; set; }
+        public List<UserActivityLogViewModel> UserActivities { get; set; }
+
     }
 
 

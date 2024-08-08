@@ -51,7 +51,7 @@
                                     <div class="col-lg-2 mt-5 mb-3">
                                         <div class="mb-3">
                                             <label style="font-size: medium;font-weight: bold;" class="text-label form-label"> بر اساس  :</label>
-                                            <select name="RoleId" required onchange="getRolePermissionsAndMenus(this)" id="roleSelect" class="default-select form-control wide mb-3">
+                                            <select name="RoleId" onchange="getRolePermissionsAndMenus(this)" id="roleSelect" class="default-select form-control wide mb-3">
                                                 <option selected value="">انتخاب کنید</option>
                                                 @{
                                                     foreach (var item in Model.Role)
