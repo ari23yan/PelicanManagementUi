@@ -3,6 +3,7 @@ using PelicanManagementUi.ViewModels.Account;
 using PelicanManagementUi.ViewModels.Common.Pagination;
 using PelicanManagementUi.ViewModels.Common.Response;
 using PelicanManagementUi.ViewModels.User;
+using PelicanManagementUi.ViewModels.UserActivity;
 
 namespace PelicanManagementUi.WebServices.Interfaces
 {
@@ -13,6 +14,7 @@ namespace PelicanManagementUi.WebServices.Interfaces
         Task<ResponseViewModel<bool>> ConfirmOtp(ConfrimOtpViewModel viewModel);
         Task<ResponseViewModel<bool>> SubmitPasswod(ForgetPasswordViewModel viewModel);
         Task<ResponseViewModel<List<UsersListViewModel>>> GetUserList(PaginationViewModel model, string token);
+        Task<ResponseViewModel<List<UserActivityViewModel>>> GetUserActivitesList(PaginationViewModel model, string token);
         Task<ResponseViewModel<UserDetailViewModel>> GetUser(Guid userId, string token);
         Task<ResponseViewModel<bool>> UpdateUser(UpdateUserViewModel updateUserViewModel, string token);
         Task<ResponseViewModel<bool>> AddUser(AddUserViewModel addUserViewModel, string token);

@@ -74,7 +74,7 @@
                                             <div class="row" id="permissionList">
                                                 @foreach (var item in Model.Permission)
                                                 {
-                                                    <div class="col-lg-2 mb-3">
+                                                    <div class="col-lg-3 mb-3">
                                                         <div class="form-check custom-checkbox mb-3 checkbox-success">
                                                             <input value="@item.Id" name="PermissionIds" type="checkbox" class="form-check-input" id="permission_@item.Id" @(item.HasPermission ? "checked" : "")>
                                                             <label class="form-check-label" for="permission_@item.Id">@item.PermissionName_Farsi</label>

@@ -1,5 +1,6 @@
 ﻿@model PelicanManagementUi.ViewModels.Role.RolesListWithPermissionAndMenusViewModel
-
+<link rel="stylesheet" href="~/vendor/select2/css/select2.min.css">
+<link href="~/vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet">
 
 <style>
     .checkbox-success .form-check-input:checked {
@@ -51,7 +52,7 @@
                                     <div class="col-lg-2 mt-5 mb-3">
                                         <div class="mb-3">
                                             <label style="font-size: medium;font-weight: bold;" class="text-label form-label"> بر اساس  :</label>
-                                            <select name="RoleId" onchange="getRolePermissionsAndMenus(this)" id="roleSelect" class="default-select form-control wide mb-3">
+                                            <select class="multi-select-placeholder js-states wide mb-3" onchange="getRolePermissionsAndMenus(this)" data-placeholder="my placeholder" name="RoleId" id="roleSelect">
                                                 <option selected value="">انتخاب کنید</option>
                                                 @{
                                                     foreach (var item in Model.Role)
@@ -62,10 +63,7 @@
                                             </select>
                                         </div>
                                     </div>
-
                                     <label style="font-size: medium;font-weight: bold;" class="text-label form-label mb-5">انتخاب  دسترسی ها و منوها:</label>
-
-
                                     <div class="col-lg-12 mb-4 mt-4">
                                         <div class="mb-3">
                                             <label style="font-size: medium;font-weight: bold;" class="text-label bold form-label">منو ها :</label>
@@ -182,4 +180,10 @@
     }
 
 </script>
+<script src="~/vendor/global/global.min.js"></script>
+<script src="~/vendor/jquery-nice-select/js/jquery.nice-select.min.js"></script>
+<script src="~/vendor/select2/js/select2.full.min.js"></script>
+<script src="~/js/plugins-init/select2-init.js"></script>
+<script src="~/js/custom.min.js"></script>
+<script src="~/js/deznav-init.js"></script>
 

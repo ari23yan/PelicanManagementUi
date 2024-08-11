@@ -36,7 +36,7 @@ namespace PelicanManagementUi.Controllers
             if (!users.IsSuccessFull.Value)
             {
                 _toastNotification.Error(users.Message);
-                return RedirectToAction("List", "User");
+                return RedirectToAction("index", "Home");
             }
             var paginationModel = new PaginationMetadata<UsersListViewModel>
             {
