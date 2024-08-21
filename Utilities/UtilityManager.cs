@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Reflection;
 
-namespace PelicanManagementUi.Utilities
+namespace UsersManagementUi.Utilities
 {
     public static class UtilityManager
     {

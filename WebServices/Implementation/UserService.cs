@@ -1,20 +1,20 @@
 ﻿using Newtonsoft.Json;
-using PelicanManagementUi.ViewModels.Common.Auth;
-using PelicanManagementUi.ViewModels.Common.Pagination;
-using PelicanManagementUi.ViewModels.Common.Response;
-using PelicanManagementUi.ViewModels.Common;
-using PelicanManagementUi.ViewModels.User;
-using PelicanManagementUi.ViewModels;
-using PelicanManagementUi.WebServices.Interfaces;
+using UsersManagementUi.ViewModels.Common.Auth;
+using UsersManagementUi.ViewModels.Common.Pagination;
+using UsersManagementUi.ViewModels.Common.Response;
+using UsersManagementUi.ViewModels.Common;
+using UsersManagementUi.ViewModels.User;
+using UsersManagementUi.ViewModels;
+using UsersManagementUi.WebServices.Interfaces;
 using System.Net.Http.Headers;
 using System.Text;
-using PelicanManagementUi.ViewModels.Account;
+using UsersManagementUi.ViewModels.Account;
 using NuGet.Common;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
-using PelicanManagementUi.ViewModels.UserActivity;
-using PelicanManagementUi.ViewModels.Role;
+using UsersManagementUi.ViewModels.UserActivity;
+using UsersManagementUi.ViewModels.Role;
 
-namespace PelicanManagementUi.WebServices.Implementation
+namespace UsersManagementUi.WebServices.Implementation
 {
     public class UserService : IUserService
     {

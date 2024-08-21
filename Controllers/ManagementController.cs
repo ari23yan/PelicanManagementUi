@@ -1,15 +1,15 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using PelicanManagementUi.Enums;
-using PelicanManagementUi.ViewModels.Common.Pagination;
-using PelicanManagementUi.ViewModels.Management;
-using PelicanManagementUi.ViewModels.Role;
-using PelicanManagementUi.WebServices.Implementation;
-using PelicanManagementUi.WebServices.Interfaces;
+using UsersManagementUi.Enums;
+using UsersManagementUi.ViewModels.Common.Pagination;
+using UsersManagementUi.ViewModels.Management;
+using UsersManagementUi.ViewModels.Role;
+using UsersManagementUi.WebServices.Implementation;
+using UsersManagementUi.WebServices.Interfaces;
 using System.Security.Claims;
 
-namespace PelicanManagementUi.Controllers
+namespace UsersManagementUi.Controllers
 {
     [Authorize]
     public class ManagementController : Controller

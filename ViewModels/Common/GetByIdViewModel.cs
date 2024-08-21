@@ -1,4 +1,4 @@
-﻿namespace PelicanManagementUi.ViewModels.Common
+﻿namespace UsersManagementUi.ViewModels.Common
 {
     public class GetByIdViewModel
     {

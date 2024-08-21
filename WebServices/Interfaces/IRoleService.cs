@@ -1,9 +1,9 @@
-﻿using PelicanManagementUi.ViewModels.Common.Pagination;
-using PelicanManagementUi.ViewModels.Common.Response;
-using PelicanManagementUi.ViewModels.Permission;
-using PelicanManagementUi.ViewModels.Role;
+﻿using UsersManagementUi.ViewModels.Common.Pagination;
+using UsersManagementUi.ViewModels.Common.Response;
+using UsersManagementUi.ViewModels.Permission;
+using UsersManagementUi.ViewModels.Role;
 
-namespace PelicanManagementUi.WebServices.Interfaces
+namespace UsersManagementUi.WebServices.Interfaces
 {
     public interface IRoleService
     {

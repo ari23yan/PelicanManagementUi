@@ -1,4 +1,4 @@
-﻿namespace PelicanManagementUi.ViewModels.Account
+﻿namespace UsersManagementUi.ViewModels.Account
 {
     public class ForgetPasswordPhoneNumberViewModel
     {

@@ -2,14 +2,14 @@ using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PelicanManagementUi;
-using PelicanManagementUi.ViewModels.Common.Pagination;
-using PelicanManagementUi.ViewModels.UserActivity;
-using PelicanManagementUi.WebServices.Interfaces;
+using UsersManagementUi.ViewModels.Common.Pagination;
+using UsersManagementUi.ViewModels.UserActivity;
+using UsersManagementUi.WebServices.Interfaces;
 using System.Diagnostics;
 using System.Reflection;
 using System.Security.Claims;
 
-namespace PelicanManagementUi.Controllers
+namespace UsersManagementUi.Controllers
 {
     [Authorize]
     public class HomeController : Controller

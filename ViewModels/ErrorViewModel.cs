@@ -1,4 +1,4 @@
-namespace PelicanManagementUi.ViewModels
+namespace UsersManagementUi.ViewModels
 {
     public class ErrorViewModel
     {

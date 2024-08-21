@@ -1,4 +1,4 @@
-﻿namespace PelicanManagementUi.ViewModels.Management
+﻿namespace UsersManagementUi.ViewModels.Management
 {
     public class AddIdentityUserViewModel
     {

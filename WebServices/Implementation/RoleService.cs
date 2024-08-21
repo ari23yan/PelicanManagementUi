@@ -1,15 +1,15 @@
 ﻿using Newtonsoft.Json;
-using PelicanManagementUi.ViewModels.Common;
-using PelicanManagementUi.ViewModels.Common.Auth;
-using PelicanManagementUi.ViewModels.Common.Pagination;
-using PelicanManagementUi.ViewModels.Common.Response;
-using PelicanManagementUi.ViewModels.Permission;
-using PelicanManagementUi.ViewModels.Role;
-using PelicanManagementUi.WebServices.Interfaces;
+using UsersManagementUi.ViewModels.Common;
+using UsersManagementUi.ViewModels.Common.Auth;
+using UsersManagementUi.ViewModels.Common.Pagination;
+using UsersManagementUi.ViewModels.Common.Response;
+using UsersManagementUi.ViewModels.Permission;
+using UsersManagementUi.ViewModels.Role;
+using UsersManagementUi.WebServices.Interfaces;
 using System.Net.Http.Headers;
 using System.Text;
 
-namespace PelicanManagementUi.WebServices.Implementation
+namespace UsersManagementUi.WebServices.Implementation
 {
     public class RoleService : IRoleService
     {

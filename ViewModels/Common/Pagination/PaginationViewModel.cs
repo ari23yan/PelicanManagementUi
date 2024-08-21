@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System;
-using PelicanManagementUi.Enums;
+using UsersManagementUi.Enums;
 
-namespace PelicanManagementUi.ViewModels.Common.Pagination
+namespace UsersManagementUi.ViewModels.Common.Pagination
 {
     public class PaginationViewModel
     {

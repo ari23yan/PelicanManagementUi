@@ -1,4 +1,4 @@
-﻿namespace PelicanManagementUi.ViewModels.Common.Pagination
+﻿namespace UsersManagementUi.ViewModels.Common.Pagination
 {
     public class PaginationMetadata<T>
     {

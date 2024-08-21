@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PelicanManagementUi.ViewModels.Common.Auth
+namespace UsersManagementUi.ViewModels.Common.Auth
 {
     public class JwtTokenHandler
     {

@@ -1,18 +1,18 @@
 ﻿using Newtonsoft.Json;
-using PelicanManagementUi.Enums;
-using PelicanManagementUi.ViewModels.Common;
-using PelicanManagementUi.ViewModels.Common.Auth;
-using PelicanManagementUi.ViewModels.Common.Pagination;
-using PelicanManagementUi.ViewModels.Common.Response;
-using PelicanManagementUi.ViewModels.Management;
-using PelicanManagementUi.ViewModels.Role;
-using PelicanManagementUi.ViewModels.User;
-using PelicanManagementUi.WebServices.Interfaces;
+using UsersManagementUi.Enums;
+using UsersManagementUi.ViewModels.Common;
+using UsersManagementUi.ViewModels.Common.Auth;
+using UsersManagementUi.ViewModels.Common.Pagination;
+using UsersManagementUi.ViewModels.Common.Response;
+using UsersManagementUi.ViewModels.Management;
+using UsersManagementUi.ViewModels.Role;
+using UsersManagementUi.ViewModels.User;
+using UsersManagementUi.WebServices.Interfaces;
 using System.Net.Http.Headers;
 using System.Reflection;
 using System.Text;
 
-namespace PelicanManagementUi.WebServices.Implementation
+namespace UsersManagementUi.WebServices.Implementation
 {
     public class ManagementService: IManagementService
     {
@@ -225,10 +225,7 @@ namespace PelicanManagementUi.WebServices.Implementation
             }
         }
 
-        public async Task<ResponseViewModel<List<ViewModels.Management.UsersListViewModel>>> GetUsersList(
-            PaginationViewModel model,
-            string token,
-            UserType type)
+        public async Task<ResponseViewModel<List<ViewModels.Management.UsersListViewModel>>> GetUsersList(PaginationViewModel model,string token,UserType type)
         {
             using (var httpClient = new HttpClient())
             {

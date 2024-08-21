@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace PelicanManagementUi.Enums
+namespace UsersManagementUi.Enums
 {
     public enum ActivityLogType : long
     {

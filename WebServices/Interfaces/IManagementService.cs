@@ -1,12 +1,12 @@
-﻿using PelicanManagementUi.Enums;
-using PelicanManagementUi.ViewModels.Common.Pagination;
-using PelicanManagementUi.ViewModels.Common.Response;
-using PelicanManagementUi.ViewModels.Management;
-using PelicanManagementUi.ViewModels.Role;
-using PelicanManagementUi.ViewModels.User;
-using UsersListViewModel = PelicanManagementUi.ViewModels.Management.UsersListViewModel;
+﻿using UsersManagementUi.Enums;
+using UsersManagementUi.ViewModels.Common.Pagination;
+using UsersManagementUi.ViewModels.Common.Response;
+using UsersManagementUi.ViewModels.Management;
+using UsersManagementUi.ViewModels.Role;
+using UsersManagementUi.ViewModels.User;
+using UsersListViewModel = UsersManagementUi.ViewModels.Management.UsersListViewModel;
 
-namespace PelicanManagementUi.WebServices.Interfaces
+namespace UsersManagementUi.WebServices.Interfaces
 {
     public interface IManagementService
     {

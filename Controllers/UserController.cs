@@ -5,15 +5,15 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using PelicanManagementUi.ViewModels.Common.Pagination;
-using PelicanManagementUi.ViewModels.User;
-using PelicanManagementUi.WebServices.Interfaces;
+using UsersManagementUi.ViewModels.Common.Pagination;
+using UsersManagementUi.ViewModels.User;
+using UsersManagementUi.WebServices.Interfaces;
 using System.Data;
 using System.Drawing.Printing;
 using System.Reflection;
 using System.Security.Claims;
 
-namespace PelicanManagementUi.Controllers
+namespace UsersManagementUi.Controllers
 {
     [Authorize]
     public class UserController : Controller

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PelicanManagementUi.Enums
+namespace UsersManagementUi.Enums
 {
     public enum FilterType
     {

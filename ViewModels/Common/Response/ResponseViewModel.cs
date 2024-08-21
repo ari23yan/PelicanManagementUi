@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PelicanManagementUi.ViewModels.Common.Response
+namespace UsersManagementUi.ViewModels.Common.Response
 {
     public class ResponseViewModel<T>
     {

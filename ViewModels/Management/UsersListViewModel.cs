@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace PelicanManagementUi.ViewModels.Management
+namespace UsersManagementUi.ViewModels.Management
 {
     public class UsersListViewModel
     {

@@ -1,8 +1,8 @@
-﻿using PelicanManagementUi.ViewModels.Permission;
-using PelicanManagementUi.ViewModels.Role;
+﻿using UsersManagementUi.ViewModels.Permission;
+using UsersManagementUi.ViewModels.Role;
 using System.Security;
 
-namespace PelicanManagementUi.ViewModels.User
+namespace UsersManagementUi.ViewModels.User
 {
     public class UserDetailViewModel
     {

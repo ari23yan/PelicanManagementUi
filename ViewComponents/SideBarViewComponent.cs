@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PelicanManagementUi.ViewModels.User;
-using PelicanManagementUi.WebServices.Interfaces;
+using UsersManagementUi.ViewModels.User;
+using UsersManagementUi.WebServices.Interfaces;
 using System.Security.Claims;
 
-namespace PelicanManagementUi.ViewComponents
+namespace UsersManagementUi.ViewComponents
 {
     public class SideBarViewComponent: ViewComponent
     {

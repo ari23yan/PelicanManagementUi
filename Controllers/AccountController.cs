@@ -2,15 +2,15 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using PelicanManagementUi.ViewModels.Common.Response;
-using PelicanManagementUi.WebServices.Interfaces;
+using UsersManagementUi.ViewModels.Common.Response;
+using UsersManagementUi.WebServices.Interfaces;
 using System.Security.Claims;
 using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Authorization;
-using PelicanManagementUi.ViewModels.Account;
+using UsersManagementUi.ViewModels.Account;
 using Microsoft.AspNetCore.Http.HttpResults;
 
-namespace PelicanManagementUi.Controllers
+namespace UsersManagementUi.Controllers
 {
     [AllowAnonymous]
 

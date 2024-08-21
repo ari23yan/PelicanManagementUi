@@ -1,4 +1,4 @@
-﻿namespace PelicanManagementUi.ViewModels.UserActivity
+﻿namespace UsersManagementUi.ViewModels.UserActivity
 {
     public class UserActivityViewModel
     {

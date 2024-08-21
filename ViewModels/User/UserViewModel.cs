@@ -1,6 +1,6 @@
-﻿using PelicanManagementUi.ViewModels.Role;
+﻿using UsersManagementUi.ViewModels.Role;
 
-namespace PelicanManagementUi.ViewModels.User
+namespace UsersManagementUi.ViewModels.User
 {
     public class UserViewModel
     {

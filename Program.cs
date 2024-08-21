@@ -1,7 +1,7 @@
 using AspNetCoreHero.ToastNotification;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using PelicanManagementUi.WebServices.Implementation;
-using PelicanManagementUi.WebServices.Interfaces;
+using UsersManagementUi.WebServices.Implementation;
+using UsersManagementUi.WebServices.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 

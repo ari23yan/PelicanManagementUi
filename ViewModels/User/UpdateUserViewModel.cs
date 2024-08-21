@@ -1,4 +1,4 @@
-﻿namespace PelicanManagementUi.ViewModels.User
+﻿namespace UsersManagementUi.ViewModels.User
 {
     public class UpdateUserViewModel
     {

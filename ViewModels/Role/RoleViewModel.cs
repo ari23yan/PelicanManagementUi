@@ -1,4 +1,4 @@
-﻿namespace PelicanManagementUi.ViewModels.Role
+﻿namespace UsersManagementUi.ViewModels.Role
 {
     public class RoleViewModel
     {

@@ -1,7 +1,7 @@
-﻿using PelicanManagementUi.ViewModels.Permission;
+﻿using UsersManagementUi.ViewModels.Permission;
 using System.Security;
 
-namespace PelicanManagementUi.ViewModels.Role
+namespace UsersManagementUi.ViewModels.Role
 {
     public class RoleMenuViewModel
     {

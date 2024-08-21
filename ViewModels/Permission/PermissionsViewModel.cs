@@ -1,4 +1,4 @@
-﻿namespace PelicanManagementUi.ViewModels.Permission
+﻿namespace UsersManagementUi.ViewModels.Permission
 {
     public class PermissionsViewModel
     {

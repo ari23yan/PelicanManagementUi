@@ -1,7 +1,7 @@
-﻿using PelicanManagementUi.Enums;
+﻿using UsersManagementUi.Enums;
 using System.ComponentModel.DataAnnotations;
 
-namespace PelicanManagementUi.ViewModels.User
+namespace UsersManagementUi.ViewModels.User
 {
     public class UserActivityLogViewModel
     {

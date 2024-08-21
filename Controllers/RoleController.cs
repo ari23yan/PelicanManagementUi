@@ -2,15 +2,15 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using PelicanManagementUi.ViewModels.User;
-using PelicanManagementUi.ViewModels.Common.Pagination;
-using PelicanManagementUi.ViewModels.Role;
-using PelicanManagementUi.WebServices.Interfaces;
+using UsersManagementUi.ViewModels.User;
+using UsersManagementUi.ViewModels.Common.Pagination;
+using UsersManagementUi.ViewModels.Role;
+using UsersManagementUi.WebServices.Interfaces;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http.HttpResults;
 using System.Data;
 
-namespace PelicanManagementUi.Controllers
+namespace UsersManagementUi.Controllers
 {
     [Authorize]
     public class RoleController : Controller

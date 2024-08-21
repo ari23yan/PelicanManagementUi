@@ -1,11 +1,11 @@
-﻿using PelicanManagementUi.ViewModels;
-using PelicanManagementUi.ViewModels.Account;
-using PelicanManagementUi.ViewModels.Common.Pagination;
-using PelicanManagementUi.ViewModels.Common.Response;
-using PelicanManagementUi.ViewModels.User;
-using PelicanManagementUi.ViewModels.UserActivity;
+﻿using UsersManagementUi.ViewModels;
+using UsersManagementUi.ViewModels.Account;
+using UsersManagementUi.ViewModels.Common.Pagination;
+using UsersManagementUi.ViewModels.Common.Response;
+using UsersManagementUi.ViewModels.User;
+using UsersManagementUi.ViewModels.UserActivity;
 
-namespace PelicanManagementUi.WebServices.Interfaces
+namespace UsersManagementUi.WebServices.Interfaces
 {
     public interface IUserService
     {
