@@ -35,6 +35,11 @@ namespace PelicanManagementUi.Controllers
         {
             var token = HttpContext.User.FindFirstValue(ClaimTypes.Authentication);
             var users = await _userService.GetUserActivitesList(model, token);
+            if (users.Status == "Unauthorized")
+            {
+                _toastNotification.Information(users.Message);
+                return RedirectToAction("SignOut", "Account");
+            }
             if (!users.IsSuccessFull.Value)
             {
                 _toastNotification.Error(users.Message);

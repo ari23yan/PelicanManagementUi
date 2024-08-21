@@ -7,6 +7,8 @@ using PelicanManagementUi.ViewModels.Common.Pagination;
 using PelicanManagementUi.ViewModels.Role;
 using PelicanManagementUi.WebServices.Interfaces;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Http.HttpResults;
+using System.Data;
 
 namespace PelicanManagementUi.Controllers
 {
@@ -27,6 +29,11 @@ namespace PelicanManagementUi.Controllers
         {
             var token = HttpContext.User.FindFirstValue(ClaimTypes.Authentication);
             var roles = await _roleService.GetRoleList(model, token);
+            if (roles.Status == "Unauthorized")
+            {
+                _toastNotification.Information(roles.Message);
+                return RedirectToAction("SignOut", "Account");
+            }
             if (!roles.IsSuccessFull.Value)
             {
                 _toastNotification.Error(roles.Message);
@@ -46,6 +53,12 @@ namespace PelicanManagementUi.Controllers
         {
             var token = HttpContext.User.FindFirstValue(ClaimTypes.Authentication);
             var userDetail = await _roleService.GetRole(id, token);
+            if (userDetail.Status == "Unauthorized")
+            {
+                _toastNotification.Information(userDetail.Message);
+
+                return RedirectToAction("SignOut", "Account");
+            }
             if (!userDetail.IsSuccessFull.Value)
             {
                 _toastNotification.Error(userDetail.Message);
@@ -64,12 +77,17 @@ namespace PelicanManagementUi.Controllers
         {
             var token = HttpContext.User.FindFirstValue(ClaimTypes.Authentication);
             var result = await _roleService.AddRole(model, token);
+            if (result.Status == "Unauthorized")
+            {
+                _toastNotification.Information(result.Message);
+                return RedirectToAction("SignOut", "Account");
+            }
             if (!result.IsSuccessFull.Value)
             {
                 _toastNotification.Error(result.Message);
                 return RedirectToAction("Add", "Role");
-
             }
+
             _toastNotification.Success(result.Message);
             return RedirectToAction("List", "Role");
         }
@@ -78,6 +96,12 @@ namespace PelicanManagementUi.Controllers
         {
             var token = HttpContext.User.FindFirstValue(ClaimTypes.Authentication);
             var result = await _roleService.UpdateRole(model, token);
+            if (result.Status == "Unauthorized")
+            {
+                _toastNotification.Information(result.Message);
+
+                return RedirectToAction("SignOut", "Account");
+            }
             if (!result.IsSuccessFull.Value)
             {
                 _toastNotification.Error(result.Message);

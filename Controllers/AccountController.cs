@@ -8,6 +8,7 @@ using System.Security.Claims;
 using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using PelicanManagementUi.ViewModels.Account;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace PelicanManagementUi.Controllers
 {
@@ -77,6 +78,12 @@ namespace PelicanManagementUi.Controllers
         public async Task<IActionResult> ForgetPassword(string phoneNumber)
         {
             var result = await _userService.SendSmsForChangePassword(phoneNumber);
+            if (result.Status == "Unauthorized")
+            {
+                _toastNotification.Information(result.Message);
+
+                return RedirectToAction("SignOut", "Account");
+            }
             if (!result.IsSuccessFull.Value)
             {
                 _toastNotification.Error(result.Message);
@@ -104,6 +111,12 @@ namespace PelicanManagementUi.Controllers
         public async Task<IActionResult> ConfirmOtp(ConfrimOtpViewModel model)
         {
             var result = await _userService.ConfirmOtp(model);
+            if (result.Status == "Unauthorized")
+            {
+                _toastNotification.Information(result.Message);
+
+                return RedirectToAction("SignOut", "Account");
+            }
             if (!result.IsSuccessFull.Value)
             {
                 _toastNotification.Error(result.Message);
@@ -132,6 +145,12 @@ namespace PelicanManagementUi.Controllers
         public async Task<IActionResult> SubmitPassword(ForgetPasswordViewModel model)
         {
             var result = await _userService.SubmitPasswod(model);
+            if (result.Status == "Unauthorized")
+            {
+                _toastNotification.Information(result.Message);
+
+                return RedirectToAction("SignOut", "Account");
+            }
             if (!result.IsSuccessFull.Value)
             {
                 _toastNotification.Error(result.Message);
@@ -147,6 +166,12 @@ namespace PelicanManagementUi.Controllers
         {
             var token = HttpContext.User.FindFirstValue(ClaimTypes.Authentication);
             var result = await _userService.ChangePassword(password, token);
+            if (result.Status == "Unauthorized")
+            {
+                _toastNotification.Information(result.Message);
+
+                return RedirectToAction("SignOut", "Account");
+            }
             if (!result.IsSuccessFull.Value)
             {
                 _toastNotification.Error(result.Message);
@@ -163,6 +188,17 @@ namespace PelicanManagementUi.Controllers
             var token = HttpContext.User.FindFirstValue(ClaimTypes.Authentication);
             var userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var userProfile = await _userService.GetUser(Guid.Parse(userId), token);
+            if (userProfile.Status == "Unauthorized") 
+            {
+                _toastNotification.Information(userProfile.Message);
+
+                return RedirectToAction("SignOut", "Account");
+            }
+            if (!userProfile.IsSuccessFull.Value)
+            {
+                _toastNotification.Error(userProfile.Message);
+                return RedirectToAction("Index", "Home");
+            }
             return View(userProfile.Data);
         }
 

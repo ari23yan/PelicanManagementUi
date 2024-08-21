@@ -20,12 +20,19 @@ namespace PelicanManagementUi.Enums
         [Display(Name = "ویرایش نقش")]
         UpdateRole,
         [Display(Name = "فعال سازی/غیرفعال سازی نقش")]
-        ActiveOrDeActiveRole,
+        ActiveOrDeActiveRole = 9,
         [Display(Name = " ایجاد کاربر پلیکان")]
         CreatePelicanUser,
         [Display(Name = "حذف کاربر پلیکان")]
         DeletePelicanUser,
         [Display(Name = "ویرایش کاربر پلیکان")]
         UpdatePelicanUser,
+
+        [Display(Name = " ایجاد کاربر تریاژ")]
+        CreateTeriageUser,
+        [Display(Name = "حذف کاربر تریاژ")]
+        DeleteTeriageUser,
+        [Display(Name = "ویرایش کاربر تریاژ")]
+        UpdateTeriageUser,
     }
 }

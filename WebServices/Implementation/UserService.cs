@@ -12,6 +12,7 @@ using PelicanManagementUi.ViewModels.Account;
 using NuGet.Common;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using PelicanManagementUi.ViewModels.UserActivity;
+using PelicanManagementUi.ViewModels.Role;
 
 namespace PelicanManagementUi.WebServices.Implementation
 {
@@ -58,9 +59,17 @@ namespace PelicanManagementUi.WebServices.Implementation
                         }
                         return new ResponseViewModel<UserAuthenticateViewModel> { IsSuccessFull = false, Message = responseDto.Message, Status = "Api Response Status Code Is Not 200" };
                     }
-                    else
+                    switch (response.StatusCode)
                     {
-                        return new ResponseViewModel<UserAuthenticateViewModel> { IsSuccessFull = false, Message = ErrorsMessages.FaildLogin, Status = "Api Response Status Code Is Not 200" };
+                        case System.Net.HttpStatusCode.Unauthorized:
+                            return new ResponseViewModel<UserAuthenticateViewModel> { IsSuccessFull = false, Message = ErrorsMessages.NotAuthenticated, Status = "Unauthorized" };
+                        case System.Net.HttpStatusCode.Forbidden:
+                            return new ResponseViewModel<UserAuthenticateViewModel> { IsSuccessFull = false, Message = ErrorsMessages.PermissionDenied, Status = "Forbidden" };
+
+                        case System.Net.HttpStatusCode.InternalServerError:
+                            return new ResponseViewModel<UserAuthenticateViewModel> { IsSuccessFull = false, Message = ErrorsMessages.InternalServerError, Status = "InternalServerError" };
+                        default:
+                            return new ResponseViewModel<UserAuthenticateViewModel> { IsSuccessFull = false, Message = ErrorsMessages.InternalServerError, Status = $"Api Response Status Code Is {response.StatusCode}" };
                     }
                 }
             }
@@ -106,9 +115,17 @@ namespace PelicanManagementUi.WebServices.Implementation
                         }
                         return new ResponseViewModel<List<UsersListViewModel>> { IsSuccessFull = false, Message = responseDto.Message, Status = "Failed" };
                     }
-                    else
+                    switch (response.StatusCode)
                     {
-                        return new ResponseViewModel<List<UsersListViewModel>> { IsSuccessFull = false, Message = ErrorsMessages.PermissionDenied, Status = "Api Response Status Code Is Not 200" };
+                        case System.Net.HttpStatusCode.Unauthorized:
+                            return new ResponseViewModel<List<UsersListViewModel>> { IsSuccessFull = false, Message = ErrorsMessages.NotAuthenticated, Status = "Unauthorized" };
+                        case System.Net.HttpStatusCode.Forbidden:
+                            return new ResponseViewModel<List<UsersListViewModel>> { IsSuccessFull = false, Message = ErrorsMessages.PermissionDenied, Status = "Forbidden" };
+
+                        case System.Net.HttpStatusCode.InternalServerError:
+                            return new ResponseViewModel<List<UsersListViewModel>> { IsSuccessFull = false, Message = ErrorsMessages.InternalServerError, Status = "InternalServerError" };
+                        default:
+                            return new ResponseViewModel<List<UsersListViewModel>> { IsSuccessFull = false, Message = ErrorsMessages.InternalServerError, Status = $"Api Response Status Code Is {response.StatusCode}" };
                     }
                 }
                 catch (Exception ex)
@@ -136,9 +153,17 @@ namespace PelicanManagementUi.WebServices.Implementation
                         var responseDto = JsonConvert.DeserializeObject<ResponseViewModel<UserDetailViewModel>>(responseBody);
                         return new ResponseViewModel<UserDetailViewModel> { IsSuccessFull = true, Data = responseDto.Data, Message = ErrorsMessages.Success, Status = "SuccessFul" };
                     }
-                    else
+                    switch (response.StatusCode)
                     {
-                        return new ResponseViewModel<UserDetailViewModel> { IsSuccessFull = false, Message = ErrorsMessages.PermissionDenied, Status = "Api Response Status Code Is Not 200" };
+                        case System.Net.HttpStatusCode.Unauthorized:
+                            return new ResponseViewModel<UserDetailViewModel> { IsSuccessFull = false, Message = ErrorsMessages.NotAuthenticated, Status = "Unauthorized" };
+                        case System.Net.HttpStatusCode.Forbidden:
+                            return new ResponseViewModel<UserDetailViewModel> { IsSuccessFull = false, Message = ErrorsMessages.PermissionDenied, Status = "Forbidden" };
+
+                        case System.Net.HttpStatusCode.InternalServerError:
+                            return new ResponseViewModel<UserDetailViewModel> { IsSuccessFull = false, Message = ErrorsMessages.InternalServerError, Status = "InternalServerError" };
+                        default:
+                            return new ResponseViewModel<UserDetailViewModel> { IsSuccessFull = false, Message = ErrorsMessages.InternalServerError, Status = $"Api Response Status Code Is {response.StatusCode}" };
                     }
                 }
                 catch (Exception ex)
@@ -173,9 +198,17 @@ namespace PelicanManagementUi.WebServices.Implementation
                         }
                         return new ResponseViewModel<bool> { IsSuccessFull = false, Message = responseDto.Message, Status = "Failed" };
                     }
-                    else
+                    switch (response.StatusCode)
                     {
-                        return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.PermissionDenied, Status = "Api Response Status Code Is Not 200" };
+                        case System.Net.HttpStatusCode.Unauthorized:
+                            return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.NotAuthenticated, Status = "Unauthorized" };
+                        case System.Net.HttpStatusCode.Forbidden:
+                            return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.PermissionDenied, Status = "Forbidden" };
+
+                        case System.Net.HttpStatusCode.InternalServerError:
+                            return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.InternalServerError, Status = "InternalServerError" };
+                        default:
+                            return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.InternalServerError, Status = $"Api Response Status Code Is {response.StatusCode}" };
                     }
                 }
                 catch (Exception ex)
@@ -209,9 +242,17 @@ namespace PelicanManagementUi.WebServices.Implementation
                         }
                         return new ResponseViewModel<bool> { IsSuccessFull = false, Message = responseDto.Message, Status = "Failed" };
                     }
-                    else
+                    switch (response.StatusCode)
                     {
-                        return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.PermissionDenied, Status = "Api Response Status Code Is Not 200" };
+                        case System.Net.HttpStatusCode.Unauthorized:
+                            return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.NotAuthenticated, Status = "Unauthorized" };
+                        case System.Net.HttpStatusCode.Forbidden:
+                            return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.PermissionDenied, Status = "Forbidden" };
+
+                        case System.Net.HttpStatusCode.InternalServerError:
+                            return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.InternalServerError, Status = "InternalServerError" };
+                        default:
+                            return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.InternalServerError, Status = $"Api Response Status Code Is {response.StatusCode}" };
                     }
                 }
                 catch (Exception ex)
@@ -245,9 +286,17 @@ namespace PelicanManagementUi.WebServices.Implementation
                         }
                         return new ResponseViewModel<bool> { IsSuccessFull = false, Message = responseDto.Message, Status = "Failed" };
                     }
-                    else
+                    switch (response.StatusCode)
                     {
-                        return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.PermissionDenied, Status = "Api Response Status Code Is Not 200" };
+                        case System.Net.HttpStatusCode.Unauthorized:
+                            return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.NotAuthenticated, Status = "Unauthorized" };
+                        case System.Net.HttpStatusCode.Forbidden:
+                            return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.PermissionDenied, Status = "Forbidden" };
+
+                        case System.Net.HttpStatusCode.InternalServerError:
+                            return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.InternalServerError, Status = "InternalServerError" };
+                        default:
+                            return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.InternalServerError, Status = $"Api Response Status Code Is {response.StatusCode}" };
                     }
                 }
                 catch (Exception ex)
@@ -277,9 +326,17 @@ namespace PelicanManagementUi.WebServices.Implementation
                         }
                         return new ResponseViewModel<bool> { IsSuccessFull = false, Message = responseDto.Message, Status = "Failed" };
                     }
-                    else
+                    switch (response.StatusCode)
                     {
-                        return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.PermissionDenied, Status = "Api Response Status Code Is Not 200" };
+                        case System.Net.HttpStatusCode.Unauthorized:
+                            return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.NotAuthenticated, Status = "Unauthorized" };
+                        case System.Net.HttpStatusCode.Forbidden:
+                            return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.PermissionDenied, Status = "Forbidden" };
+
+                        case System.Net.HttpStatusCode.InternalServerError:
+                            return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.InternalServerError, Status = "InternalServerError" };
+                        default:
+                            return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.InternalServerError, Status = $"Api Response Status Code Is {response.StatusCode}" };
                     }
                 }
                 catch (Exception ex)
@@ -314,9 +371,17 @@ namespace PelicanManagementUi.WebServices.Implementation
                         }
                         return new ResponseViewModel<bool> { IsSuccessFull = false, Message = responseDto.Message, Status = "Failed" };
                     }
-                    else
+                    switch (response.StatusCode)
                     {
-                        return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.PermissionDenied, Status = "Api Response Status Code Is Not 200" };
+                        case System.Net.HttpStatusCode.Unauthorized:
+                            return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.NotAuthenticated, Status = "Unauthorized" };
+                        case System.Net.HttpStatusCode.Forbidden:
+                            return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.PermissionDenied, Status = "Forbidden" };
+
+                        case System.Net.HttpStatusCode.InternalServerError:
+                            return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.InternalServerError, Status = "InternalServerError" };
+                        default:
+                            return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.InternalServerError, Status = $"Api Response Status Code Is {response.StatusCode}" };
                     }
                 }
                 catch (Exception ex)
@@ -346,9 +411,17 @@ namespace PelicanManagementUi.WebServices.Implementation
                         }
                         return new ResponseViewModel<bool> { IsSuccessFull = false, Message = responseDto.Message, Status = "Failed" };
                     }
-                    else
+                    switch (response.StatusCode)
                     {
-                        return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.PermissionDenied, Status = "Api Response Status Code Is Not 200" };
+                        case System.Net.HttpStatusCode.Unauthorized:
+                            return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.NotAuthenticated, Status = "Unauthorized" };
+                        case System.Net.HttpStatusCode.Forbidden:
+                            return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.PermissionDenied, Status = "Forbidden" };
+
+                        case System.Net.HttpStatusCode.InternalServerError:
+                            return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.InternalServerError, Status = "InternalServerError" };
+                        default:
+                            return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.InternalServerError, Status = $"Api Response Status Code Is {response.StatusCode}" };
                     }
                 }
                 catch (Exception ex)
@@ -378,9 +451,17 @@ namespace PelicanManagementUi.WebServices.Implementation
                         }
                         return new ResponseViewModel<bool> { IsSuccessFull = false, Message = responseDto.Message, Status = "Failed" };
                     }
-                    else
+                    switch (response.StatusCode)
                     {
-                        return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.PermissionDenied, Status = "Api Response Status Code Is Not 200" };
+                        case System.Net.HttpStatusCode.Unauthorized:
+                            return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.NotAuthenticated, Status = "Unauthorized" };
+                        case System.Net.HttpStatusCode.Forbidden:
+                            return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.PermissionDenied, Status = "Forbidden" };
+
+                        case System.Net.HttpStatusCode.InternalServerError:
+                            return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.InternalServerError, Status = "InternalServerError" };
+                        default:
+                            return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.InternalServerError, Status = $"Api Response Status Code Is {response.StatusCode}" };
                     }
                 }
                 catch (Exception ex)
@@ -414,9 +495,17 @@ namespace PelicanManagementUi.WebServices.Implementation
                         }
                         return new ResponseViewModel<bool> { IsSuccessFull = false, Message = responseDto.Message, Status = "Failed" };
                     }
-                    else
+                    switch (response.StatusCode)
                     {
-                        return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.PermissionDenied, Status = "Api Response Status Code Is Not 200" };
+                        case System.Net.HttpStatusCode.Unauthorized:
+                            return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.NotAuthenticated, Status = "Unauthorized" };
+                        case System.Net.HttpStatusCode.Forbidden:
+                            return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.PermissionDenied, Status = "Forbidden" };
+
+                        case System.Net.HttpStatusCode.InternalServerError:
+                            return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.InternalServerError, Status = "InternalServerError" };
+                        default:
+                            return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.InternalServerError, Status = $"Api Response Status Code Is {response.StatusCode}" };
                     }
                 }
                 catch (Exception ex)
@@ -463,9 +552,17 @@ namespace PelicanManagementUi.WebServices.Implementation
                         }
                         return new ResponseViewModel<List<UserActivityViewModel>> { IsSuccessFull = false, Message = responseDto.Message, Status = "Failed" };
                     }
-                    else
+                    switch (response.StatusCode)
                     {
-                        return new ResponseViewModel<List<UserActivityViewModel>> { IsSuccessFull = false, Message = ErrorsMessages.PermissionDenied, Status = "Api Response Status Code Is Not 200" };
+                        case System.Net.HttpStatusCode.Unauthorized:
+                            return new ResponseViewModel<List<UserActivityViewModel>> { IsSuccessFull = false, Message = ErrorsMessages.NotAuthenticated, Status = "Unauthorized" };
+                        case System.Net.HttpStatusCode.Forbidden:
+                            return new ResponseViewModel<List<UserActivityViewModel>> { IsSuccessFull = false, Message = ErrorsMessages.PermissionDenied, Status = "Forbidden" };
+
+                        case System.Net.HttpStatusCode.InternalServerError:
+                            return new ResponseViewModel<List<UserActivityViewModel>> { IsSuccessFull = false, Message = ErrorsMessages.InternalServerError, Status = "InternalServerError" };
+                        default:
+                            return new ResponseViewModel<List<UserActivityViewModel>> { IsSuccessFull = false, Message = ErrorsMessages.InternalServerError, Status = $"Api Response Status Code Is {response.StatusCode}" };
                     }
                 }
                 catch (Exception ex)

@@ -33,7 +33,7 @@
                     @if (item.SubMenus == null || !item.SubMenus.Any())
                     {
                         <li>
-                            <a asp-action="@attributes.Action" asp-controller="@attributes.Controller" class="ai-icon" aria-expanded="false">
+                            <a asp-action="@attributes.Action" asp-route-type="@attributes.Parameter" asp-controller="@attributes.Controller" class="ai-icon" aria-expanded="false">
                                 <i class="@attributes.Icon"></i>
                                 <span class="nav-text">@item.Name_Farsi</span>
                             </a>
@@ -53,7 +53,7 @@
                                     @if (subItem.SubMenus == null || !subItem.SubMenus.Any())
                                     {
                                         <li>
-                                            <a asp-action="@subItemAttributes.Action" asp-controller="@subItemAttributes.Controller">@subItem.Name_Farsi</a>
+                                            <a asp-action="@subItemAttributes.Action" asp-route-type="@subItemAttributes.Parameter" asp-controller="@subItemAttributes.Controller">@subItem.Name_Farsi</a>
                                         </li>
                                     }
                                     else
@@ -65,7 +65,7 @@
                                                 {
                                                     var subSubItemAttributes = Newtonsoft.Json.JsonConvert.DeserializeObject<AttributesViewModel>(subSubItem.Link);
                                                     <li>
-                                                        <a asp-action="@subSubItemAttributes.Action" asp-controller="@subSubItemAttributes.Controller">@subSubItem.Name_Farsi</a>
+                                                        <a asp-route-type="@subSubItemAttributes.Parameter" asp-action="@subSubItemAttributes.Action" asp-controller="@subSubItemAttributes.Controller">@subSubItem.Name_Farsi</a>
                                                     </li>
                                                 }
                                             </ul>
@@ -78,5 +78,6 @@
                 }
             }
         </ul>
+
     </div>
 </div>

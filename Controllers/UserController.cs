@@ -2,11 +2,13 @@
 using AspNetCoreHero.ToastNotification.Notyf;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PelicanManagementUi.ViewModels.Common.Pagination;
 using PelicanManagementUi.ViewModels.User;
 using PelicanManagementUi.WebServices.Interfaces;
+using System.Data;
 using System.Drawing.Printing;
 using System.Reflection;
 using System.Security.Claims;
@@ -33,6 +35,12 @@ namespace PelicanManagementUi.Controllers
         {
             var token = HttpContext.User.FindFirstValue(ClaimTypes.Authentication);
             var users = await _userService.GetUserList(model, token);
+            if (users.Status == "Unauthorized")
+            {
+                _toastNotification.Information(users.Message);
+
+                return RedirectToAction("SignOut", "Account");
+            }
             if (!users.IsSuccessFull.Value)
             {
                 _toastNotification.Error(users.Message);
@@ -53,6 +61,11 @@ namespace PelicanManagementUi.Controllers
         {
             var token = HttpContext.User.FindFirstValue(ClaimTypes.Authentication);
             var userDetail = await _userService.GetUser(id, token);
+            if (userDetail.Status == "Unauthorized")
+            {
+                _toastNotification.Information(userDetail.Message);
+                return RedirectToAction("SignOut", "Account");
+            }
             if (!userDetail.IsSuccessFull.Value)
             {
                 _toastNotification.Error(userDetail.Message);
@@ -73,6 +86,11 @@ namespace PelicanManagementUi.Controllers
         {
             var token = HttpContext.User.FindFirstValue(ClaimTypes.Authentication);
             var result = await _userService.AddUser(model, token);
+            if (result.Status == "Unauthorized")
+            {
+                _toastNotification.Information(result.Message);
+                return RedirectToAction("SignOut", "Account");
+            }
             if (!result.IsSuccessFull.Value)
             {
                 _toastNotification.Error(result.Message);
@@ -89,6 +107,11 @@ namespace PelicanManagementUi.Controllers
         {
             var token = HttpContext.User.FindFirstValue(ClaimTypes.Authentication);
             var userDetail = await _userService.UpdateUser(model, token);
+            if (userDetail.Status == "Unauthorized")
+            {
+                _toastNotification.Information(userDetail.Message);
+                return RedirectToAction("SignOut", "Account");
+            }
             if (!userDetail.IsSuccessFull.Value)
             {
                 _toastNotification.Error(userDetail.Message);
