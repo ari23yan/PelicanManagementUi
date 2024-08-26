@@ -100,7 +100,6 @@ namespace UsersManagementUi.WebServices.Implementation
                     {
                         queryParams.Add($"filterType={model.FilterType.Value}");
                     }
-
                     var url = $"{serviceAddress}/user/list?" + string.Join("&", queryParams);
 
                     var response = await httpClient.GetAsync(url);

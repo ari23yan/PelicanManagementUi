@@ -1,0 +1,110 @@
+﻿@model UsersManagementUi.ViewModels.Management.HisNovinUserListViewModel
+
+<link rel="stylesheet" href="~/vendor/select2/css/select2.min.css">
+<link href="~/vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet">
+
+<style>
+    .checkbox-success .form-check-input:checked {
+        background-color: #2258bf;
+        border-color: #2258bf;
+    }
+
+    .checkbox-success .form-check-input:focus {
+        border-color: #2258bf;
+        box-shadow: none !important;
+    }
+
+    .select2-container--default.select2-container .select2-selection--multiple {
+        border: solid #e8e8e8 1px !important;
+    }
+
+</style>
+
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row page-titles">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">خانه</a></li> &nbsp;
+                \
+                <li class="breadcrumb-item"><a asp-action="HisNovinList" asp-route-type="2" asp-controller="Management">لیست کاربر ها</a></li> &nbsp;
+                \
+                <li class="breadcrumb-item active"><a asp-action="HisNovinUserDetail" asp-controller="Management">جزئیات کاربر</a></li>
+                <li class="ml-auto">
+                    <a asp-action="HisNovinList"  asp-controller="Management">
+                        <svg fill="#2258bf" height="30px" width="30px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                             xmlns:xlink="http://www.w3.org/1999/xlink"
+                             viewBox="0 0 26.676 26.676" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <path d="M26.105,21.891c-0.229,0-0.439-0.131-0.529-0.346l0,0c-0.066-0.156-1.716-3.857-7.885-4.59 c-1.285-0.156-2.824-0.236-4.693-0.25v4.613c0,0.213-0.115,0.406-0.304,0.508c-0.188,0.098-0.413,0.084-0.588-0.033L0.254,13.815 C0.094,13.708,0,13.528,0,13.339c0-0.191,0.094-0.365,0.254-0.477l11.857-7.979c0.175-0.121,0.398-0.129,0.588-0.029 c0.19,0.102,0.303,0.295,0.303,0.502v4.293c2.578,0.336,13.674,2.33,13.674,11.674c0,0.271-0.191,0.508-0.459,0.562 C26.18,21.891,26.141,21.891,26.105,21.891z"></path> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> </g> </g></svg>
+                    </a>
+                </li>
+            </ol>
+        </div>
+        <div class="row">
+            <div class="col-xl-12 col-xxl-12">
+                <div class="card">
+                    <div class="card-header"><h4 class="card-title">His Novin ویرایش کاربر</h4></div>
+                    <div class="card-body">
+                        <form asp-action="UpdateHisNovinUser" asp-controller="Management" enctype="multipart/form-data" method="post">
+                            <input value="@Model.Id" type="text" name="UserId" class="d-none">
+                            <div class="tab-content">
+                                <div class="row">
+                                    <div class="col-lg-6 mb-2">
+                                        <div class="mb-3">
+                                            <label style="font-size: medium;font-weight: bold;" class="text-label form-label">نام </label><input value="@Model.FirstName" type="text" name="FirstName" class="form-control"  required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 mb-2">
+                                        <div class="mb-3">
+                                            <label style="font-size: medium;font-weight: bold;" class="text-label form-label">نام خانوادگی </label><input value="@Model.LastName" type="text" name="LastName" class="form-control"  required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 mb-2">
+                                        <div class="mb-3">
+                                            <label style="font-size: medium;font-weight: bold;" class="text-label form-label">نام کاربری </label><input value="@Model.UserName" type="text" name="UserName" class="form-control" disabled required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 mb-2">
+                                        <div class="mb-3">
+                                            <label style="font-size: medium;font-weight: bold;" class="text-label form-label">کدملی</label><input value="@Model.NationalCode" type="text" name="NationalCode" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 mb-2">
+                                        <div class="mb-3">
+                                            <label style="font-size: medium;font-weight: bold;" class="text-label form-label">کد پرسنلی</label><input disabled value="@Model.PersonalCode" type="text" name="PersonalCode" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 mb-2">
+                                        <div class="mb-3">
+                                            <label style="font-size: medium;font-weight: bold;" class="text-label form-label">رمز عبور</label><input placeholder="رمز عبور جدید را وارد کنید" type="text" name="Password" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-12 mb-2">
+                                        <div class="mb-3">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-10 mb-3">
+                                        <div class="mb-3">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-1 mb-3 w-auto pl-0">
+                                        <div class="mb-3">
+                                            <div class="text-center"><button type="reset" class="btn btn-dark btn-block">انصراف</button></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-1 mb-3 w-auto">
+                                        <div class="mb-3">
+                                            <div class="text-center"><button type="submit" class="btn btn-primary btn-block">ثبت</button></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

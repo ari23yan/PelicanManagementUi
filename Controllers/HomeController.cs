@@ -1,7 +1,7 @@
 using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using PelicanManagementUi;
+using UsersManagementUi;
 using UsersManagementUi.ViewModels.Common.Pagination;
 using UsersManagementUi.ViewModels.UserActivity;
 using UsersManagementUi.WebServices.Interfaces;

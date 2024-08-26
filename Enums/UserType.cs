@@ -8,7 +8,9 @@ namespace UsersManagementUi.Enums
 {
     public enum UserType
     {
-        Triage =1,
-        Pelican
+        Triage = 1,
+        Pelican,
+        HisNovin,
+        Clinic
     }
 }

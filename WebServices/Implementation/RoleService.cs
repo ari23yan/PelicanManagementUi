@@ -388,11 +388,9 @@ namespace UsersManagementUi.WebServices.Implementation
                             return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.NotAuthenticated, Status = "Unauthorized" };
                         case System.Net.HttpStatusCode.Forbidden:
                             return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.PermissionDenied, Status = "Forbidden" };
-
-                        case System.Net.HttpStatusCode.InternalServerError:
-                            return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.InternalServerError, Status = "InternalServerError" };
                         default:
-                            return new ResponseViewModel<bool> { IsSuccessFull = false, Message = ErrorsMessages.InternalServerError, Status = $"Api Response Status Code Is {response.StatusCode}" };
+                            var errorMessage = await response.Content.ReadAsStringAsync();
+                            return new ResponseViewModel<bool> { IsSuccessFull = false, Message = errorMessage, Status = $"Api Response Status Code Is {response.StatusCode}" };
                     }
                 }
                 catch (Exception ex)

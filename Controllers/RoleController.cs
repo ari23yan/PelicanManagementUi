@@ -17,11 +17,14 @@ namespace UsersManagementUi.Controllers
     {
         private readonly IRoleService _roleService;
         private readonly INotyfService _toastNotification;
+        private readonly ILogger<RoleController> _logger;
 
-        public RoleController(IRoleService roleService, INotyfService notyfService)
+        public RoleController(IRoleService roleService, INotyfService notyfService, ILogger<RoleController> logger)
         {
             _roleService = roleService;
             _toastNotification = notyfService;
+            _logger = logger;
+
 
         }
         [HttpGet]
@@ -99,7 +102,6 @@ namespace UsersManagementUi.Controllers
             if (result.Status == "Unauthorized")
             {
                 _toastNotification.Information(result.Message);
-
                 return RedirectToAction("SignOut", "Account");
             }
             if (!result.IsSuccessFull.Value)
